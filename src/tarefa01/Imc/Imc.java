@@ -28,4 +28,5 @@ public class Imc {
   public double getImc() {
     return peso / altura * altura;
   }
+  
 }

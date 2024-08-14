@@ -1,12 +1,6 @@
-package tarefa01.RevisaoAed;
+
 
 public class RevisaoAed {
-
-  public RevisaoAed() {
-  }
-  
-
-
 
   public int fibLoop(int numerosTermos) {
 

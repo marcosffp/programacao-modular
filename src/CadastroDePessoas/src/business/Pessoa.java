@@ -1,4 +1,4 @@
-package CadastroDePessoas.business;
+package CadastroDePessoas.src.business;
 
 import java.time.LocalDate;
 

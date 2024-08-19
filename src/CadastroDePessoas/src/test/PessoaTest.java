@@ -1,13 +1,14 @@
-package CadastroDePessoas.business.test;
+package CadastroDePessoas.src.test;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 
-import CadastroDePessoas.business.EstadoCivil;
-import CadastroDePessoas.business.FormacaoAcademica;
-import CadastroDePessoas.business.Pessoa;
-import CadastroDePessoas.business.Profissao;
-
+import CadastroDePessoas.src.business.EstadoCivil;
+import CadastroDePessoas.src.business.FormacaoAcademica;
+import CadastroDePessoas.src.business.Pessoa;
+import CadastroDePessoas.src.business.Profissao;
 import java.time.LocalDate;
 import org.junit.Test;
 
@@ -311,7 +312,7 @@ public class PessoaTest {
   }
 
   /*
-   * Testa profissão válido
+   * Testa profissão válido.
    */
   @Test
   public void testSetProfissaoValido() {
@@ -322,7 +323,163 @@ public class PessoaTest {
   }
 
   /*
-   * Testa vida social 
+   * Testa vida social true.
    */
- 
+  @Test
+  public void testSetVidaSocialTrue() {
+    Pessoa pessoa = new Pessoa();
+    pessoa.setVidaSocial(true);
+    assertTrue(pessoa.getVidaSocial());
+  }
+
+  /*
+   * Testa vida social false.
+   */
+  @Test
+  public void testSetVidaSocialFalse() {
+    Pessoa pessoa = new Pessoa();
+    pessoa.setVidaSocial(false);
+    assertFalse(pessoa.getVidaSocial());
+  }
+
+  /*
+   * Testa hobby true.
+   */
+  @Test
+  public void testSetHobbyTrue() {
+    Pessoa pessoa = new Pessoa();
+    pessoa.setHobby(true);
+    assertTrue(pessoa.getHobby());
+  }
+
+  /*
+   * Testa hobby false.
+   */
+  @Test
+  public void testSetHobbyFalse() {
+    Pessoa pessoa = new Pessoa();
+    pessoa.setHobby(false);
+    assertFalse(pessoa.getHobby());
+  }
+
+  /*
+   * Testa atividade física menor que 0.
+   */
+  @Test
+  public void testSetAtividadeFisicaMenorZero() {
+    Pessoa pessoa = new Pessoa();
+    int atividadeFisica = -1;
+    assertThrows(IllegalArgumentException.class, () -> {
+      pessoa.setAltura(atividadeFisica);
+    });
+  }
+
+  /*
+   * Testa atividade física maior que 7.
+   */
+  @Test
+  public void testSetAtividadeFisicaMaiorSete() {
+    Pessoa pessoa = new Pessoa();
+    int atividadeFisica = 9;
+    assertThrows(IllegalArgumentException.class, () -> {
+      pessoa.setAtividadeFisica(atividadeFisica);
+    });
+  }
+
+  /*
+   * Testa atividade física igual a 0.
+   */
+  @Test
+  public void testSetAtividadeFisicaIgualZero() {
+    Pessoa pessoa = new Pessoa();
+    int atividadeFisica = 0;
+    pessoa.setAtividadeFisica(atividadeFisica);
+    assertEquals(atividadeFisica, pessoa.getAtividadeFisica());
+  }
+
+  /*
+   * Testa atividade física igual a 7.
+   */
+  @Test
+  public void testSetAtividadeFisicaIgualSete() {
+    Pessoa pessoa = new Pessoa();
+    int atividadeFisica = 7;
+    pessoa.setAtividadeFisica(atividadeFisica);
+    assertEquals(atividadeFisica, pessoa.getAtividadeFisica());
+  }
+
+  /*
+   * Testa atividade física válido.
+   */
+  @Test
+  public void testSetAtividadeFisicaValido() {
+    Pessoa pessoa = new Pessoa();
+    int atividadeFisica = 5;
+    pessoa.setAtividadeFisica(atividadeFisica);
+    assertEquals(atividadeFisica, pessoa.getAtividadeFisica());
+  }
+
+  /*
+   * Testa saúde menor que 0.
+   */
+  @Test
+  public void testSetSaudeMenorZero() {
+    Pessoa pessoa = new Pessoa();
+    int saude = 0;
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          pessoa.setSaude(saude);
+        });
+  }
+
+  /*
+   * Testa saúde maior que 10.
+   */
+  @Test
+  public void testSetSaudeMaiorDez() {
+    Pessoa pessoa = new Pessoa();
+    int saude = 12;
+    assertThrows(
+        IllegalArgumentException.class,
+        () -> {
+          pessoa.setSaude(saude);
+          ;
+        });
+  }
+
+  /*
+   * Testa saúde igual a 1.
+   */
+  @Test
+  public void testSetSaudeIgualUm() {
+    Pessoa pessoa = new Pessoa();
+    int saude = 1;
+    pessoa.setSaude(saude);
+    ;
+    assertEquals(saude, pessoa.getSaude());
+  }
+
+  /*
+   * Testa saúde igual a 10;.
+   */
+  @Test
+  public void testSetSaudeIgualDez() {
+    Pessoa pessoa = new Pessoa();
+    int saude = 10;
+    pessoa.setSaude(saude);
+    ;
+    assertEquals(saude, pessoa.getSaude());
+  }
+
+  /*
+   * Testa saúde válido.
+   */
+  @Test
+  public void testSetSaudeValido() {
+    Pessoa pessoa = new Pessoa();
+    int saude = 4;
+    pessoa.setSaude(saude);
+    assertEquals(saude, pessoa.getSaude());
+  }
 }

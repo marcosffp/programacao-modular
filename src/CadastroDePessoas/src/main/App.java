@@ -1,14 +1,15 @@
-package CadastroDePessoas.main;
+package CadastroDePessoas.src.main;
 
-import CadastroDePessoas.business.EstadoCivil;
-import CadastroDePessoas.business.FormacaoAcademica;
-import CadastroDePessoas.business.Pessoa;
-import CadastroDePessoas.business.Profissao;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Scanner;
+
+import CadastroDePessoas.src.business.EstadoCivil;
+import CadastroDePessoas.src.business.FormacaoAcademica;
+import CadastroDePessoas.src.business.Pessoa;
+import CadastroDePessoas.src.business.Profissao;
 
 public class App {
 

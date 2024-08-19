@@ -184,7 +184,7 @@ public class Pessoa {
         + "\n"
         + "Altura: "
         + String.format("%.2f", altura)
-        + " cm\n"
+        + " m\n"
         + "Peso: "
         + String.format("%.2f", peso)
         + " kg\n"

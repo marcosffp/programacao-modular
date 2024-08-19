@@ -138,7 +138,7 @@ public class Pessoa {
     this.vidaSocial = vidaSocial;
   }
 
-  public boolean getVidaSocial() {
+  public boolean isVidaSocial() {
     return vidaSocial;
   }
 
@@ -146,7 +146,7 @@ public class Pessoa {
     this.hobby = hobby;
   }
 
-  public boolean getHobby() {
+  public boolean isHobby() {
     return hobby;
   }
 

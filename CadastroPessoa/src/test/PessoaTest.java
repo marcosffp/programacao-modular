@@ -332,7 +332,7 @@ public class PessoaTest {
   public void testSetVidaSocialTrue() {
     Pessoa pessoa = new Pessoa();
     pessoa.setVidaSocial(true);
-    assertTrue(pessoa.getVidaSocial());
+    assertTrue(pessoa.isVidaSocial());
   }
 
   /*
@@ -342,7 +342,7 @@ public class PessoaTest {
   public void testSetVidaSocialFalse() {
     Pessoa pessoa = new Pessoa();
     pessoa.setVidaSocial(false);
-    assertFalse(pessoa.getVidaSocial());
+    assertFalse(pessoa.isVidaSocial());
   }
 
   /*
@@ -352,7 +352,7 @@ public class PessoaTest {
   public void testSetHobbyTrue() {
     Pessoa pessoa = new Pessoa();
     pessoa.setHobby(true);
-    assertTrue(pessoa.getHobby());
+    assertTrue(pessoa.isHobby());
   }
 
   /*
@@ -362,7 +362,7 @@ public class PessoaTest {
   public void testSetHobbyFalse() {
     Pessoa pessoa = new Pessoa();
     pessoa.setHobby(false);
-    assertFalse(pessoa.getHobby());
+    assertFalse(pessoa.isHobby());
   }
 
   /*

@@ -234,7 +234,7 @@ public class PessoaTest {
   @Test
   public void testSetDataNascimentoFuturo() {
     Pessoa pessoa = new Pessoa();
-    LocalDate dataNascimento = LocalDate.now().of(2050, 10, 3);
+    LocalDate dataNascimento = LocalDate.of(2050, 10, 3);
     assertThrows(
         IllegalArgumentException.class,
         () -> {
@@ -248,7 +248,7 @@ public class PessoaTest {
   @Test
   public void testSetDataNascimentoValido() {
     Pessoa pessoa = new Pessoa();
-    LocalDate dataNascimento = LocalDate.now().of(2005, 10, 3);
+    LocalDate dataNascimento = LocalDate.of(2005, 10, 3);
     pessoa.setDataNascimento(dataNascimento);
     assertEquals(dataNascimento, pessoa.getDataNascimento());
   }
@@ -305,7 +305,6 @@ public class PessoaTest {
   @Test
   public void testSetProfissaoNulo() {
     Pessoa pessoa = new Pessoa();
-    String profissao = "ESTUDANTE";
     assertThrows(IllegalArgumentException.class, () -> {
       pessoa.setProfissao(null);
     });

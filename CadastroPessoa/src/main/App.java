@@ -4,7 +4,6 @@ import business.EstadoCivil;
 import business.FormacaoAcademica;
 import business.Pessoa;
 import business.Profissao;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,7 +18,7 @@ public class App {
     Locale.setDefault(Locale.US);
     Scanner sc = new Scanner(System.in);
 
-    System.out.println("---Cadastro de Pessoas---");
+    System.out.println("-----------Cadastro de Pessoas-----------");
 
     int opcaoMenu;
 
@@ -30,11 +29,13 @@ public class App {
       System.out.println("3. Sair do sistema");
       opcaoMenu = sc.nextInt();
       sc.nextLine();
+      System.out.println();
 
       switch (opcaoMenu) {
         case 1:
           System.out.println("Cadastro de pessoa");
-          System.out.println("Quantas pessoas serão cadastradas? ");
+          System.out.println();
+          System.out.print("Quantas pessoas serão cadastradas? ");
           int numeroCadastro = sc.nextInt();
           sc.nextLine();
 
@@ -103,7 +104,8 @@ public class App {
 
             pessoas.add(pessoa);
 
-            System.out.println("Cadastro da pessoa #" + i + " finalizado");
+
+            System.out.println("Cadastro da pessoa #" + i + " com sucesso!");
             System.out.println();
           }
           break;

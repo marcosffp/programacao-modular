@@ -11,13 +11,11 @@ import business.Pessoa;
 import business.Profissao;
 import java.time.LocalDate;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 
 public class PessoaTest {
-
-  /*
-   * Testa nome com símbolo.
-   */
   @Test
+  @DisplayName("Testa nome com símbolo")
   public void testSetNomeSimbolo() {
     Pessoa pessoa = new Pessoa();
     String nome = "M@rco$";
@@ -28,10 +26,8 @@ public class PessoaTest {
         });
   }
 
-  /*
-   * Testa nome com número.
-   */
   @Test
+  @DisplayName("Testa nome com número")
   public void testSetNomeNumero() {
     Pessoa pessoa = new Pessoa();
     String nome = "M1rc05";
@@ -42,10 +38,8 @@ public class PessoaTest {
         });
   }
 
-  /*
-   * Testa nome null.
-   */
   @Test
+  @DisplayName("Testa nome null")
   public void testSetNomeNull() {
     Pessoa pessoa = new Pessoa();
     assertThrows(
@@ -55,10 +49,8 @@ public class PessoaTest {
         });
   }
 
-  /*
-   * Testa nome vazio.
-   */
   @Test
+  @DisplayName("Testa nome vazio")
   public void testSetNomeVazio() {
     Pessoa pessoa = new Pessoa();
     String nome = "";
@@ -69,10 +61,8 @@ public class PessoaTest {
         });
   }
 
-  /*
-   * Testa nome válido.
-   */
   @Test
+  @DisplayName("Testa nome válido")
   public void testSetNomeValido() {
     Pessoa pessoa = new Pessoa();
     String nome = "Marcos Alberto";

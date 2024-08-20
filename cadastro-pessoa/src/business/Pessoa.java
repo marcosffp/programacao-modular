@@ -1,7 +1,7 @@
 package business;
 
 public class Pessoa {
-  String nome;
+  private String nome;
 
   public Pessoa() {}
 
@@ -24,10 +24,5 @@ public class Pessoa {
 
   public String getNome() {
     return nome;
-  }
-
-  @Override
-  public String toString() {
-    return "Nome: " + nome + "\n";
   }
 }

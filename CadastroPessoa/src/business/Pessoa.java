@@ -3,17 +3,17 @@ package business;
 import java.time.LocalDate;
 
 public class Pessoa {
-  String nome;
-  float altura;
-  float peso;
-  LocalDate dataNascimento;
-  EstadoCivil estadoCivil;
-  FormacaoAcademica formacaoAcademica;
-  Profissao profissao;
-  boolean vidaSocial;
-  boolean hobby;
-  int atividadeFisica;
-  int saude;
+  private String nome;
+  private float altura;
+  private float peso;
+  private LocalDate dataNascimento;
+  private EstadoCivil estadoCivil;
+  private FormacaoAcademica formacaoAcademica;
+  private Profissao profissao;
+  private boolean vidaSocial;
+  private boolean hobby;
+  private int atividadeFisica;
+  private int saude;
 
   public Pessoa() {}
 

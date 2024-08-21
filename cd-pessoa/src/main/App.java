@@ -77,7 +77,15 @@ public class App {
     String nome = entradaString(sc, "Digite o nome: ");
     LocalDate dataNascimento =
         entradaLocalDate(sc, "Digite a data de nascimento (DD/MM/AAAA): ", formatadorData);
-    Genero genero = entradaEnum(sc, "Selecione o gênero: ", Genero.values());
+
+    System.out.println("Selecione o gênero: ");
+    for (int i = 0; i < Genero.values().length; i++) {
+      System.out.println((i + 1) + ". " + Genero.values()[i].name());
+    }
+    int opcaoGenero = sc.nextInt();
+    sc.nextLine();
+    Genero genero = Genero.values()[opcaoGenero - 1];
+
     float altura = entradaFloat(sc, "Digite a altura: ");
     sc.nextLine();
     int peso = entradaInt(sc, "Digite o peso: ");
@@ -86,12 +94,38 @@ public class App {
     sc.nextLine();
     String naturalidade = entradaString(sc, "Digite o naturalidade: ");
     System.out.println();
-    Hobby hobby = entradaEnum(sc, "Selecione o hobby: ", Hobby.values());
-    EstadoCivil estadoCivil = entradaEnum(sc, "Selecione o estado civil: ", EstadoCivil.values());
-    Escolaridade escolaridade =
-        entradaEnum(sc, "Selecione a escolaridade: ", Escolaridade.values());
+    System.out.println("Selecione o hobby: ");
+    for (int i = 0; i < Hobby.values().length; i++) {
+      System.out.println((i + 1) + ". " + Hobby.values()[i].name());
+    }
+    int opcaoHobby = sc.nextInt();
+    sc.nextLine();
+    Hobby hobby = Hobby.values()[opcaoHobby - 1];
+    System.out.println("Selecione o estado civil: ");
+    for (int i = 0; i < EstadoCivil.values().length; i++) {
+      System.out.println((i + 1) + ". " + EstadoCivil.values()[i].name());
+    }
+    int opcaoEstadoCivil = sc.nextInt();
+    sc.nextLine();
+    EstadoCivil estadoCivil = EstadoCivil.values()[opcaoEstadoCivil - 1];
+
+    System.out.println("Selecione a escolaridade: ");
+    for (int i = 0; i < Escolaridade.values().length; i++) {
+      System.out.println((i + 1) + ". " + Escolaridade.values()[i].name());
+    }
+    int opcaoEscolaridade = sc.nextInt();
+    sc.nextLine();
+    Escolaridade escolaridade = Escolaridade.values()[opcaoEscolaridade - 1];
+
     boolean feliz = entradaBoolean(sc, "Digite se é feliz (s/n): ");
-    Moradia moradia = entradaEnum(sc, naturalidade, Moradia.values());
+
+    System.out.println("Selecione a moradia: ");
+    for (int i = 0; i < Moradia.values().length; i++) {
+      System.out.println((i + 1) + ". " + Moradia.values()[i].name());
+    }
+    int opcaoMoradia = sc.nextInt();
+    sc.nextLine();
+    Moradia moradia = Moradia.values()[opcaoMoradia - 1];
 
     return new Pessoa(
         nome,
@@ -124,16 +158,6 @@ public class App {
     System.out.print(mensagem);
     String dataNascimentoString = sc.nextLine();
     return LocalDate.parse(dataNascimentoString, formatadorData);
-  }
-
-  public static <T extends Enum<T>> T entradaEnum(Scanner sc, String mensagem, T[] valores) {
-    System.out.println(mensagem);
-    for (int i = 0; i < valores.length; i++) {
-      System.out.println((i + 1) + ". " + valores[i].name());
-    }
-    int opcao = sc.nextInt();
-    sc.nextLine();
-    return valores[opcao - 1];
   }
 
   public static Float entradaFloat(Scanner sc, String mensagem) {

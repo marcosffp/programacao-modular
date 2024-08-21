@@ -11,15 +11,18 @@ public class Pessoa {
   }
 
   public void setNome(String nome) {
-    if (nome != null
-        && nome.chars()
-            .allMatch(n -> (n >= 'a' && n <= 'z') || (n >= 'A' && n <= 'Z') || (n == ' '))
-        && !nome.isEmpty()) {
-      this.nome = nome;
-    } else {
-      throw new IllegalArgumentException(
-          "Nome inválido. O nome deve conter apenas letras e espaço");
+    if (nome == null || nome.isEmpty()) {
+      throw new IllegalArgumentException("Nome não pode ser nulo ou vazio");
     }
+
+    char[] nomeChars = nome.toLowerCase().toCharArray();
+    for (char nomeChar : nomeChars) {
+      if (!(nomeChar >= 'a' && nomeChar <= 'z') && nomeChar != ' ') {
+        throw new IllegalArgumentException("Nome deve ser alfabético com apenas letras e espaço");
+      }
+    }
+
+    this.nome = nome;
   }
 
   public String getNome() {

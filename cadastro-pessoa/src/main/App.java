@@ -6,7 +6,9 @@ import java.util.Scanner;
 
 public class App {
 
-  public static Pessoa[] pessoas;
+  public static int TAMANHO_MAX_VETOR = 20;
+  public static int totalCadastrado = 0;
+  public static Pessoa[] pessoas = new Pessoa[TAMANHO_MAX_VETOR];
 
   public static void main(String[] args) {
     Locale.setDefault(Locale.US);
@@ -18,7 +20,7 @@ public class App {
 
     do {
       System.out.println("Escolha: ");
-      System.out.println("1. Cadatrar a pessoa");
+      System.out.println("1. Cadastrar pessoa");
       System.out.println("2. Listar pessoas cadastradas");
       System.out.println("3. Sair do sistema");
       opcaoMenu = sc.nextInt();
@@ -33,31 +35,33 @@ public class App {
           int numeroCadastro = sc.nextInt();
           sc.nextLine();
 
-          pessoas = new Pessoa[numeroCadastro];
-          for (int i = 0; i < numeroCadastro; i++) {
-            System.out.println("Cadastro #" + (i + 1) + ":");
-            System.out.print("Digite o nome: ");
-            String nome = sc.nextLine();
+          if (totalCadastrado + numeroCadastro <= TAMANHO_MAX_VETOR) {
+            for (int i = 0; i < numeroCadastro; i++) {
+              System.out.println("Cadastro #" + (totalCadastrado + 1) + ":");
+              System.out.print("Digite o nome: ");
+              String nome = sc.nextLine();
 
-            Pessoa pessoa = new Pessoa(nome);
+              Pessoa pessoa = new Pessoa(nome);
+              pessoas[totalCadastrado] = pessoa;
+              totalCadastrado++;
 
-            pessoas[i] = pessoa;
-
-            System.out.println("Cadastro da pessoa #" + (i + 1) + " com sucesso!");
-            System.out.println();
+              System.out.println("Cadastro da pessoa #" + totalCadastrado + " com sucesso!");
+              System.out.println();
+            }
+          } else {
+            System.out.println("Erro: Não há espaço suficiente para cadastrar todas as pessoas.");
           }
           break;
         case 2:
-          if ((pessoas != null) && (pessoas.length > 0)) {
-            for (Pessoa pessoa : pessoas) {
-              System.out.println(pessoa.getNome());
-              System.out.println();
+          if (totalCadastrado > 0) {
+            for (int i = 0; i < totalCadastrado; i++) {
+              System.out.println(pessoas[i].getNome());
               System.out.println("------------------------------------------");
             }
           } else {
             System.out.println("Nenhuma pessoa cadastrada");
           }
-
+          break;
         default:
           break;
       }

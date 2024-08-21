@@ -1,72 +1,75 @@
 package test;
 
-import org.junit.jupiter.api.DisplayName;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+
+import business.Pessoa;
+import java.time.LocalDate;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 public class PessoaTest {
-  @Test
-  @DisplayName()
-  void testSetAltura() {
+  public static Pessoa pessoa;
 
+  @BeforeEach
+  public void setUp() throws Exception {
+    pessoa = new Pessoa();
   }
 
   @Test
-  void testSetDataNascimento() {
-
+  public void testSetAltura() {
+    pessoa.setAltura(-1);
+    assertEquals(0.0, pessoa.getAltura(), 0.1f);
+    pessoa.setAltura(2.7f);
+    assertEquals(0.0, pessoa.getAltura(), 0.1f);
+    pessoa.setAltura(1.60f);
+    assertEquals(1.60f, pessoa.getAltura(), 0.1f);
   }
 
   @Test
-  void testSetEscolaridade() {
-
+  public void testSetDataNascimento() {
+    pessoa.setDataNascimento(LocalDate.now());
+    assertNull(pessoa.getDataNascimento());
+    pessoa.setDataNascimento(LocalDate.now().plusYears(5));
+    assertNull(pessoa.getDataNascimento());
+    pessoa.setDataNascimento(LocalDate.now().minusYears(5));
+    assertEquals(LocalDate.now().minusYears(5), pessoa.getDataNascimento());
   }
 
   @Test
-  void testSetEstadoCivil() {
-
+  public void testSetNome() {
+    pessoa.setNome("Mar1!@");
+    assertNull(pessoa.getNome());
+    pessoa.setNome("Marcos Alberto");
+    assertEquals("Marcos Alberto", pessoa.getNome());
   }
 
   @Test
-  void testSetFeliz() {
+  public void testSetPeso() {
+    pessoa.setPeso(-1);
 
+    assertEquals(0.0, pessoa.getPeso(), 0.01);
+
+    pessoa.setPeso(605);
+    assertEquals(0.0, pessoa.getPeso(), 0.01);
+
+    pessoa.setPeso(60);
+    assertEquals(60.0, pessoa.getPeso(), 0.01);
   }
 
   @Test
-  void testSetGenero() {
-
+  public void testSetRenda() {
+    pessoa.setRenda(-1);
+    assertEquals(0.0, pessoa.getRenda(), 0.1f);
+    pessoa.setRenda(2652.42f);
+    assertEquals(2652.42f, pessoa.getRenda(), 0.1f);
   }
 
   @Test
-  void testSetHobby() {
-
-  }
-
-  @Test
-  void testSetMoradia() {
-
-  }
-
-  @Test
-  void testSetNaturalidade() {
-
-  }
-
-  @Test
-  void testSetNome() {
-
-  }
-
-  @Test
-  void testSetPeso() {
-
-  }
-
-  @Test
-  void testSetRenda() {
-
-  }
-
-  @Test
-  void testToString() {
-
+  public void testSetNaturalidade() {
+    pessoa.setNaturalidade("Mineir1!@");
+    assertNull(pessoa.getNaturalidade());
+    pessoa.setNaturalidade("Mineiro");
+    assertEquals("Mineiro", pessoa.getNaturalidade());
   }
 }

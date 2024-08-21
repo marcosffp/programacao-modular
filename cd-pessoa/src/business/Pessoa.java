@@ -69,6 +69,7 @@ public class Pessoa {
 
     this.nome = nome;
   }
+
   public static DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   public LocalDate getDataNascimento() {
@@ -95,7 +96,7 @@ public class Pessoa {
   }
 
   public void setAltura(float altura) {
-    if ((altura > 0) && (altura < 2.60)) {
+    if ((altura > 0) && (altura < 2.60f)) {
       this.altura = altura;
     }
     return;
@@ -128,6 +129,20 @@ public class Pessoa {
   }
 
   public void setNaturalidade(String naturalidade) {
+    if (naturalidade == null || naturalidade.isEmpty()) {
+      System.out.println("Naturalidade nulo ou vazio");
+      return;
+    }
+
+    char[] naturalidadeChar = naturalidade.toCharArray();
+    for (int i = 0; i < naturalidadeChar.length; i++) {
+      if (!((naturalidadeChar[i] >= 'a' && naturalidadeChar[i] <= 'z')
+          || (naturalidadeChar[i] >= 'A' && naturalidadeChar[i] <= 'Z')
+          || naturalidadeChar[i] == ' ')) {
+        System.out.println("Naturalidade com símbolo ou número");
+        return;
+      }
+    }
     this.naturalidade = naturalidade;
   }
 

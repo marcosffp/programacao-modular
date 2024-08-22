@@ -59,9 +59,7 @@ public class Pessoa {
 
     char[] nomeChar = nome.toCharArray();
     for (int i = 0; i < nomeChar.length; i++) {
-      if (!((nomeChar[i] >= 'a' && nomeChar[i] <= 'z')
-          || (nomeChar[i] >= 'A' && nomeChar[i] <= 'Z')
-          || nomeChar[i] == ' ')) {
+      if (!(Character.isLetter(nomeChar[i]) || nomeChar[i] == ' ')) {
         System.out.println("Nome com símbolo ou número");
         return;
       }
@@ -133,10 +131,8 @@ public class Pessoa {
 
     char[] naturalidadeChar = naturalidade.toCharArray();
     for (int i = 0; i < naturalidadeChar.length; i++) {
-      if (!((naturalidadeChar[i] >= 'a' && naturalidadeChar[i] <= 'z')
-          || (naturalidadeChar[i] >= 'A' && naturalidadeChar[i] <= 'Z')
-          || naturalidadeChar[i] == ' ')) {
-        System.out.println("Naturalidade com símbolo ou número");
+      if (!(Character.isLetter(naturalidadeChar[i]) || naturalidadeChar[i] == ' ')) {
+        System.out.println("Nome com símbolo ou número");
         return;
       }
     }

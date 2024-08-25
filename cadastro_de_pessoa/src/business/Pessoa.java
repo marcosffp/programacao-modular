@@ -51,21 +51,25 @@ public class Pessoa {
     return nome;
   }
 
-  public void setNome(String nome) {
+  public boolean isStringValido(String nome) {
     if (nome == null || nome.isEmpty()) {
       System.out.println("Nome nulo ou vazio");
-      return;
+      return false;
     }
-
     char[] nomeChar = nome.toCharArray();
     for (int i = 0; i < nomeChar.length; i++) {
       if (!(Character.isLetter(nomeChar[i]) || nomeChar[i] == ' ')) {
         System.out.println("Nome com símbolo ou número");
-        return;
+        return false;
       }
     }
+    return true;
+  }
 
-    this.nome = nome;
+  public void setNome(String nome) {
+    if (isStringValido(nome)) {
+      this.nome = nome;
+    }
   }
 
   public static DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
@@ -74,11 +78,14 @@ public class Pessoa {
     return dataNascimento;
   }
 
+  public boolean isDataNascimentoValido(LocalDate dataNascimento) {
+    return dataNascimento.isBefore(LocalDate.now());
+  }
+
   public void setDataNascimento(LocalDate dataNascimento) {
-    if (dataNascimento.isBefore(LocalDate.now())) {
+    if (isDataNascimentoValido(dataNascimento)) {
       this.dataNascimento = dataNascimento;
     }
-    return;
   }
 
   public Genero getGenero() {
@@ -93,8 +100,12 @@ public class Pessoa {
     return altura;
   }
 
+  public boolean isAlturaValida(float altura) {
+    return altura > 0 && altura < 2.60f;
+  }
+
   public void setAltura(float altura) {
-    if ((altura > 0) && (altura < 2.60f)) {
+    if (isAlturaValida(altura)) {
       this.altura = altura;
     }
   }
@@ -103,8 +114,12 @@ public class Pessoa {
     return peso;
   }
 
+  public boolean isPesoValido(int peso) {
+    return peso > 0 && peso < 600;
+  }
+
   public void setPeso(int peso) {
-    if ((peso > 0) && (peso < 600)) {
+    if (isPesoValido(peso)) {
       this.peso = peso;
     }
   }
@@ -113,8 +128,12 @@ public class Pessoa {
     return renda;
   }
 
+  public boolean isRendaValida(float renda) {
+    return renda >= 0;
+  }
+
   public void setRenda(float renda) {
-    if (renda >= 0) {
+    if (isRendaValida(renda)) {
       this.renda = renda;
     }
   }
@@ -124,19 +143,9 @@ public class Pessoa {
   }
 
   public void setNaturalidade(String naturalidade) {
-    if (naturalidade == null || naturalidade.isEmpty()) {
-      System.out.println("Naturalidade nulo ou vazio");
-      return;
+    if (isStringValido(naturalidade)) {
+      this.naturalidade = naturalidade;
     }
-
-    char[] naturalidadeChar = naturalidade.toCharArray();
-    for (int i = 0; i < naturalidadeChar.length; i++) {
-      if (!(Character.isLetter(naturalidadeChar[i]) || naturalidadeChar[i] == ' ')) {
-        System.out.println("Nome com símbolo ou número");
-        return;
-      }
-    }
-    this.naturalidade = naturalidade;
   }
 
   public Hobby getHobby() {
@@ -181,34 +190,45 @@ public class Pessoa {
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("=============================================\n");
-    sb.append("Nome: ").append(nome).append("\n");
-    sb.append("Data de nascimento: ").append(formatadorData.format(dataNascimento)).append("\n");
-    sb.append("Gênero: ").append(genero).append("\n");
-    sb.append("Altura: ")
-        .append(altura)
-        .append(" m")
-        .append("  |  Peso: ")
-        .append(peso)
-        .append(" kg\n");
-    sb.append("Renda: R$ ")
-        .append(String.format("%.2f", renda))
-        .append("  |  Naturalidade: ")
-        .append(naturalidade)
-        .append("\n");
-    sb.append("Hobby: ").append(hobby).append("\n");
-    sb.append("Estado civil: ")
-        .append(estadoCivil)
-        .append("  |  Escolaridade: ")
-        .append(escolaridade)
-        .append("\n");
-    sb.append("Feliz: ")
-        .append(feliz ? "Sim" : "Não")
-        .append("  |  Moradia: ")
-        .append(moradia)
-        .append("\n");
-    sb.append("=============================================\n");
-    return sb.toString();
+
+    return "=============================================\n" + "Nome: " + nome != null
+        ? nome
+        : "Não informado"
+                    + "\n"
+                    + "Data de nascimento: "
+                    + (dataNascimento != null
+                        ? formatadorData.format(dataNascimento)
+                        : "Não informada")
+                    + "\n"
+                    + "Gênero: "
+                    + genero
+                    + "\n"
+                    + "Altura: "
+                    + altura
+                    + " m  |  Peso: "
+                    + peso
+                    + " kg\n"
+                    + "Renda: R$ "
+                    + String.format("%.2f", renda)
+                    + "  |  Naturalidade: "
+                    + naturalidade
+                != null
+            ? naturalidade
+            : "Não informada"
+                + "\n"
+                + "Hobby: "
+                + hobby
+                + "\n"
+                + "Estado civil: "
+                + estadoCivil
+                + "  |  Escolaridade: "
+                + escolaridade
+                + "\n"
+                + "Feliz: "
+                + (feliz ? "Sim" : "Não")
+                + "  |  Moradia: "
+                + moradia
+                + "\n"
+                + "=============================================\n";
   }
 }

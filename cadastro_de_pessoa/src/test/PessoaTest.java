@@ -5,6 +5,7 @@ import static org.junit.Assert.assertEquals;
 import business.Pessoa;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 public class PessoaTest {
@@ -16,6 +17,7 @@ public class PessoaTest {
   }
 
   @Test
+  @DisplayName("Testando o método setAltura")
   public void testSetAltura() {
     pessoa.setAltura(-1);
     assertEquals(0.0, pessoa.getAltura(), 0.1f);
@@ -26,6 +28,7 @@ public class PessoaTest {
   }
 
   @Test
+  @DisplayName("Testando o método setDataNascimento")
   public void testSetDataNascimento() {
     pessoa.setDataNascimento(LocalDate.now());
     assertEquals(null,pessoa.getDataNascimento());
@@ -36,6 +39,7 @@ public class PessoaTest {
   }
 
   @Test
+  @DisplayName("Testando o método setNome")
   public void testSetNome() {
     pessoa.setNome("Mar1!@");
     assertEquals(null,pessoa.getNome());
@@ -44,6 +48,7 @@ public class PessoaTest {
   }
 
   @Test
+  @DisplayName("Testando o método setPeso")
   public void testSetPeso() {
     pessoa.setPeso(-1);
 
@@ -57,6 +62,7 @@ public class PessoaTest {
   }
 
   @Test
+  @DisplayName("Testando o método setRenda")
   public void testSetRenda() {
     pessoa.setRenda(-1);
     assertEquals(0.0, pessoa.getRenda(), 0.1f);
@@ -65,6 +71,7 @@ public class PessoaTest {
   }
 
   @Test
+  @DisplayName("Testando o método setNaturalidade")
   public void testSetNaturalidade() {
     pessoa.setNaturalidade("Mineir1!@");
     assertEquals(null, pessoa.getNaturalidade());

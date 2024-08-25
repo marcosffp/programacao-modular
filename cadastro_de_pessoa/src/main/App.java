@@ -16,7 +16,6 @@ public class App {
   private static int TAMANHO_MAX_VETOR = 100;
   private static int totalCadastrado = 0;
   private static Pessoa[] pessoas = new Pessoa[TAMANHO_MAX_VETOR];
-  
 
   public static void main(String[] args) throws Exception {
     Locale.setDefault(Locale.US);
@@ -74,10 +73,12 @@ public class App {
       String dataNascimentoString = sc.nextLine();
       LocalDate dataNascimento = LocalDate.parse(dataNascimentoString, formatadorData);
 
-      System.out.println("Selecione o gênero: ");
+      System.out.println();
+
       for (int j = 0; j < Genero.values().length; j++) {
         System.out.println((j + 1) + ". " + Genero.values()[j].name());
       }
+      System.out.print("Selecione o gênero: ");
       int opcaoGenero = sc.nextInt();
       sc.nextLine();
       Genero genero = Genero.values()[opcaoGenero - 1];
@@ -96,28 +97,31 @@ public class App {
 
       System.out.print("Digite o naturalidade: ");
       String naturalidade = sc.nextLine();
-      System.out.println();
 
-      System.out.println("Selecione o hobby: ");
+      System.out.println();
       for (int j = 0; j < Hobby.values().length; j++) {
         System.out.println((j + 1) + ". " + Hobby.values()[j].name());
       }
+
+      System.out.print("Selecione o hobby: ");
       int opcaoHobby = sc.nextInt();
       sc.nextLine();
       Hobby hobby = Hobby.values()[opcaoHobby - 1];
 
-      System.out.println("Selecione o estado civil: ");
+      System.out.println();
       for (int j = 0; j < EstadoCivil.values().length; j++) {
         System.out.println((j + 1) + ". " + EstadoCivil.values()[j].name());
       }
+      System.out.print("Selecione o estado civil: ");
       int opcaoEstadoCivil = sc.nextInt();
       sc.nextLine();
       EstadoCivil estadoCivil = EstadoCivil.values()[opcaoEstadoCivil - 1];
 
-      System.out.println("Selecione a escolaridade: ");
+      System.out.println();
       for (int j = 0; j < Escolaridade.values().length; j++) {
         System.out.println((j + 1) + ". " + Escolaridade.values()[j].name());
       }
+      System.out.print("Selecione a escolaridade: ");
       int opcaoEscolaridade = sc.nextInt();
       sc.nextLine();
       Escolaridade escolaridade = Escolaridade.values()[opcaoEscolaridade - 1];
@@ -127,27 +131,29 @@ public class App {
       boolean feliz = respostaFeliz == 's' || respostaFeliz == 'S';
       sc.nextLine();
 
-      System.out.println("Selecione a moradia: ");
+      System.out.println();
       for (int j = 0; j < Moradia.values().length; j++) {
         System.out.println((j + 1) + ". " + Moradia.values()[j].name());
       }
+      System.out.print("Selecione a moradia: ");
       int opcaoMoradia = sc.nextInt();
       sc.nextLine();
       Moradia moradia = Moradia.values()[opcaoMoradia - 1];
 
-      Pessoa pessoa = new Pessoa(
-          nome,
-          dataNascimento,
-          genero,
-          altura,
-          peso,
-          renda,
-          naturalidade,
-          hobby,
-          estadoCivil,
-          escolaridade,
-          feliz,
-          moradia);
+      Pessoa pessoa =
+          new Pessoa(
+              nome,
+              dataNascimento,
+              genero,
+              altura,
+              peso,
+              renda,
+              naturalidade,
+              hobby,
+              estadoCivil,
+              escolaridade,
+              feliz,
+              moradia);
 
       pessoas[totalCadastrado] = pessoa;
       totalCadastrado++;
@@ -157,12 +163,13 @@ public class App {
     }
   }
 
-
   public static void listarPessoas() {
     if (totalCadastrado > 0) {
       for (int i = 0; i < totalCadastrado; i++) {
         System.out.println(pessoas[i]);
       }
+    } else {
+      System.out.println("Nenhuma pessoa cadastrada.");
     }
   }
 }

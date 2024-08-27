@@ -191,44 +191,49 @@ public class Pessoa {
   @Override
   public String toString() {
 
-    return "=============================================\n" + "Nome: " + nome != null
-        ? nome
-        : "Não informado"
-                    + "\n"
-                    + "Data de nascimento: "
-                    + (dataNascimento != null
-                        ? formatadorData.format(dataNascimento)
-                        : "Não informada")
-                    + "\n"
-                    + "Gênero: "
-                    + genero
-                    + "\n"
-                    + "Altura: "
-                    + altura
-                    + " m  |  Peso: "
-                    + peso
-                    + " kg\n"
-                    + "Renda: R$ "
-                    + String.format("%.2f", renda)
-                    + "  |  Naturalidade: "
-                    + naturalidade
-                != null
-            ? naturalidade
-            : "Não informada"
-                + "\n"
-                + "Hobby: "
-                + hobby
-                + "\n"
-                + "Estado civil: "
-                + estadoCivil
-                + "  |  Escolaridade: "
-                + escolaridade
-                + "\n"
-                + "Feliz: "
-                + (feliz ? "Sim" : "Não")
-                + "  |  Moradia: "
-                + moradia
-                + "\n"
-                + "=============================================\n";
+    return "**************************************************************"
+        + "\n"
+        + "Atura: "
+        + String.format("%.2f", altura)
+        + "m"
+        + "  |  "
+        + "Data de nascimento: "
+        + (formatadorData.format(dataNascimento) != null
+            ? formatadorData.format(dataNascimento)
+            : "Não informada")
+        + "\n"
+        + "Escolaridade: "
+        + escolaridade
+        + "  |  "
+        + "Estado civil: "
+        + estadoCivil
+        + "\n"
+        + "Feliz: "
+        + (feliz ? "Sim" : "Não")
+        + "  |  "
+        + "Gênero: "
+        + genero
+        + "  |  "
+        + "Hobby: "
+        + hobby
+        + "\n"
+        + "Moradia: "
+        + moradia
+        + "  |  "
+        + "Naturalidade: "
+        + (naturalidade != null ? naturalidade : "Não informada")
+        + "\n"
+        + "Nome: "
+        + (nome != null ? nome : "Não informado")
+        + "  |  "
+        + "Peso: "
+        + peso
+        + "kg"
+        + "  |  "
+        + "Renda: R$ "
+        + String.format("%.2f", renda)
+        + "\n"
+        + "**************************************************************"
+        + "\n";
   }
 }

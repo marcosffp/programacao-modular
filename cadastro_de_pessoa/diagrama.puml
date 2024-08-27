@@ -1,0 +1,115 @@
+@startuml
+
+package business {
+  enum Escolaridade {
+    NENHUMA
+    FUNDAMENTAL
+    MEDIO
+    SUPERIOR
+    POS_GRADUACAO
+  }
+
+  enum EstadoCivil {
+    SOLTEIRO
+    CASADO
+    VIUVO
+    SEPARADO
+    DIVORCIADO
+  }
+
+  enum Genero {
+    FEMININO
+    MASCULINO
+    NAO_BINARIO
+    NAO_RESPONDER
+  }
+
+  enum Hobby {
+    ARTE
+    ESPORTE
+    CINEMA
+    LIVRO
+    MÚSICA
+    CULINÁRIA
+    GAME
+    NENHUM
+  }
+
+  enum Moradia {
+    COM_FAMILIA
+    ALUGUEL
+    CASA_PROPRIA
+  }
+
+  class Pessoa {
+    - nome: String
+    - dataNascimento: LocalDate
+    - genero: Genero
+    - altura: float
+    - peso: int
+    - renda: float
+    - naturalidade: String
+    - hobby: Hobby
+    - estadoCivil: EstadoCivil
+    - escolaridade: Escolaridade
+    - feliz: boolean
+    - moradia: Moradia
+
+    + Pessoa()
+    + Pessoa(nome: String, dataNascimento: LocalDate, genero: Genero, altura: float, peso: int, renda: float, naturalidade: String, hobby: Hobby, estadoCivil: EstadoCivil, escolaridade: Escolaridade, feliz: boolean, moradia: Moradia)
+    + getNome(): String
+    + setNome(nome: String)
+    + getDataNascimento(): LocalDate
+    + setDataNascimento(dataNascimento: LocalDate)
+    + getGenero(): Genero
+    + setGenero(genero: Genero)
+    + getAltura(): float
+    + setAltura(altura: float)
+    + getPeso(): int
+    + setPeso(peso: int)
+    + getRenda(): float
+    + setRenda(renda: float)
+    + getNaturalidade(): String
+    + setNaturalidade(naturalidade: String)
+    + getHobby(): Hobby
+    + setHobby(hobby: Hobby)
+    + getEstadoCivil(): EstadoCivil
+    + setEstadoCivil(estadoCivil: EstadoCivil)
+    + getEscolaridade(): Escolaridade
+    + setEscolaridade(escolaridade: Escolaridade)
+    + isFeliz(): boolean
+    + setFeliz(feliz: boolean)
+    + getMoradia(): Moradia
+    + setMoradia(moradia: Moradia)
+    + toString(): String
+  }
+}
+
+package main {
+  class App {
+    - TAMANHO_MAX_VETOR: int
+    - totalCadastrado: int
+    - pessoas: Pessoa[]
+
+    + main(args: String[]): void
+    + menu(): void
+    + cadastrarPessoas(sc: Scanner, formatadorData: DateTimeFormatter): void
+    + listarPessoas(): void
+  }
+}
+
+package test {
+  class PessoaTest {
+    - pessoa: Pessoa
+
+    + setUp(): void
+    + testSetAltura(): void
+    + testSetDataNascimento(): void
+    + testSetNome(): void
+    + testSetPeso(): void
+    + testSetRenda(): void
+    + testSetNaturalidade(): void
+  }
+}
+
+@enduml

@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class App {
 
-  private static int TAMANHO_MAX_VETOR = 100;
+  private static final int TAMANHO_MAX_VETOR = 50;
   private static int totalCadastrado = 0;
   private static Pessoa[] pessoas = new Pessoa[TAMANHO_MAX_VETOR];
 

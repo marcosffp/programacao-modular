@@ -1,14 +1,12 @@
-package test.PessoaTest;
-
+package test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import java.time.LocalDate;
 
+import business.Pessoa;
+import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-
-import business.Pessoa;
 
 public class PessoaTest {
   public static Pessoa pessoa;
@@ -33,22 +31,25 @@ public class PessoaTest {
   @DisplayName("Testando o método setDataNascimento")
   public void testSetDataNascimento() {
     pessoa.setDataNascimento(LocalDate.now());
-    assertEquals(null,pessoa.getDataNascimento(),"Teste data de nascimento com data presente");
+    assertEquals(null, pessoa.getDataNascimento(), "Teste data de nascimento com data presente");
     pessoa.setDataNascimento(LocalDate.now().plusYears(5));
-    assertEquals(null, pessoa.getDataNascimento(),"Teste data de nascimento com data futuro");
+    assertEquals(null, pessoa.getDataNascimento(), "Teste data de nascimento com data futuro");
     pessoa.setDataNascimento(LocalDate.now().minusYears(5));
-    assertEquals(LocalDate.now().minusYears(5), pessoa.getDataNascimento(),"Teste data de nascimento com data válido");
+    assertEquals(
+        LocalDate.now().minusYears(5),
+        pessoa.getDataNascimento(),
+        "Teste data de nascimento com data válido");
   }
 
   @Test
   @DisplayName("Testando o método setNome")
   public void testSetNome() {
     pessoa.setNome("Mar1!@");
-    assertEquals(null,pessoa.getNome(),"Teste nome com caracteres especiais e números");
+    assertEquals(null, pessoa.getNome(), "Teste nome com caracteres especiais e números");
     pessoa.setNome("joão");
-    assertEquals("joão", pessoa.getNome(),"Teste nome com acentos");
-        pessoa.setNome("Marcos Alberto");
-    assertEquals("Marcos Alberto", pessoa.getNome(),"Teste nome com valor válido");
+    assertEquals("joão", pessoa.getNome(), "Teste nome com acentos");
+    pessoa.setNome("Marcos Alberto");
+    assertEquals("Marcos Alberto", pessoa.getNome(), "Teste nome com valor válido");
   }
 
   @Test
@@ -56,30 +57,31 @@ public class PessoaTest {
   public void testSetPeso() {
     pessoa.setPeso(-1);
 
-    assertEquals(0.0f, pessoa.getPeso(),"Teste peso com valor negativo");
+    assertEquals(0.0f, pessoa.getPeso(), "Teste peso com valor negativo");
 
     pessoa.setPeso(605);
-    assertEquals(0.0f, pessoa.getPeso(),"Teste peso com valor acima de 600");
+    assertEquals(0.0f, pessoa.getPeso(), "Teste peso com valor acima de 600");
 
     pessoa.setPeso(60);
-    assertEquals(60.0f, pessoa.getPeso(),"Teste peso com valor válido");
+    assertEquals(60.0f, pessoa.getPeso(), "Teste peso com valor válido");
   }
 
   @Test
   @DisplayName("Testando o método setRenda")
   public void testSetRenda() {
     pessoa.setRenda(-1);
-    assertEquals(0.0, pessoa.getRenda(),"Teste renda com valor negativo");
+    assertEquals(0.0, pessoa.getRenda(), "Teste renda com valor negativo");
     pessoa.setRenda(2652.42f);
-    assertEquals(2652.42f, pessoa.getRenda(),"Teste renda com valor válido");
+    assertEquals(2652.42f, pessoa.getRenda(), "Teste renda com valor válido");
   }
 
   @Test
   @DisplayName("Testando o método setNaturalidade")
   public void testSetNaturalidade() {
     pessoa.setNaturalidade("Mineir1!@");
-    assertEquals(null, pessoa.getNaturalidade(),"Teste naturalidade com caracteres especiais e números");
+    assertEquals(
+        null, pessoa.getNaturalidade(), "Teste naturalidade com caracteres especiais e números");
     pessoa.setNaturalidade("Mineiro");
-    assertEquals("Mineiro", pessoa.getNaturalidade(),"Teste naturalidade com valor válido");
+    assertEquals("Mineiro", pessoa.getNaturalidade(), "Teste naturalidade com valor válido");
   }
 }

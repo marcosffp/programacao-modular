@@ -9,136 +9,86 @@ import br.lpm.business.Pessoa;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 public class Main {
-     private static final int TAMANHO_MAX_VETOR = 50;
+  private static final int TAMANHO_MAX_VETOR = 50;
   private static int totalCadastrado = 0;
   private static Pessoa[] pessoas = new Pessoa[TAMANHO_MAX_VETOR];
+  private static DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   public static void main(String[] args) throws Exception {
     Locale.setDefault(Locale.US);
-    Scanner sc = new Scanner(System.in);
-    DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    System.out.println("-------------Cadastro de Pessoas-------------");
     int opcaoMenu;
 
     do {
-      menu();
-      opcaoMenu = sc.nextInt();
-      System.out.println();
-
+      opcaoMenu =
+          JOptionPane.showOptionDialog(
+              null,
+              "Escolha uma opção do menu:",
+              "Cadastro de Pessoas",
+              JOptionPane.DEFAULT_OPTION,
+              JOptionPane.QUESTION_MESSAGE,
+              null,
+              menu(),
+              menu()[0]);
       switch (opcaoMenu) {
-        case 1:
-          cadastrarPessoas(sc, formatadorData);
+        case 0:
+          cadastrarPessoas();
           break;
-        case 2:
+        case 1:
           listarPessoas();
           break;
-        case 3:
-          System.out.println("Saindo do sistema");
+        case 2:
+          sairDoSistema();
           break;
 
         default:
           break;
       }
 
-    } while (opcaoMenu != 3);
-    sc.close();
+    } while (opcaoMenu != 2);
   }
 
-  public static void menu() {
-    System.out.println("Escolha uma dessas opções: ");
-    System.out.println("1. Cadastrar pessoa");
-    System.out.println("2. Listar pessoas cadastradas");
-    System.out.println("3. Sair do sistema");
+  private static void sairDoSistema() {
+    JOptionPane.showMessageDialog(
+        null, "Saindo do sistema", "Sair", JOptionPane.INFORMATION_MESSAGE);
+  }
+  
+  private static String[] menu() {
+    return new String[] {"Cadastrar pessoa", "Listar pessoas cadastradas", "Sair do sistema"};
   }
 
-  public static void cadastrarPessoas(Scanner sc, DateTimeFormatter formatadorData) {
-    System.out.println("-------------Cadastro de pessoa-------------");
-    System.out.println();
-    System.out.print("Quantas pessoas serão cadastradas? ");
-    int numeroCadastro = sc.nextInt();
-    sc.nextLine();
+  private static void cadastrarPessoas() {
+    int espacoRestante = TAMANHO_MAX_VETOR - totalCadastrado;
+    if (espacoRestante == 0) {
+      JOptionPane.showMessageDialog(
+          null, "Capacidade máxima atingida. Não é possível cadastrar mais pessoas.");
+      return;
+    }
+
+    JOptionPane.showMessageDialog(null, "Cadastro de pessoa");
+    int numeroCadastro =
+        Integer.parseInt(JOptionPane.showInputDialog(null, "Quantas pessoas serão cadastradas? "));
 
     for (int i = 0; i < numeroCadastro; i++) {
-      System.out.println("Cadastro n°" + (totalCadastrado + 1) + ":");
 
-      System.out.print("Digite o nome: ");
-      String nome = sc.nextLine();
+      JOptionPane.showMessageDialog(null, "Cadastro n°" + (totalCadastrado + 1));
 
-      System.out.print("Digite a data de nascimento (DD/MM/AAAA): ");
-      String dataNascimentoString = sc.nextLine();
-      LocalDate dataNascimento = LocalDate.parse(dataNascimentoString, formatadorData);
-
-      System.out.println();
-
-      for (int j = 0; j < Genero.values().length; j++) {
-        System.out.println((j + 1) + ". " + Genero.values()[j].name());
-      }
-      System.out.print("Selecione o gênero: ");
-      int opcaoGenero = sc.nextInt();
-      sc.nextLine();
-      Genero genero = Genero.values()[opcaoGenero - 1];
-
-      System.out.print("Digite a altura: ");
-      float altura = sc.nextFloat();
-      sc.nextLine();
-
-      System.out.print("Digite o peso: ");
-      int peso = sc.nextInt();
-      sc.nextLine();
-
-      System.out.print("Digite a renda: ");
-      float renda = sc.nextFloat();
-      sc.nextLine();
-
-      System.out.print("Digite o naturalidade: ");
-      String naturalidade = sc.nextLine();
-
-      System.out.println();
-      for (int j = 0; j < Hobby.values().length; j++) {
-        System.out.println((j + 1) + ". " + Hobby.values()[j].name());
-      }
-
-      System.out.print("Selecione o hobby: ");
-      int opcaoHobby = sc.nextInt();
-      sc.nextLine();
-      Hobby hobby = Hobby.values()[opcaoHobby - 1];
-
-      System.out.println();
-      for (int j = 0; j < EstadoCivil.values().length; j++) {
-        System.out.println((j + 1) + ". " + EstadoCivil.values()[j].name());
-      }
-      System.out.print("Selecione o estado civil: ");
-      int opcaoEstadoCivil = sc.nextInt();
-      sc.nextLine();
-      EstadoCivil estadoCivil = EstadoCivil.values()[opcaoEstadoCivil - 1];
-
-      System.out.println();
-      for (int j = 0; j < Escolaridade.values().length; j++) {
-        System.out.println((j + 1) + ". " + Escolaridade.values()[j].name());
-      }
-      System.out.print("Selecione a escolaridade: ");
-      int opcaoEscolaridade = sc.nextInt();
-      sc.nextLine();
-      Escolaridade escolaridade = Escolaridade.values()[opcaoEscolaridade - 1];
-
-      System.out.print("Digite se é feliz (s/n): ");
-      char respostaFeliz = sc.next().charAt(0);
-      boolean feliz = respostaFeliz == 's' || respostaFeliz == 'S';
-      sc.nextLine();
-
-      System.out.println();
-      for (int j = 0; j < Moradia.values().length; j++) {
-        System.out.println((j + 1) + ". " + Moradia.values()[j].name());
-      }
-      System.out.print("Selecione a moradia: ");
-      int opcaoMoradia = sc.nextInt();
-      sc.nextLine();
-      Moradia moradia = Moradia.values()[opcaoMoradia - 1];
-
+      String nome = solicitarNome();
+      LocalDate dataNascimento = solicitarDataNascimento();
+      Genero genero = solicitarGenero();
+      float altura = solicitarAltura();
+      int peso = solicitarPeso();
+      float renda = solicitarRenda();
+      String naturalidade = solicitarNaturalidade();
+      Hobby hobby = solicitarHobby();
+      EstadoCivil estadoCivil = solicitarEstadoCivil();
+      Escolaridade escolaridade = solicitarEscolaridade();
+      boolean feliz = solicitarFeliz();
+      Moradia moradia = solicitarMoradia();
+     
       Pessoa pessoa =
           new Pessoa(
               nome,
@@ -156,19 +106,177 @@ public class Main {
 
       pessoas[totalCadastrado] = pessoa;
       totalCadastrado++;
-
-      System.out.println("Cadastro da pessoa n°" + totalCadastrado + " com sucesso!");
-      System.out.println();
     }
   }
 
-  public static void listarPessoas() {
+  private static void listarPessoas() {
     if (totalCadastrado > 0) {
+      String listarPessoas = "";
       for (int i = 0; i < totalCadastrado; i++) {
-        System.out.println(pessoas[i]);
+        listarPessoas += pessoas[i].toString() + "\n";
       }
+      JOptionPane.showMessageDialog(
+          null, listarPessoas, "Lista de Pessoas", JOptionPane.INFORMATION_MESSAGE);
     } else {
-      System.out.println("Nenhuma pessoa cadastrada.");
+      JOptionPane.showMessageDialog(
+          null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
+    }
+  }
+
+  private static String solicitarNome() {
+    return JOptionPane.showInputDialog("Digite o nome:");
+  }
+
+  private static LocalDate solicitarDataNascimento() {
+    String dataNascimentoString =
+        JOptionPane.showInputDialog("Digite a data de nascimento (DD/MM/AAAA): ");
+    return LocalDate.parse(dataNascimentoString, formatadorData);
+  }
+
+  private static Genero solicitarGenero() {
+    String[] opcoesGenero = new String[Genero.values().length];
+    for (int j = 0; j < Genero.values().length; j++) {
+      opcoesGenero[j] = Genero.values()[j].name();
+    }
+    int escolhaGenero =
+        JOptionPane.showOptionDialog(
+            null,
+            "Escolha o gênero: ",
+            "Gênero",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            opcoesGenero,
+            opcoesGenero[0]);
+
+    if (escolhaGenero >= 0 && escolhaGenero < Genero.values().length) {
+      return Genero.values()[escolhaGenero];
+    } else {
+      JOptionPane.showMessageDialog(
+          null, "Escolha inválida! Por favor, selecione uma opção válida.");
+      return solicitarGenero();
+    }
+  }
+
+  private static Float solicitarAltura() {
+    return Float.parseFloat(JOptionPane.showInputDialog(null, "Digite a altura: "));
+  }
+
+  private static int solicitarPeso() {
+    return Integer.parseInt(JOptionPane.showInputDialog(null, "Digite o peso: "));
+  }
+
+  private static float solicitarRenda() {
+    return Float.parseFloat(JOptionPane.showInputDialog(null, "Digite a renda: "));
+  }
+
+  private static String solicitarNaturalidade() {
+    return JOptionPane.showInputDialog("Digite a naturalidade:");
+  }
+
+  private static Hobby solicitarHobby() {
+    String[] opcoesHobby = new String[Hobby.values().length];
+    for (int j = 0; j < Hobby.values().length; j++) {
+      opcoesHobby[j] = Hobby.values()[j].name();
+    }
+
+    int escolhaHobby = JOptionPane.showOptionDialog(
+        null,
+        "Escolha o hobby: ",
+        "Hobby",
+        JOptionPane.DEFAULT_OPTION,
+        JOptionPane.QUESTION_MESSAGE,
+        null,
+        opcoesHobby,
+        opcoesHobby[0]);
+    if (escolhaHobby >= 0 && escolhaHobby < Hobby.values().length) {
+      return Hobby.values()[escolhaHobby];
+    } else {
+      JOptionPane.showMessageDialog(
+          null, "Escolha inválida! Por favor, selecione uma opção válida.");
+      return solicitarHobby();
+    }
+  }
+  
+  private static EstadoCivil solicitarEstadoCivil() {
+    String[] opcoesEstadoCivil = new String[EstadoCivil.values().length];
+    for (int j = 0; j < EstadoCivil.values().length; j++) {
+      opcoesEstadoCivil[j] = EstadoCivil.values()[j].name();
+    }
+
+    int escolhaEstadoCivil = JOptionPane.showOptionDialog(
+        null,
+        "Escolha o estado civil:",
+        "Estado Civil",
+        JOptionPane.DEFAULT_OPTION,
+        JOptionPane.QUESTION_MESSAGE,
+        null,
+        opcoesEstadoCivil,
+        opcoesEstadoCivil[0]);
+
+    if (escolhaEstadoCivil >= 0 && escolhaEstadoCivil < EstadoCivil.values().length) {
+      return EstadoCivil.values()[escolhaEstadoCivil];
+    } else {
+      JOptionPane.showMessageDialog(
+          null, "Escolha inválida! Por favor, selecione uma opção válida.");
+      return solicitarEstadoCivil();
+    }
+  }
+  
+  private static Escolaridade solicitarEscolaridade() {
+    String[] opcoesEscolaridade = new String[Escolaridade.values().length];
+    for (int j = 0; j < Escolaridade.values().length; j++) {
+      opcoesEscolaridade[j] = Escolaridade.values()[j].name();
+    }
+
+    int escolhaEscolaridade = JOptionPane.showOptionDialog(
+        null,
+        "Escolha a escolaridade:",
+        "Escolaridade",
+        JOptionPane.DEFAULT_OPTION,
+        JOptionPane.QUESTION_MESSAGE,
+        null,
+        opcoesEscolaridade,
+        opcoesEscolaridade[0]);
+
+    if (escolhaEscolaridade >= 0 && escolhaEscolaridade < Escolaridade.values().length) {
+      return Escolaridade.values()[escolhaEscolaridade];
+    } else {
+      JOptionPane.showMessageDialog(
+          null, "Escolha inválida! Por favor, selecione uma opção válida.");
+      return solicitarEscolaridade(); 
+    }
+  }
+  
+  private static boolean solicitarFeliz() {
+    int opcaoFeliz = JOptionPane.showConfirmDialog(
+        null, "Você é feliz?", "Felicidade", JOptionPane.YES_NO_OPTION);
+    return opcaoFeliz == JOptionPane.YES_OPTION;
+  }
+  
+  private static Moradia solicitarMoradia() {
+    String[] opcoesMoradia = new String[Moradia.values().length];
+    for (int j = 0; j < Moradia.values().length; j++) {
+      opcoesMoradia[j] = Moradia.values()[j].name();
+    }
+
+    int escolhaMoradia =
+        JOptionPane.showOptionDialog(
+            null,
+            "Escolha a moradia:",
+            "Moradia",
+            JOptionPane.DEFAULT_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            opcoesMoradia,
+            opcoesMoradia[0]);
+
+    if (escolhaMoradia >= 0 && escolhaMoradia < Moradia.values().length) {
+      return Moradia.values()[escolhaMoradia];
+    } else {
+      JOptionPane.showMessageDialog(
+          null, "Escolha inválida! Por favor, selecione uma opção válida.");
+      return solicitarMoradia();
     }
   }
 }

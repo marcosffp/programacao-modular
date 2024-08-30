@@ -3,13 +3,16 @@ package br.lpm.business;
 import java.time.LocalDate;
 
 public class Dataset {
+
   private int quantidadePessoa;
   private static final int MAX_PESSOAS = 100;
   private Pessoa[] pessoas = new Pessoa[MAX_PESSOAS];
 
-
   public Dataset() {
-    this.quantidadePessoa = 0;
+  }
+
+  public static int getMaxPessoas() {
+    return MAX_PESSOAS;
   }
 
   public void addPessoa(Pessoa pessoa) {
@@ -66,7 +69,7 @@ public class Dataset {
     for (int i = 0; i < quantidadePessoa; i++) {
       if (pessoas[i].equals(velha)) {
         pessoas[i] = nova;
-        break;
+        return;
       }
     }
   }
@@ -99,24 +102,13 @@ public class Dataset {
     return quantidadePessoa;
   }
 
-  private float getAtributo(Pessoa pessoa, String atributo) {
-    switch (atributo) {
-      case "altura":
-        return pessoa.getAltura();
-      case "peso":
-        return pessoa.getPeso();
-      default:
-        return -1;
-    }
-  }
-
-  public float calcularMax(String atributo) {
+  public float maxAltura() {
     if (quantidadePessoa == 0) {
       return 0;
     }
-    float maior = getAtributo(pessoas[0], atributo);
+    float maior = pessoas[0].getAltura();
     for (int i = 0; i < quantidadePessoa; i++) {
-      float valorAtual = getAtributo(pessoas[i], atributo);
+      float valorAtual = pessoas[i].getAltura();
       if (valorAtual > maior) {
         maior = valorAtual;
       }
@@ -124,17 +116,52 @@ public class Dataset {
     return maior;
   }
 
-  public float maxAltura() {
-    return calcularMax("altura");
-  }
-
-  public float calcularMin(String atributo) {
+  public float minAltura() {
     if (quantidadePessoa == 0) {
       return 0;
     }
-    float menor = getAtributo(pessoas[0], atributo);
+    float menor = pessoas[0].getAltura();
     for (int i = 0; i < quantidadePessoa; i++) {
-      float valorAtual = getAtributo(pessoas[i], atributo);
+      float valorAtual = pessoas[i].getAltura();
+      if (valorAtual < menor) {
+        menor = valorAtual;
+      }
+    }
+    return menor;
+  }
+  public float avgAltura() {
+    if (quantidadePessoa == 0) {
+      return 0;
+    }
+    float soma = 0.0f;
+    int quantidade = quantidadePessoa;
+    for (int i = 0; i < quantidadePessoa; i++) {
+      soma += pessoas[i].getAltura();
+    }
+    return soma / quantidade;
+  }
+
+  public int  maxPeso() {
+    if (quantidadePessoa == 0) {
+      return 0;
+    }
+    int maior = pessoas[0].getPeso();
+    for (int i = 0; i < quantidadePessoa; i++) {
+      int valorAtual = pessoas[i].getPeso();
+      if (valorAtual > maior) {
+        maior = valorAtual;
+      }
+    }
+    return maior;
+  }
+
+  public int minPeso() {
+    if (quantidadePessoa == 0) {
+      return 0;
+    }
+    int menor = pessoas[0].getPeso();
+    for (int i = 0; i < quantidadePessoa; i++) {
+      int valorAtual = pessoas[i].getPeso();
       if (valorAtual < menor) {
         menor = valorAtual;
       }
@@ -142,36 +169,16 @@ public class Dataset {
     return menor;
   }
 
-  public float minAltura() {
-    return calcularMin("altura");
-  }
-
-  public float calcularMedia(String atributo) {
+  public float avgPeso() {
     if (quantidadePessoa == 0) {
       return 0;
     }
     float soma = 0.0f;
     int quantidade = quantidadePessoa;
     for (int i = 0; i < quantidadePessoa; i++) {
-      soma += getAtributo(pessoas[i], atributo);
+      soma += pessoas[i].getPeso();
     }
     return soma / quantidade;
-  }
-
-  public float avgAltura() {
-    return calcularMedia("altura");
-  }
-
-  public float maxPeso() {
-    return calcularMax("peso");
-  }
-
-  public float minPeso() {
-    return calcularMin("peso");
-  }
-
-  public float avgPeso() {
-    return calcularMedia("peso");
   }
 
   public int calcularIdade(Pessoa pessoa) {

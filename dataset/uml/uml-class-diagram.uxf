@@ -1,0 +1,114 @@
+<diagram program="umletino" version="15.1"><zoom_level>7</zoom_level><element><id>UMLClass</id><coordinates><x>103</x><y>14</y><w>343</w><h>294</h></coordinates><panel_attributes>&lt;&lt;Pessoa&gt;&gt;
+Package::br.lpm.business
+--
+- nome: String
+- dataNascimento: LocalDate 
+- genero: Genero
+- altura: float
+- peso: int
+- renda: float                             
+- naturalidade: String                   
+- hobby: Hobby                           
+- estadoCivil: EstadoCivil                
+- escolaridade: Escolaridade            
+- feliz: boolean                         
+- moradia: Moradia 
+- formatadorData: DateTimeFormatter &lt;&lt;static&gt;&gt;
+--
++ Pessoa ()
++ Pessoa (nome: String, dataNascimento: LocalDate, genero: Genero, altura: float,                    
+ peso: int, renda: float, naturalidade: String,  hobby: Hobby,  estadoCivil: EstadoCivil, 
+ escolaridade: Escolaridade,  feliz: boolean,  moradia: Moradia)
++ isStringValido (nome: String): boolean
++ isDataNascimentoValido (dataNascimento: LocalDate): boolean
++ isAlturaValida (altura: float): boolean
++ isPesoValido (peso: int): boolean
++ isRendaValida (renda: float): boolean
++ toString (): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>481</x><y>14</y><w>147</w><h>105</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+Escolaridade
+Package::br.lpm.business
+--
+ NENHUMA
+ FUNDAMENTAL
+ MEDIO
+ SUPERIOR
+ POS_GRADUACAO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>481</x><y>133</y><w>147</w><h>98</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+EstadoCivil
+Package::br.lpm.business
+--
+ SOLTEIRO
+ CASADO
+ VIUVO
+ SEPARADO
+ DIVORCIADO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>481</x><y>245</y><w>147</w><h>91</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+Genero
+Package::br.lpm.business
+--
+ FEMININO
+ MASCULINO
+ NAO_BINARIO
+ NAO_RESPONDER</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>103</x><y>322</y><w>147</w><h>133</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+Hobby
+Package::business
+--
+ ARTE
+ ESPORTE
+ CINEMA
+ LIVRO
+ MÚSICA
+ CULINÁRIA
+ GAME
+ NENHUM</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>299</x><y>322</y><w>147</w><h>133</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+Hobby
+Package::business
+--
+  ARTE
+  ESPORTE
+  CINEMA
+  LIVRO
+  MÚSICA
+  CULINÁRIA
+  GAME
+  NENHUM</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>481</x><y>357</y><w>147</w><h>77</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+Moradia
+Package::br.lpm.business
+--
+ COM_FAMILIA
+ ALUGUEL
+ CASA_PROPRIA</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>670</x><y>0</y><w>343</w><h>364</h></coordinates><panel_attributes>&lt;&lt;Dataset&gt;&gt;
+Package::br.lpm.business
+--
+- pessoas: Pessoa[]
+- MAX_PESSOAS: int &lt;&lt;static, final&gt;&gt;
+- quantidadePessoa: int
+--
++ Dataset()
++ getMaxPessoa() {static}
++ addPessoa(pessoa: Pessoa): void
+- executarRemocao(i :int): void
++ removePessoa(pessoa: Pessoa): void
++ removePessoaByName(nome: String): void
++ replacePessoa(velha: Pessoa, nova: Pessoa): void
++ getPessoaByName(nome: String): Pessoa
++ getAll(): Pessoa[]
++ removeAll(): void
++ size(): int
++ maxAltura(): float
++ minAltura(): float
++ avgAltura(): float
++ maxPeso(): int
++ minPeso(): int
++ avgPeso(): float
+- calcularIdade(pessoa: Pessoa): int
+- calcularPorcentagem(quantidade: int): float
++ percentAdult(): float
++ percentEstadoCivil(estado: EstadoCivil): float
++ modeEstadoCivil(): EstadoCivil
++ percentEscolaridade(escolaridade: Escolaridade): float
++ modeEscolaridade(): Escolaridade
++ percentMoradia(moradia: Moradia): float
++ modeMoradia(): Moradia
++ percentHobby(): float
++ percentFeliz(): float
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>

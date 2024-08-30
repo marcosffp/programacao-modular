@@ -31,7 +31,7 @@ public class Dataset {
   }
   
 
-  public void executarRemocao(int i) {
+  private void executarRemocao(int i) {
     for (int j = i; j < quantidadePessoa - 1; j++) {
       pessoas[j] = pessoas[j + 1];
     }
@@ -181,7 +181,7 @@ public class Dataset {
     return soma / quantidade;
   }
 
-  public int calcularIdade(Pessoa pessoa) {
+  private int calcularIdade(Pessoa pessoa) {
     LocalDate dataNascimento = pessoa.getDataNascimento();
     LocalDate dataAtual = LocalDate.now();
     int idade = dataAtual.getYear() - dataNascimento.getYear();

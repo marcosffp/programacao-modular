@@ -16,6 +16,7 @@ public class Pessoa {
   private Escolaridade escolaridade;
   private boolean feliz;
   private Moradia moradia;
+  private static DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   public Pessoa() {}
 
@@ -71,8 +72,6 @@ public class Pessoa {
       this.nome = nome;
     }
   }
-
-  public static DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   public LocalDate getDataNascimento() {
     return dataNascimento;

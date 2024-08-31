@@ -16,7 +16,6 @@ import javax.swing.JOptionPane;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
@@ -51,17 +50,29 @@ public class Main {
           listarPessoas();
           break;
         case 2:
-          histogramFormacaoAcadêmica();
+          histogramaFormacaoAcadêmica();
+          pieEstadoCivil();
           break;
         case 3:
-          pieEstadoCivil();
+          pesquisarPessoa();
+          break;
         case 4:
+          mostrarEstatisticas();
+          break;
+        case 5:
+          removerPessoa();
+          break;
+        case 6:
+          substituirPessoa();
+          break;
+        case 7:
           sairDoSistema();
+          break;
         default:
           break;
       }
 
-    } while (opcaoMenu != 4);
+    } while (opcaoMenu != 7);
   }
 
   private static void sairDoSistema() {
@@ -74,21 +85,33 @@ public class Main {
     return new String[] {
       "Cadastrar pessoa",
       "Listar pessoas cadastradas",
-      "Histograma Formação Acadêmica",
-      "Pie Chart dos Estados Civis",
+      "Gráficos",
+      "Pesquisar Pessoa",
+      "Mostrar EstatÍsticas",
+      "Remover Pessoa",
+      "Substituir Pessoa",
       "Sair do sistema"
     };
   }
 
   private static void cadastrarPessoas() {
-    int espacoRestante = Dataset.getMaxPessoas() - totalCadastrado;
-    if (espacoRestante == 0) {
+    if (totalCadastrado == Dataset.getMaxPessoas()) {
       JOptionPane.showMessageDialog(
           null, "Capacidade máxima atingida. Não é possível cadastrar mais pessoas.");
       return;
     }
+
     int numeroCadastro =
         Integer.parseInt(JOptionPane.showInputDialog(null, "Quantas pessoas serão cadastradas? "));
+
+    if (numeroCadastro <= 0) {
+      JOptionPane.showMessageDialog(
+          null,
+          "Número de pessoas deve ser maior que zero. Operação cancelada.",
+          "Erro",
+          JOptionPane.ERROR_MESSAGE);
+      return;
+    }
 
     for (int i = 0; i < numeroCadastro; i++) {
 
@@ -127,25 +150,25 @@ public class Main {
 
       JOptionPane.showMessageDialog(
           null,
-          "Cadastro da pessoa " + totalCadastrado + " com sucesso!",
-          "Informação",
+          "Cadastro da pessoa " + totalCadastrado + " " + nome + " com sucesso!",
+          "Cadastro finalizado",
           JOptionPane.INFORMATION_MESSAGE);
     }
   }
 
   private static void listarPessoas() {
-    if (totalCadastrado > 0) {
-      Pessoa[] pessoas = dataset.getAll();
-      String listarPessoas = "";
-      for (int i = 0; i < totalCadastrado; i++) {
-        listarPessoas += pessoas[i].toString() + "\n";
-      }
-      JOptionPane.showMessageDialog(
-          null, listarPessoas, "Lista de Pessoas", JOptionPane.INFORMATION_MESSAGE);
-    } else {
+    if (totalCadastrado == 0) {
       JOptionPane.showMessageDialog(
           null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
+      return;
     }
+    Pessoa[] pessoas = dataset.getAll();
+    String listarPessoas = "";
+    for (int i = 0; i < totalCadastrado; i++) {
+      listarPessoas += pessoas[i].toString() + "\n";
+    }
+    JOptionPane.showMessageDialog(
+        null, listarPessoas, "Lista de Pessoas", JOptionPane.INFORMATION_MESSAGE);
   }
 
   private static String solicitarNome() {
@@ -339,8 +362,8 @@ public class Main {
     }
   }
 
-  public static void histogramFormacaoAcadêmica() {
-    if (totalCadastrado <= 0) {
+  public static void histogramaFormacaoAcadêmica() {
+    if (totalCadastrado == 0) {
       JOptionPane.showMessageDialog(
           null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
       return;
@@ -394,14 +417,14 @@ public class Main {
         null, frame.getContentPane(), "Histograma", JOptionPane.PLAIN_MESSAGE);
   }
 
-  @SuppressWarnings({"rawtypes", "unchecked"})
   public static void pieEstadoCivil() {
-    if (totalCadastrado <= 0) {
+    if (totalCadastrado == 0) {
       JOptionPane.showMessageDialog(
           null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
       return;
     }
-    DefaultPieDataset pizza = new DefaultPieDataset();
+
+    DefaultPieDataset<String> pizza = new DefaultPieDataset<>();
     pizza.setValue("Solteiro", dataset.percentEstadoCivil(EstadoCivil.SOLTEIRO));
     pizza.setValue("Casado", dataset.percentEstadoCivil(EstadoCivil.CASADO));
     pizza.setValue("Viúvo", dataset.percentEstadoCivil(EstadoCivil.VIUVO));
@@ -410,14 +433,6 @@ public class Main {
 
     JFreeChart pieChart =
         ChartFactory.createPieChart("Distribuição dos Estados Civis", pizza, true, true, false);
-
-    PiePlot plot = (PiePlot) pieChart.getPlot();
-
-    plot.setSectionPaint("Solteiro", new Color(135, 206, 250));
-    plot.setSectionPaint("Casado", new Color(70, 130, 180));
-    plot.setSectionPaint("Viúvo", new Color(0, 191, 255));
-    plot.setSectionPaint("Separado", new Color(100, 149, 237));
-    plot.setSectionPaint("Divorciado", new Color(72, 61, 139));
 
     pieChart.setBackgroundPaint(Color.WHITE);
     ChartPanel chartPanel = new ChartPanel(pieChart);
@@ -430,6 +445,116 @@ public class Main {
     frame.setLocationRelativeTo(null);
 
     JOptionPane.showMessageDialog(
-        null, frame.getContentPane(), "Gráfico de Estados Civis", JOptionPane.PLAIN_MESSAGE);
+        null, frame.getContentPane(), "Pie Chart", JOptionPane.PLAIN_MESSAGE);
+  }
+
+  private static void pesquisarPessoa() {
+    if (totalCadastrado == 0) {
+      JOptionPane.showMessageDialog(
+          null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
+      return;
+    }
+
+    String nome =
+        JOptionPane.showInputDialog(
+            null,
+            "Digite o nome da pessoa para pesquisa:",
+            "Pesquisar Pessoa",
+            JOptionPane.QUESTION_MESSAGE);
+    Pessoa pessoa = dataset.getPessoaByName(nome);
+
+    if (pessoa != null) {
+      JOptionPane.showMessageDialog(
+          null, pessoa.toString(), "Pessoa Encontrada", JOptionPane.INFORMATION_MESSAGE);
+    } else {
+      JOptionPane.showMessageDialog(
+          null, "Pessoa não encontrada.", "Resultado da Pesquisa", JOptionPane.INFORMATION_MESSAGE);
+    }
+  }
+
+  private static void mostrarEstatisticas() {
+    if (totalCadastrado == 0) {
+      JOptionPane.showMessageDialog(
+          null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
+      return;
+    }
+
+    String estatisticas =
+        "**************************************************************\n"
+            + "Número de pessoas cadastradas: "
+            + totalCadastrado
+            + "\n";
+    estatisticas += dataset.toString();
+
+    JOptionPane.showMessageDialog(
+        null, estatisticas, "Estatísticas", JOptionPane.INFORMATION_MESSAGE);
+  }
+
+  private static void removerPessoa() {
+    if (totalCadastrado == 0) {
+      JOptionPane.showMessageDialog(
+          null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
+      return;
+    }
+
+    String nome = JOptionPane.showInputDialog(null, "Digite o nome da pessoa a ser removida:");
+    dataset.removePessoaByName(nome);
+    totalCadastrado--;
+    JOptionPane.showMessageDialog(
+        null, "Pessoa removida com sucesso!", "Remover Pessoa", JOptionPane.INFORMATION_MESSAGE);
+  }
+
+  private static void substituirPessoa() {
+    if (totalCadastrado == 0) {
+      JOptionPane.showMessageDialog(
+          null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
+      return;
+    }
+
+    String nomeAntigo =
+        JOptionPane.showInputDialog(null, "Digite o nome da pessoa a ser substituída:");
+    Pessoa pessoaAntiga = dataset.getPessoaByName(nomeAntigo);
+    if (pessoaAntiga == null) {
+      JOptionPane.showMessageDialog(
+          null, "Pessoa não encontrada.", "Substituir Pessoa", JOptionPane.INFORMATION_MESSAGE);
+      return;
+    }
+
+    JOptionPane.showMessageDialog(null, "Substituindo pessoa: " + pessoaAntiga.toString());
+
+    String nomeNovo = solicitarNome();
+    LocalDate dataNascimento = solicitarDataNascimento();
+    Genero genero = solicitarGenero();
+    float altura = solicitarAltura();
+    int peso = solicitarPeso();
+    float renda = solicitarRenda();
+    String naturalidade = solicitarNaturalidade();
+    Hobby hobby = solicitarHobby();
+    EstadoCivil estadoCivil = solicitarEstadoCivil();
+    Escolaridade escolaridade = solicitarEscolaridade();
+    boolean feliz = solicitarFeliz();
+    Moradia moradia = solicitarMoradia();
+
+    Pessoa novaPessoa =
+        new Pessoa(
+            nomeNovo,
+            dataNascimento,
+            genero,
+            altura,
+            peso,
+            renda,
+            naturalidade,
+            hobby,
+            estadoCivil,
+            escolaridade,
+            feliz,
+            moradia);
+
+    dataset.replacePessoa(pessoaAntiga, novaPessoa);
+    JOptionPane.showMessageDialog(
+        null,
+        "Pessoa substituída com sucesso!",
+        "Substituir Pessoa",
+        JOptionPane.INFORMATION_MESSAGE);
   }
 }

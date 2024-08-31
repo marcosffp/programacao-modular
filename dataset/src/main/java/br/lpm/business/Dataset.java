@@ -6,10 +6,9 @@ public class Dataset {
 
   private int quantidadePessoa;
   private static final int MAX_PESSOAS = 100;
-  private Pessoa[] pessoas = new Pessoa[MAX_PESSOAS];
+  private static Pessoa[] pessoas = new Pessoa[MAX_PESSOAS];
 
-  public Dataset() {
-  }
+  public Dataset() {}
 
   public static int getMaxPessoas() {
     return MAX_PESSOAS;
@@ -29,7 +28,6 @@ public class Dataset {
     }
     pessoas[quantidadePessoa++] = pessoa;
   }
-  
 
   private void executarRemocao(int i) {
     for (int j = i; j < quantidadePessoa - 1; j++) {
@@ -129,6 +127,7 @@ public class Dataset {
     }
     return menor;
   }
+
   public float avgAltura() {
     if (quantidadePessoa == 0) {
       return 0;
@@ -141,7 +140,7 @@ public class Dataset {
     return soma / quantidade;
   }
 
-  public int  maxPeso() {
+  public int maxPeso() {
     if (quantidadePessoa == 0) {
       return 0;
     }
@@ -375,5 +374,39 @@ public class Dataset {
       }
     }
     return calcularPorcentagem(felizquantidadePessoa);
+  }
+
+  @Override
+  public String toString() {
+    return ""
+        + "\n"
+        + "Altura Máxima: "
+        + String.format("%.2f", maxAltura())
+        + "\n"
+        + "Altura Mínima: "
+        + String.format("%.2f", minAltura())
+        + "\n"
+        + "Altura Média: "
+        + String.format("%.2f", avgAltura())
+        + "\n"
+        + "Peso Máximo: "
+        + maxPeso()
+        + "\n"
+        + "Peso Mínimo: "
+        + minPeso()
+        + "\n"
+        + "Peso Médio: "
+        + String.format("%.2f", avgPeso())
+        + "\n"
+        + "Percentual de Adultos: "
+        + String.format("%.2f", percentAdult())
+        + "%\n"
+        + "Percentual de Pessoas com Hobbies: "
+        + String.format("%.2f", percentHobby())
+        + "%\n"
+        + "Percentual de Pessoas Felizes: "
+        + String.format("%.2f", percentFeliz())
+        + "%\n"
+        + "**************************************************************\n";
   }
 }

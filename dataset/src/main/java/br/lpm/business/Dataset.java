@@ -53,7 +53,7 @@ public class Dataset {
       return;
     }
     for (int i = 0; i < quantidadePessoa; i++) {
-      if (pessoas[i].getNome().equals(nome)) {
+      if (pessoas[i].getNome().equalsIgnoreCase(nome)) {
         executarRemocao(i);
         return;
       }
@@ -74,7 +74,7 @@ public class Dataset {
 
   public Pessoa getPessoaByName(String nome) {
     for (int i = 0; i < quantidadePessoa; i++) {
-      if (pessoas[i].getNome().equals(nome)) {
+      if (pessoas[i].getNome().equalsIgnoreCase(nome)) {
         return pessoas[i];
       }
     }

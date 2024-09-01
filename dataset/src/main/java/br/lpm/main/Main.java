@@ -7,7 +7,6 @@ import br.lpm.business.Genero;
 import br.lpm.business.Hobby;
 import br.lpm.business.Moradia;
 import br.lpm.business.Pessoa;
-import java.awt.Color;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JFrame;
@@ -16,7 +15,6 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.category.BarRenderer;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
@@ -428,14 +426,9 @@ public class Main {
             "Número de Pessoas",
             datasetGrafico,
             PlotOrientation.VERTICAL,
-            false,
+            true,
             true,
             false);
-
-    BarRenderer renderizador = (BarRenderer) grafico.getCategoryPlot().getRenderer();
-    for (int i = 0; i < todasEscolaridades.length; i++) {
-      renderizador.setSeriesPaint(i, Color.BLUE);
-    }
 
     ChartPanel painelGrafico = new ChartPanel(grafico);
     painelGrafico.setPreferredSize(new java.awt.Dimension(400, 300));
@@ -457,28 +450,29 @@ public class Main {
       return;
     }
 
-    DefaultPieDataset<String> pizza = new DefaultPieDataset<>();
-    pizza.setValue("Solteiro", dataset.percentEstadoCivil(EstadoCivil.SOLTEIRO));
-    pizza.setValue("Casado", dataset.percentEstadoCivil(EstadoCivil.CASADO));
-    pizza.setValue("Viúvo", dataset.percentEstadoCivil(EstadoCivil.VIUVO));
-    pizza.setValue("Separado", dataset.percentEstadoCivil(EstadoCivil.SEPARADO));
-    pizza.setValue("Divorciado", dataset.percentEstadoCivil(EstadoCivil.DIVORCIADO));
+    DefaultPieDataset<String> datasetGrafico = new DefaultPieDataset<>();
+    datasetGrafico.setValue("Solteiro", dataset.percentEstadoCivil(EstadoCivil.SOLTEIRO));
+    datasetGrafico.setValue("Casado", dataset.percentEstadoCivil(EstadoCivil.CASADO));
+    datasetGrafico.setValue("Viúvo", dataset.percentEstadoCivil(EstadoCivil.VIUVO));
+    datasetGrafico.setValue("Separado", dataset.percentEstadoCivil(EstadoCivil.SEPARADO));
+    datasetGrafico.setValue("Divorciado", dataset.percentEstadoCivil(EstadoCivil.DIVORCIADO));
 
-    JFreeChart pieChart =
-        ChartFactory.createPieChart("Distribuição dos Estados Civis", pizza, true, true, false);
+    JFreeChart grafico =
+        ChartFactory.createPieChart(
+            "Distribuição dos Estados Civis", datasetGrafico, true, true, false);
 
-    pieChart.setBackgroundPaint(Color.WHITE);
-    ChartPanel chartPanel = new ChartPanel(pieChart);
-    chartPanel.setPreferredSize(new java.awt.Dimension(400, 300));
 
-    JFrame frame = new JFrame();
-    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    frame.add(chartPanel);
-    frame.pack();
-    frame.setLocationRelativeTo(null);
+    ChartPanel painelGrafico = new ChartPanel(grafico);
+    painelGrafico.setPreferredSize(new java.awt.Dimension(400, 300));
+
+    JFrame frameGrafico = new JFrame();
+    frameGrafico.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    frameGrafico.add(painelGrafico);
+    frameGrafico.pack();
+    frameGrafico.setLocationRelativeTo(null);
 
     JOptionPane.showMessageDialog(
-        null, frame.getContentPane(), "Pie Chart", JOptionPane.PLAIN_MESSAGE);
+        null, frameGrafico.getContentPane(), "Pie Chart", JOptionPane.PLAIN_MESSAGE);
   }
 
   private static void pesquisarPessoa() {

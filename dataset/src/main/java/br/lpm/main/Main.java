@@ -396,7 +396,7 @@ public class Main {
       JOptionPane.showMessageDialog(
           null,
           "Não há pessoas cadastradas no sistema. Por favor, cadastre algumas pessoas para"
-              + " visualizar a lista.",
+              + " visualizar o histograma.",
           "Nenhum Cadastro Encontrado",
           JOptionPane.INFORMATION_MESSAGE);
       return;
@@ -453,7 +453,11 @@ public class Main {
   public static void pieEstadoCivil() {
     if (totalCadastrado == 0) {
       JOptionPane.showMessageDialog(
-          null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
+          null,
+          "Não há pessoas cadastradas no sistema. Por favor, cadastre algumas pessoas para"
+              + " visualizar a pizza.",
+          "Nenhum Cadastro Encontrado",
+          JOptionPane.INFORMATION_MESSAGE);
       return;
     }
 
@@ -484,7 +488,11 @@ public class Main {
   private static void pesquisarPessoa() {
     if (totalCadastrado == 0) {
       JOptionPane.showMessageDialog(
-          null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
+          null,
+          "Não há pessoas cadastradas no sistema. Por favor, cadastre algumas pessoas para"
+              + " pesquisar pessoa.",
+          "Nenhum Cadastro Encontrado",
+          JOptionPane.INFORMATION_MESSAGE);
       return;
     }
 
@@ -501,14 +509,18 @@ public class Main {
           null, pessoa.toString(), "Pessoa Encontrada", JOptionPane.INFORMATION_MESSAGE);
     } else {
       JOptionPane.showMessageDialog(
-          null, "Pessoa não encontrada.", "Resultado da Pesquisa", JOptionPane.INFORMATION_MESSAGE);
+          null, "Pessoa "+nome+" não encontrada.", "Resultado da Pesquisa", JOptionPane.INFORMATION_MESSAGE);
     }
   }
 
   private static void mostrarEstatisticas() {
     if (totalCadastrado == 0) {
       JOptionPane.showMessageDialog(
-          null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
+          null,
+          "Não há pessoas cadastradas no sistema. Por favor, cadastre algumas pessoas para"
+              + " visualizar as estatísticas.",
+          "Nenhum Cadastro Encontrado",
+          JOptionPane.INFORMATION_MESSAGE);
       return;
     }
 
@@ -526,7 +538,11 @@ public class Main {
   private static void removerPessoa() {
     if (totalCadastrado == 0) {
       JOptionPane.showMessageDialog(
-          null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
+          null,
+          "Não há pessoas cadastradas no sistema. Por favor, cadastre algumas pessoas para"
+              + " visualizar o histograma.",
+          "Nenhum Cadastro Encontrado",
+          JOptionPane.INFORMATION_MESSAGE);
       return;
     }
 
@@ -534,13 +550,17 @@ public class Main {
     dataset.removePessoaByName(nome);
     totalCadastrado--;
     JOptionPane.showMessageDialog(
-        null, "Pessoa removida com sucesso!", "Remover Pessoa", JOptionPane.INFORMATION_MESSAGE);
+        null, "Pessoa "+nome+" removida com sucesso!", "Remover Pessoa", JOptionPane.INFORMATION_MESSAGE);
   }
 
   private static void substituirPessoa() {
     if (totalCadastrado == 0) {
-      JOptionPane.showMessageDialog(
-          null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
+           JOptionPane.showMessageDialog(
+          null,
+          "Não há pessoas cadastradas no sistema. Por favor, cadastre algumas pessoas para"
+              + " visualizar o histograma.",
+          "Nenhum Cadastro Encontrado",
+          JOptionPane.INFORMATION_MESSAGE);
       return;
     }
 
@@ -549,7 +569,7 @@ public class Main {
     Pessoa pessoaAntiga = dataset.getPessoaByName(nomeAntigo);
     if (pessoaAntiga == null) {
       JOptionPane.showMessageDialog(
-          null, "Pessoa não encontrada.", "Substituir Pessoa", JOptionPane.INFORMATION_MESSAGE);
+          null, "Pessoa "+nomeAntigo +" não encontrada.", "Substituir Pessoa", JOptionPane.INFORMATION_MESSAGE);
       return;
     }
 

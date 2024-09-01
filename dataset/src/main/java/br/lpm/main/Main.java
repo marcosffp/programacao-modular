@@ -10,7 +10,6 @@ import br.lpm.business.Pessoa;
 import java.awt.Color;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import org.jfree.chart.ChartFactory;
@@ -27,8 +26,6 @@ public class Main {
   private static DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   public static void main(String[] args) throws Exception {
-    Locale.setDefault(Locale.US);
-
     int opcaoMenu;
 
     do {
@@ -97,7 +94,10 @@ public class Main {
   private static void cadastrarPessoas() {
     if (totalCadastrado == Dataset.getMaxPessoas()) {
       JOptionPane.showMessageDialog(
-          null, "Capacidade máxima atingida. Não é possível cadastrar mais pessoas.");
+          null,
+          "Capacidade máxima atingida. Não é possível cadastrar mais pessoas.",
+          "Aviso",
+          JOptionPane.WARNING_MESSAGE);
       return;
     }
 
@@ -115,7 +115,11 @@ public class Main {
 
     for (int i = 0; i < numeroCadastro; i++) {
 
-      JOptionPane.showMessageDialog(null, "Cadastro n°" + (totalCadastrado + 1));
+      JOptionPane.showMessageDialog(
+          null,
+          "Cadastro n°" + (totalCadastrado + 1),
+          "Cadastro em Andamento",
+          JOptionPane.INFORMATION_MESSAGE);
 
       String nome = solicitarNome();
       LocalDate dataNascimento = solicitarDataNascimento();
@@ -150,25 +154,13 @@ public class Main {
 
       JOptionPane.showMessageDialog(
           null,
-          "Cadastro da pessoa " + totalCadastrado + " " + nome + " com sucesso!",
-          "Cadastro finalizado",
+          "O cadastro da pessoa nº "
+              + totalCadastrado
+              + " foi concluído com sucesso!\nNome: "
+              + nome,
+          "Cadastro Concluído",
           JOptionPane.INFORMATION_MESSAGE);
     }
-  }
-
-  private static void listarPessoas() {
-    if (totalCadastrado == 0) {
-      JOptionPane.showMessageDialog(
-          null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
-      return;
-    }
-    Pessoa[] pessoas = dataset.getAll();
-    String listarPessoas = "";
-    for (int i = 0; i < totalCadastrado; i++) {
-      listarPessoas += pessoas[i].toString() + "\n";
-    }
-    JOptionPane.showMessageDialog(
-        null, listarPessoas, "Lista de Pessoas", JOptionPane.INFORMATION_MESSAGE);
   }
 
   private static String solicitarNome() {
@@ -209,7 +201,10 @@ public class Main {
       return Genero.values()[escolhaGenero];
     } else {
       JOptionPane.showMessageDialog(
-          null, "Escolha inválida! Por favor, selecione uma opção válida.");
+          null,
+          "A opção selecionada é inválida. Por favor, escolha uma opção válida",
+          "Seleção Inválida",
+          JOptionPane.ERROR_MESSAGE);
       return solicitarGenero();
     }
   }
@@ -269,7 +264,10 @@ public class Main {
       return Hobby.values()[escolhaHobby];
     } else {
       JOptionPane.showMessageDialog(
-          null, "Escolha inválida! Por favor, selecione uma opção válida.");
+          null,
+          "A opção selecionada é inválida. Por favor, escolha uma opção válida",
+          "Seleção Inválida",
+          JOptionPane.ERROR_MESSAGE);
       return solicitarHobby();
     }
   }
@@ -295,7 +293,10 @@ public class Main {
       return EstadoCivil.values()[escolhaEstadoCivil];
     } else {
       JOptionPane.showMessageDialog(
-          null, "Escolha inválida! Por favor, selecione uma opção válida.");
+          null,
+          "A opção selecionada é inválida. Por favor, escolha uma opção válida",
+          "Seleção Inválida",
+          JOptionPane.ERROR_MESSAGE);
       return solicitarEstadoCivil();
     }
   }
@@ -321,7 +322,10 @@ public class Main {
       return Escolaridade.values()[escolhaEscolaridade];
     } else {
       JOptionPane.showMessageDialog(
-          null, "Escolha inválida! Por favor, selecione uma opção válida.");
+          null,
+          "A opção selecionada é inválida. Por favor, escolha uma opção válida",
+          "Seleção Inválida",
+          JOptionPane.ERROR_MESSAGE);
       return solicitarEscolaridade();
     }
   }
@@ -357,35 +361,64 @@ public class Main {
       return Moradia.values()[escolhaMoradia];
     } else {
       JOptionPane.showMessageDialog(
-          null, "Escolha inválida! Por favor, selecione uma opção válida.");
+          null,
+          "A opção selecionada é inválida. Por favor, escolha uma opção válida",
+          "Seleção Inválida",
+          JOptionPane.ERROR_MESSAGE);
       return solicitarMoradia();
     }
   }
 
+  private static void listarPessoas() {
+    if (totalCadastrado == 0) {
+      JOptionPane.showMessageDialog(
+          null,
+          "Não há pessoas cadastradas no sistema. Por favor, cadastre algumas pessoas para"
+              + " visualizar a lista.",
+          "Nenhum Cadastro Encontrado",
+          JOptionPane.INFORMATION_MESSAGE);
+      return;
+    }
+ 
+    Pessoa[] pessoas = dataset.getAll();
+    String listarPessoas = "";
+    for (int i = 0; i < totalCadastrado; i++) {
+      listarPessoas += pessoas[i].toString() + "\n";
+    }
+    JOptionPane.showMessageDialog(
+        null, listarPessoas, "Lista de Pessoas Cadastradas", JOptionPane.INFORMATION_MESSAGE);
+  }
+
+  
+
   public static void histogramaFormacaoAcadêmica() {
     if (totalCadastrado == 0) {
       JOptionPane.showMessageDialog(
-          null, "Nenhuma pessoa cadastrada.", "Nenhuma Pessoa", JOptionPane.INFORMATION_MESSAGE);
+          null,
+          "Não há pessoas cadastradas no sistema. Por favor, cadastre algumas pessoas para"
+              + " visualizar a lista.",
+          "Nenhum Cadastro Encontrado",
+          JOptionPane.INFORMATION_MESSAGE);
       return;
     }
 
-    Pessoa[] pessoas = dataset.getAll();
-    Escolaridade[] tEscolaridades = Escolaridade.values();
-    int[] contagemEscolaridade = new int[Escolaridade.values().length];
+    Pessoa[] listaPessoas = dataset.getAll();
+    Escolaridade[] todasEscolaridades = Escolaridade.values();
+    int[] contagemEscolaridades = new int[Escolaridade.values().length];
 
     for (int i = 0; i < totalCadastrado; i++) {
-      Escolaridade escolaridade = pessoas[i].getEscolaridade();
-      for (int j = 0; j < contagemEscolaridade.length; j++) {
-        if (tEscolaridades[j] == escolaridade) {
-          contagemEscolaridade[j]++;
+      Escolaridade escolaridade = listaPessoas[i].getEscolaridade();
+      for (int j = 0; j < contagemEscolaridades.length; j++) {
+        if (todasEscolaridades[j] == escolaridade) {
+          contagemEscolaridades[j]++;
         }
       }
     }
 
-    DefaultCategoryDataset categoria = new DefaultCategoryDataset();
-    for (int i = 0; i < contagemEscolaridade.length; i++) {
-      categoria.addValue(
-          contagemEscolaridade[i], "Formação Acadêmica", tEscolaridades[i].toString());
+    DefaultCategoryDataset datasetGrafico = new DefaultCategoryDataset();
+    for (int i = 0; i < contagemEscolaridades.length; i++) {
+      datasetGrafico.addValue(
+          contagemEscolaridades[i], "Formação Acadêmica", todasEscolaridades[i].name());
     }
 
     JFreeChart grafico =
@@ -393,28 +426,28 @@ public class Main {
             "Distribuição de Formação Acadêmica",
             "Formação Acadêmica",
             "Número de Pessoas",
-            categoria,
+            datasetGrafico,
             PlotOrientation.VERTICAL,
             false,
             true,
             false);
 
-    BarRenderer renderer = (BarRenderer) grafico.getCategoryPlot().getRenderer();
-    for (int i = 0; i < tEscolaridades.length; i++) {
-      renderer.setSeriesPaint(i, Color.BLUE);
+    BarRenderer renderizador = (BarRenderer) grafico.getCategoryPlot().getRenderer();
+    for (int i = 0; i < todasEscolaridades.length; i++) {
+      renderizador.setSeriesPaint(i, Color.BLUE);
     }
 
-    ChartPanel chartPanel = new ChartPanel(grafico);
-    chartPanel.setPreferredSize(new java.awt.Dimension(400, 300));
+    ChartPanel painelGrafico = new ChartPanel(grafico);
+    painelGrafico.setPreferredSize(new java.awt.Dimension(400, 300));
 
-    JFrame frame = new JFrame();
-    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-    frame.add(chartPanel);
-    frame.pack();
-    frame.setLocationRelativeTo(null);
+    JFrame frameGrafico = new JFrame();
+    frameGrafico.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    frameGrafico.add(painelGrafico);
+    frameGrafico.pack();
+    frameGrafico.setLocationRelativeTo(null);
 
     JOptionPane.showMessageDialog(
-        null, frame.getContentPane(), "Histograma", JOptionPane.PLAIN_MESSAGE);
+        null, frameGrafico.getContentPane(), "Histograma", JOptionPane.PLAIN_MESSAGE);
   }
 
   public static void pieEstadoCivil() {

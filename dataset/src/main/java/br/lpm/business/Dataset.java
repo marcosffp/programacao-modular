@@ -242,22 +242,22 @@ public class Dataset {
         viuvo++;
       }
     }
-    int maxquantidadePessoa = casado;
+    int quantMaxPessoa = casado;
     EstadoCivil mode = EstadoCivil.CASADO;
-    if (divorciado > maxquantidadePessoa) {
-      maxquantidadePessoa = divorciado;
+    if (divorciado > quantMaxPessoa) {
+      quantMaxPessoa = divorciado;
       mode = EstadoCivil.DIVORCIADO;
     }
-    if (separado > maxquantidadePessoa) {
-      maxquantidadePessoa = separado;
+    if (separado > quantMaxPessoa) {
+      quantMaxPessoa = separado;
       mode = EstadoCivil.SEPARADO;
     }
-    if (solteiro > maxquantidadePessoa) {
-      maxquantidadePessoa = solteiro;
+    if (solteiro > quantMaxPessoa) {
+      quantMaxPessoa = solteiro;
       mode = EstadoCivil.SOLTEIRO;
     }
-    if (viuvo > maxquantidadePessoa) {
-      maxquantidadePessoa = viuvo;
+    if (viuvo > quantMaxPessoa) {
+      quantMaxPessoa = viuvo;
       mode = EstadoCivil.VIUVO;
     }
 
@@ -297,22 +297,22 @@ public class Dataset {
         posGraduacao++;
       }
     }
-    int maxquantidadePessoa = nenhuma;
+    int quantMaxPessoa = nenhuma;
     Escolaridade mode = Escolaridade.NENHUMA;
-    if (fundamental > maxquantidadePessoa) {
-      maxquantidadePessoa = fundamental;
+    if (fundamental > quantMaxPessoa) {
+      quantMaxPessoa = fundamental;
       mode = Escolaridade.FUNDAMENTAL;
     }
-    if (medio > maxquantidadePessoa) {
-      maxquantidadePessoa = medio;
+    if (medio > quantMaxPessoa) {
+      quantMaxPessoa = medio;
       mode = Escolaridade.MEDIO;
     }
-    if (superior > maxquantidadePessoa) {
-      maxquantidadePessoa = superior;
+    if (superior > quantMaxPessoa) {
+      quantMaxPessoa = superior;
       mode = Escolaridade.SUPERIOR;
     }
-    if (posGraduacao > maxquantidadePessoa) {
-      maxquantidadePessoa = posGraduacao;
+    if (posGraduacao > quantMaxPessoa) {
+      quantMaxPessoa = posGraduacao;
       mode = Escolaridade.POS_GRADUACAO;
     }
     return mode;
@@ -343,14 +343,14 @@ public class Dataset {
         casaPropria++;
       }
     }
-    int maxquantidadePessoa = comFamilia;
+    int quantMaxPessoa = comFamilia;
     Moradia mode = Moradia.COM_FAMILIA;
-    if (aluguel > maxquantidadePessoa) {
-      maxquantidadePessoa = aluguel;
+    if (aluguel > quantMaxPessoa) {
+      quantMaxPessoa = aluguel;
       mode = Moradia.ALUGUEL;
     }
-    if (casaPropria > maxquantidadePessoa) {
-      maxquantidadePessoa = casaPropria;
+    if (casaPropria > quantMaxPessoa) {
+      quantMaxPessoa = casaPropria;
       mode = Moradia.CASA_PROPRIA;
     }
     return mode;

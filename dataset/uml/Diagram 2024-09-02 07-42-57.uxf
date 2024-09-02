@@ -1,0 +1,99 @@
+<diagram program="umletino" version="15.1"><zoom_level>7</zoom_level><element><id>UMLClass</id><coordinates><x>0</x><y>7</y><w>343</w><h>280</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
+br.lpm.business::Pessoa
+--
+-nome: String
+-dataNascimento: LocalDate 
+-genero: Genero
+-altura: float
+-peso: int
+-renda: float                             
+-naturalidade: String                   
+-hobby: Hobby                           
+-estadoCivil: EstadoCivil                
+-escolaridade: Escolaridade            
+-feliz: boolean                         
+-moradia: Moradia 
+__-formatadorData: DateTimeFormatter__
+--
++Pessoa ()
++Pessoa (nome: String, dataNascimento: LocalDate, genero: Genero, altura: float,                    
+ peso: int, renda: float, naturalidade: String,  hobby: Hobby,  estadoCivil: EstadoCivil, 
+ escolaridade: Escolaridade,  feliz: boolean,  moradia: Moradia)
+-isStringValido (nome: String): boolean
+-isDataNascimentoValido (dataNascimento: LocalDate): boolean
+-isAlturaValida (altura: float): boolean
+-isPesoValido (peso: int): boolean
+-isRendaValida (renda: float): boolean
++toString (): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>364</x><y>7</y><w>147</w><h>105</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+br.lpm.business::Escolaridade
+--
+ NENHUMA
+ FUNDAMENTAL
+ MEDIO
+ SUPERIOR
+ POS_GRADUACAO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>560</x><y>7</y><w>147</w><h>98</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+br.lpm.business::EstadoCivil
+--
+ SOLTEIRO
+ CASADO
+ VIUVO
+ SEPARADO
+ DIVORCIADO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>364</x><y>126</y><w>147</w><h>91</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+br.lpm.business::Genero
+--
+ FEMININO
+ MASCULINO
+ NAO_BINARIO
+ NAO_RESPONDER</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>462</x><y>231</y><w>147</w><h>133</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+br.lpm.business::Hobby
+--
+ ARTE
+ ESPORTE
+ CINEMA
+ LIVRO
+ MÚSICA
+ CULINÁRIA
+ GAME
+ NENHUM</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>560</x><y>126</y><w>147</w><h>77</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+br.lpm.business::Moradia
+--
+ COM_FAMILIA
+ ALUGUEL
+ CASA_PROPRIA</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>728</x><y>0</y><w>343</w><h>371</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
+br.lpm.business::Dataset
+--
+_-MAX_PESSOAS = 100: int_
+_-pessoas: Pessoas[MAX_PESSOAS]_
+-quantidadePessoa: int
+--
++Dataset()
+_+getMaxPessoa()_
++addPessoa(pessoa: Pessoa): void
+-executarRemocao(i :int): void
++removePessoa(pessoa: Pessoa): void
++removePessoaByName(nome: String): void
++replacePessoa(velha: Pessoa, nova: Pessoa): void
++getPessoaByName(nome: String): Pessoa
++getAll(): Pessoa[]
++removeAll(): void
++size(): int
++maxAltura(): float
++minAltura(): float
++avgAltura(): float
++maxPeso(): int
++minPeso(): int
++avgPeso(): float
+-calcularIdade(pessoa: Pessoa): int
+-calcularPorcentagem(quantidade: int): float
++percentAdult(): float
++percentEstadoCivil(estado: EstadoCivil): float
++modeEstadoCivil(): EstadoCivil
++percentEscolaridade(escolaridade: Escolaridade): float
++modeEscolaridade(): Escolaridade
++percentMoradia(moradia: Moradia): float
++modeMoradia(): Moradia
++percentHobby(): float
++percentFeliz(): float
++toString(): String
+</panel_attributes><additional_attributes></additional_attributes></element></diagram>

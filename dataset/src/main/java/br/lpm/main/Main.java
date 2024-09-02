@@ -534,7 +534,7 @@ public class Main {
       JOptionPane.showMessageDialog(
           null,
           "Não há pessoas cadastradas no sistema. Por favor, cadastre algumas pessoas para"
-              + " visualizar o histograma.",
+              + " remover pessoa.",
           "Nenhum Cadastro Encontrado",
           JOptionPane.INFORMATION_MESSAGE);
       return;
@@ -552,7 +552,7 @@ public class Main {
            JOptionPane.showMessageDialog(
           null,
           "Não há pessoas cadastradas no sistema. Por favor, cadastre algumas pessoas para"
-              + " visualizar o histograma.",
+              + " substituir pessoa.",
           "Nenhum Cadastro Encontrado",
           JOptionPane.INFORMATION_MESSAGE);
       return;

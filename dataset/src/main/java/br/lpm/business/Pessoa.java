@@ -52,7 +52,7 @@ public class Pessoa {
     return nome;
   }
 
-  public boolean isStringValido(String nome) {
+  private boolean isStringValido(String nome) {
     if (nome == null || nome.isEmpty()) {
       System.out.println("Nome nulo ou vazio");
       return false;
@@ -77,7 +77,7 @@ public class Pessoa {
     return dataNascimento;
   }
 
-  public boolean isDataNascimentoValido(LocalDate dataNascimento) {
+  private boolean isDataNascimentoValido(LocalDate dataNascimento) {
     return dataNascimento.isBefore(LocalDate.now());
   }
 
@@ -99,7 +99,7 @@ public class Pessoa {
     return altura;
   }
 
-  public boolean isAlturaValida(float altura) {
+  private boolean isAlturaValida(float altura) {
     return altura > 0 && altura < 2.60f;
   }
 
@@ -113,7 +113,7 @@ public class Pessoa {
     return peso;
   }
 
-  public boolean isPesoValido(int peso) {
+  private boolean isPesoValido(int peso) {
     return peso > 0 && peso < 600;
   }
 
@@ -127,7 +127,7 @@ public class Pessoa {
     return renda;
   }
 
-  public boolean isRendaValida(float renda) {
+  private boolean isRendaValida(float renda) {
     return renda >= 0;
   }
 

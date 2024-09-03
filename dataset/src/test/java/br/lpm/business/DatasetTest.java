@@ -78,7 +78,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando addPessoa")
   public void testAddPessoa() {
-    dataset.removeAll();
     dataset.addPessoa(null);
     assertEquals(0, dataset.size(), "Pessoa nula adicionada");
     dataset.addPessoa(pessoa1);
@@ -92,7 +91,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando removePessoa")
   public void testRemovePessoa() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     dataset.addPessoa(pessoa2);
     dataset.removePessoa(pessoa3);
@@ -106,7 +104,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando removePessoaByName")
   public void testRemovePessoaByName() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     dataset.addPessoa(pessoa2);
     dataset.removePessoaByName("Bernardo");
@@ -120,7 +117,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando replacePessoa")
   public void testReplacePessoa() {
-    dataset.removeAll();
     dataset.replacePessoa(pessoa1, pessoa2);
     assertEquals(0, dataset.size(), "Tamanho alterado");
     dataset.addPessoa(pessoa1);
@@ -131,7 +127,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando getPessoaByName")
   public void testGetPessoaByName() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     assertEquals(null, dataset.getPessoaByName("João"), "Pessoa não encontrada");
     dataset.addPessoa(pessoa2);
@@ -143,14 +138,12 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando getAll")
   public void testGetAll() {
-    dataset.removeAll();
     Pessoa[] pessoas = dataset.getAll();
     assertEquals(0, pessoas.length, "Vetor não vazio após remoção");
     dataset.addPessoa(pessoa1);
     Pessoa[] pessoas2 = dataset.getAll();
     assertEquals(1, pessoas2.length, "Tamanho do vetor errado");
     assertEquals(pessoa1, pessoas2[0], "Pessoa não encontrada no vetor");
-    dataset.removeAll();
   }
 
   @Test
@@ -166,7 +159,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando size")
   public void testSize() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     assertEquals(1, dataset.size(), "Tamanho incorreto após adicionar uma pessoa");
     dataset.addPessoa(pessoa2);
@@ -180,7 +172,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando maxAltura")
   public void testMaxAltura() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     assertEquals(1.70f, dataset.maxAltura(), 0.01f, "Altura máxima deve ser 1.70");
     dataset.addPessoa(pessoa2);
@@ -192,7 +183,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando minAltura")
   public void testMinAltura() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     assertEquals(1.70f, dataset.minAltura(), 0.01f, "Altura mínima deve ser 1.70");
     dataset.addPessoa(pessoa2);
@@ -204,7 +194,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando avgAltura")
   public void testAvgAltura() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     assertEquals(1.70f, dataset.avgAltura(), 0.01f, "Altura média deve ser 1.70");
     dataset.removePessoa(pessoa1);
@@ -217,7 +206,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando maxPeso")
   public void testMaxPeso() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     assertEquals(70, dataset.maxPeso(), "Peso máximo deve ser 70");
     dataset.addPessoa(pessoa2);
@@ -231,7 +219,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando minPeso")
   public void testMinPeso() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     assertEquals(70, dataset.minPeso(), "Peso mínimo deve ser 70");
     dataset.addPessoa(pessoa2);
@@ -245,7 +232,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando avgPeso")
   public void testAvgPeso() {
-    dataset.removeAll();
     assertEquals(0, dataset.avgPeso(), "Peso médio deve ser 0");
     dataset.addPessoa(pessoa1);
     assertEquals(70, dataset.avgPeso(), 0.01f, "Peso médio deve ser 70");
@@ -259,7 +245,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando método percentAdult")
   public void testPercentAdult() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     dataset.addPessoa(pessoa2);
     dataset.addPessoa(pessoa3);
@@ -274,7 +259,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando método percentEstadoCivil")
   public void testPercentEstadoCivil() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     dataset.addPessoa(pessoa2);
     dataset.addPessoa(pessoa3);
@@ -288,7 +272,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando método modeEstadoCivil")
   public void testModeEstadoCivil() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     dataset.addPessoa(pessoa2);
     dataset.addPessoa(pessoa3);
@@ -301,7 +284,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando método percentEscolaridade")
   public void testPercentEscolaridade() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     dataset.addPessoa(pessoa2);
     dataset.addPessoa(pessoa3);
@@ -315,7 +297,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando método modeEscolaridade")
   public void testModeEscolaridade() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     dataset.addPessoa(pessoa2);
     dataset.addPessoa(pessoa3);
@@ -328,7 +309,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando método percentMoradia")
   public void testPercentMoradia() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     dataset.addPessoa(pessoa2);
     dataset.addPessoa(pessoa3);
@@ -342,7 +322,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando método modeMoradia")
   public void testModeMoradia() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     dataset.addPessoa(pessoa2);
     dataset.addPessoa(pessoa3);
@@ -353,7 +332,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando método percentHobby")
   public void testPercentHobby() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     dataset.addPessoa(pessoa2);
     dataset.addPessoa(pessoa3);
@@ -367,7 +345,6 @@ public class DatasetTest {
   @Test
   @DisplayName("Testando método percentFeliz")
   public void testPercentFeliz() {
-    dataset.removeAll();
     dataset.addPessoa(pessoa1);
     dataset.addPessoa(pessoa2);
     dataset.addPessoa(pessoa3);

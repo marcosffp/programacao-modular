@@ -521,8 +521,7 @@ public class Main {
     String estatisticas =
         "**************************************************************\n"
             + "Número de pessoas cadastradas: "
-            + totalCadastrado
-            + "\n";
+            + totalCadastrado;
     estatisticas += dataset.toString();
 
     JOptionPane.showMessageDialog(

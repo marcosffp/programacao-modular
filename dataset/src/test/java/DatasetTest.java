@@ -1,6 +1,13 @@
-package br.lpm.business;
+
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import br.lpm.business.Pessoa;
+import br.lpm.business.Dataset;
+import br.lpm.business.Escolaridade;
+import br.lpm.business.EstadoCivil;
+import br.lpm.business.Hobby;
+import br.lpm.business.Moradia;
 
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;

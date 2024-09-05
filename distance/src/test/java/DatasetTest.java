@@ -6,6 +6,7 @@ import br.lpm.business.Pessoa;
 import br.lpm.business.Dataset;
 import br.lpm.business.Escolaridade;
 import br.lpm.business.EstadoCivil;
+import br.lpm.business.Genero;
 import br.lpm.business.Hobby;
 import br.lpm.business.Moradia;
 
@@ -22,63 +23,81 @@ public class DatasetTest {
   private static Pessoa pessoa3;
 
   @BeforeEach
-  public void setUp() throws Exception {
+  public void setUp() {
     pessoa1 =
         criarPessoa(
             "Marcos",
             LocalDate.of(2005, 10, 3),
+            Genero.MASCULINO,
             1.70f,
             70,
+            600.54f,
+            "Mineira",
+            Hobby.NENHUM,
             EstadoCivil.CASADO,
             Escolaridade.SUPERIOR,
-            Moradia.CASA_PROPRIA,
-            Hobby.NENHUM,
-            true);
+            true,
+            Moradia.CASA_PROPRIA);
+
     pessoa2 =
         criarPessoa(
             "Jamilly",
             LocalDate.of(2006, 2, 24),
+            Genero.FEMININO,
             1.40f,
             80,
+            100.12f, 
+            "Mineira",
+            Hobby.ESPORTE,
             EstadoCivil.SOLTEIRO,
             Escolaridade.MEDIO,
-            Moradia.ALUGUEL,
-            Hobby.ESPORTE,
-            true);
+            true,
+            Moradia.ALUGUEL);
+
     pessoa3 =
         criarPessoa(
             "Bernardo",
             LocalDate.of(2014, 2, 10),
+            Genero.MASCULINO,
             1.60f,
             60,
+            2000.12f,
+            "Salvador",
+            Hobby.ESPORTE,
             EstadoCivil.SOLTEIRO,
             Escolaridade.MEDIO,
-            Moradia.ALUGUEL,
-            Hobby.ESPORTE,
-            false);
+            false,
+            Moradia.ALUGUEL);
+
     dataset = new Dataset();
   }
 
   private Pessoa criarPessoa(
       String nome,
       LocalDate dataNascimento,
+      Genero genero,
       float altura,
       int peso,
+      float renda,
+      String naturalidade,
+      Hobby hobby,
       EstadoCivil estadoCivil,
       Escolaridade escolaridade,
-      Moradia moradia,
-      Hobby hobby,
-      boolean feliz) {
+      boolean feliz,
+      Moradia moradia) {
     Pessoa pessoa = new Pessoa();
     pessoa.setNome(nome);
     pessoa.setDataNascimento(dataNascimento);
+    pessoa.setGenero(genero);
     pessoa.setAltura(altura);
     pessoa.setPeso(peso);
+    pessoa.setRenda(renda);
+    pessoa.setNaturalidade(naturalidade);
+    pessoa.setHobby(hobby);
     pessoa.setEstadoCivil(estadoCivil);
     pessoa.setEscolaridade(escolaridade);
-    pessoa.setMoradia(moradia);
-    pessoa.setHobby(hobby);
     pessoa.setFeliz(feliz);
+    pessoa.setMoradia(moradia);
     return pessoa;
   }
 

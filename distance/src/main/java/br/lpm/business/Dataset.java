@@ -387,46 +387,6 @@ public class Dataset {
     return mode;
   }
 
-  public int maxEscolaridade() {
-    return calcularMaximoInt(pessoas, "escolaridade");
-  }
-
-  public int minEscolaridade() {
-    return calcularMinimoInt(pessoas, "escolaridade");
-  }
-
-  public int maxEstadoCivil() {
-    return calcularMaximoInt(pessoas, "estadocivil");
-  }
-
-  public int minEstadoCivil() {
-    return calcularMinimoInt(pessoas, "estadocivil");
-  }
-
-  public int maxMoradia() {
-    return calcularMaximoInt(pessoas, "moradia");
-  }
-
-  public int minMoradia() {
-    return calcularMinimoInt(pessoas, "moradia");
-  }
-
-  public int maxGenero() {
-    return calcularMaximoInt(pessoas, "genero");
-  }
-
-  public int minGenero() {
-    return calcularMinimoInt(pessoas, "genero");
-  }
-
-  public int maxHobby() {
-    return calcularMaximoInt(pessoas, "hobby");
-  }
-
-  public int minHobby() {
-    return calcularMinimoInt(pessoas, "hobby");
-  }
-
   private int calcularMaximoInt(Pessoa[] pessoas, String tipo) {
     if (quantidadePessoa == 0) {
       return 0;
@@ -459,16 +419,6 @@ public class Dataset {
     switch (tipo) {
       case "peso":
         return pessoa.getPeso();
-      case "escolaridade":
-        return pessoa.getEscolaridade().ordinal();
-      case "estadocivil":
-        return pessoa.getEstadoCivil().ordinal();
-      case "moradia":
-        return pessoa.getMoradia().ordinal();
-      case "genero":
-        return pessoa.getGenero().ordinal();
-      case "hobby":
-        return pessoa.getHobby().ordinal();
       default:
         return 0;
     }

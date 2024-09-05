@@ -25,24 +25,6 @@ public class DistanceMeasure {
         return normalize(pessoa.getAltura(), dataset.minAltura(), dataset.maxAltura());
       case "RENDA":
         return normalize(pessoa.getRenda(), dataset.minRenda(), dataset.maxRenda());
-      case "ESCOLARIDADE":
-        return normalizeEnum(
-            pessoa.getEscolaridade().ordinal(),
-            dataset.minEscolaridade(),
-            dataset.maxEscolaridade());
-      case "ESTADOCIVIL":
-        return normalizeEnum(
-            pessoa.getEstadoCivil().ordinal(), dataset.minEstadoCivil(), dataset.maxEstadoCivil());
-      case "MORADIA":
-        return normalizeEnum(
-            pessoa.getMoradia().ordinal(), dataset.minMoradia(), dataset.maxMoradia());
-      case "GENERO":
-        return normalizeEnum(
-            pessoa.getGenero().ordinal(), dataset.minGenero(), dataset.maxGenero());
-      case "HOBBY":
-        return normalizeEnum(pessoa.getHobby().ordinal(), dataset.minHobby(), dataset.maxHobby());
-      case "FELIZ":
-        return pessoa.isFeliz() ? 1.0f : 0.0f;
       default:
         return 0.0f;
     }
@@ -55,15 +37,10 @@ public class DistanceMeasure {
     return (x - minx) / (maxx - minx);
   }
 
-  private float normalizeEnum(int ordinal, int minOrdinal, int maxOrdinal) {
-    return normalize(ordinal, minOrdinal, maxOrdinal);
-  }
-
   public float calcDistance(Pessoa first, Pessoa second) {
     if (first == null || second == null) {
       return 0.0f;
     }
-
     float[] diferencas = calcularDiferenças(first, second);
     float somaDosQuadrados = calcularSomaDosQuadrados(diferencas);
     return calcularRaizQuadrada(somaDosQuadrados / diferencas.length);
@@ -91,11 +68,11 @@ public class DistanceMeasure {
   }
 
   private float calcularDistanciaEnum(Enum<?> first, Enum<?> second) {
-    return (first == second) ? 0.0f : 1.0f;
+    return (first == second) ? 1.0f : 0.0f;
   }
 
   private int calcularDistanciaBoolean(boolean first, boolean second) {
-    return first == second ? 0 : 1;
+    return first == second ? 1 : 0;
   }
 
   private float calcularSomaDosQuadrados(float[] diferencas) {

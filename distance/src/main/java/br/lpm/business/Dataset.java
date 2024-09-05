@@ -9,7 +9,8 @@ public class Dataset {
   private static Pessoa[] pessoas = new Pessoa[MAX_PESSOAS];
   private DistanceMeasure distanceMeasure;
 
-  public Dataset(){}
+  public Dataset() {}
+
   public Dataset(DistanceMeasure distanceMeasure) {
     this.distanceMeasure = distanceMeasure;
   }
@@ -168,7 +169,6 @@ public class Dataset {
       soma += pessoas[i].getAltura();
     }
     return soma / quantidadePessoa;
-
   }
 
   public float avgPeso() {
@@ -190,8 +190,7 @@ public class Dataset {
     return calcularMinimoInt(pessoas, "peso");
   }
 
-
-  private int calcularIdade(Pessoa pessoa) {
+  public int calcularIdade(Pessoa pessoa) {
     LocalDate dataNascimento = pessoa.getDataNascimento();
     LocalDate dataAtual = LocalDate.now();
     int idade = dataAtual.getYear() - dataNascimento.getYear();
@@ -419,27 +418,50 @@ public class Dataset {
     switch (tipo) {
       case "peso":
         return pessoa.getPeso();
+      case "idade":
+        return calcularIdade(pessoa);
       default:
         return 0;
     }
   }
 
+  public int maxIdade() {
+    return calcularMaximoInt(pessoas, "idade");
+  }
+
+  public int minIdade() {
+    return calcularMinimoInt(pessoas, "idade");
+  }
+
   public float[] calcDistanceVector(Pessoa pessoa) {
-    float[] distances = new float[quantidadePessoa];
-    for (int i = 0; i < quantidadePessoa; i++) {
-      distances[i] =distanceMeasure.calcDistance(pessoa, pessoas[i]);
+    if (pessoa == null || quantidadePessoa == 0) {
+      return new float[0];
     }
-    return distances; 
+
+    float[] distancias = new float[quantidadePessoa]; 
+    for (int i = 0; i < quantidadePessoa; i++) {
+      if (pessoas[i] != null && !pessoas[i].equals(pessoa)) {
+        distancias[i] = distanceMeasure.calcDistance(pessoa, pessoas[i]);
+      } else {
+        distancias[i] = 0.0f; 
+      }
+    }
+
+    return distancias; 
   }
 
   public float[][] calcDistanceMatrix() {
+    if (distanceMeasure == null || quantidadePessoa == 0) {
+      return new float[0][0];
+    }
+
     float[][] distances = new float[quantidadePessoa][quantidadePessoa];
     for (int i = 0; i < quantidadePessoa; i++) {
       for (int j = 0; j < quantidadePessoa; j++) {
         if (i != j) {
           distances[i][j] = distanceMeasure.calcDistance(pessoas[i], pessoas[j]);
         } else {
-          distances[i][j] = 0;
+          distances[i][j] = 0.0f;
         }
       }
     }
@@ -488,6 +510,10 @@ public class Dataset {
     ordenarPessoas(pessoas, similares);
 
     return selecionarMaisSimilares(pessoas, n);
+  }
+
+  public void setDistanceMeasure(DistanceMeasure distanceMeasure) {
+    this.distanceMeasure = distanceMeasure;
   }
 
   @Override

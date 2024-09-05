@@ -2,14 +2,14 @@
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import br.lpm.business.Pessoa;
 import br.lpm.business.Dataset;
+import br.lpm.business.DistanceMeasure;
 import br.lpm.business.Escolaridade;
 import br.lpm.business.EstadoCivil;
 import br.lpm.business.Genero;
 import br.lpm.business.Hobby;
 import br.lpm.business.Moradia;
-
+import br.lpm.business.Pessoa;
 import java.time.LocalDate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -21,6 +21,7 @@ public class DatasetTest {
   private static Pessoa pessoa1;
   private static Pessoa pessoa2;
   private static Pessoa pessoa3;
+  private DistanceMeasure distanceMeasure;
 
   @BeforeEach
   public void setUp() {
@@ -70,6 +71,8 @@ public class DatasetTest {
             Moradia.ALUGUEL);
 
     dataset = new Dataset();
+    distanceMeasure = new DistanceMeasure(dataset);
+    dataset.setDistanceMeasure(distanceMeasure);
   }
 
   private Pessoa criarPessoa(
@@ -379,5 +382,87 @@ public class DatasetTest {
         dataset.percentFeliz(),
         0.01f,
         "A porcentagem de pessoas felizes deveria ser 66.67%");
+  }
+
+  @Test
+  @DisplayName("Testando calcDistanceVector")
+  public void testCalcDistanceVector() {
+    dataset.addPessoa(pessoa1);
+    dataset.addPessoa(pessoa2);
+    dataset.addPessoa(pessoa3);
+
+    float[] distancias = dataset.calcDistanceVector(pessoa1);
+    assertEquals(3, distancias.length);
+    assertEquals(
+        0.0f,
+        distancias[0],
+        0.01f,
+        " O vetor de distâncias não contém o número correto de elementos");
+
+    assertEquals(0.0f, distancias[0], "A distância da pessoa1 para si mesma deve ser 0");
+    float valorEsperadoPessoa2 = distanceMeasure.calcDistance(pessoa1, pessoa2);
+    assertEquals(valorEsperadoPessoa2, distancias[1], 0.01f,
+        "A distância calculada entre pessoa1 e pessoa2 está incorreta");
+
+    float valorEsperadoPessoa3 = distanceMeasure.calcDistance(pessoa1, pessoa3);
+    assertEquals(valorEsperadoPessoa3, distancias[2], 0.01f,
+        "A distância calculada entre pessoa1 e pessoa3 está incorreta");
+  }
+
+  @Test
+  @DisplayName("Testando calcDistanceMatrix com várias pessoas")
+  public void testCalcDistanceMatrix() {
+    dataset.addPessoa(pessoa1);
+    dataset.addPessoa(pessoa2);
+    dataset.addPessoa(pessoa3);
+
+    float[][] matrizDistancias = dataset.calcDistanceMatrix();
+    assertEquals(
+        3, matrizDistancias.length, "A matriz de distâncias não contém o número correto de linhas");
+    assertEquals(
+        3,
+        matrizDistancias[0].length,
+        "A matriz de distâncias não contém o número correto de colunas");
+
+    assertEquals(
+        0.0f, matrizDistancias[0][0], 0.01f, "A distância da pessoa1 para si mesma deve ser 0");
+    assertEquals(
+        0.0f, matrizDistancias[1][1], 0.01f, "A distância da pessoa2 para si mesma deve ser 0");
+    assertEquals(
+        0.0f, matrizDistancias[2][2], 0.01f, "A distância da pessoa3 para si mesma deve ser 0");
+
+    float valorEsperadoPessoa1Pessoa2 = distanceMeasure.calcDistance(pessoa1, pessoa2);
+    assertEquals(
+        valorEsperadoPessoa1Pessoa2,
+        matrizDistancias[0][1],
+        0.01f,
+        "A distância entre pessoa1 e pessoa2 está incorreta");
+
+    assertEquals(
+        valorEsperadoPessoa1Pessoa2,
+        matrizDistancias[1][0],
+        0.01f,
+        "A distância entre pessoa2 e pessoa1 está incorreta");
+
+  }
+
+  @Test
+  @DisplayName("Testando getSimilar em vários cenários")
+  public void testGetSimilar() {
+    dataset.addPessoa(pessoa1);
+    dataset.addPessoa(pessoa2);
+    dataset.addPessoa(pessoa3);
+
+
+    Pessoa[] similares = dataset.getSimilar(pessoa1, 2);
+    assertEquals(pessoa2, similares[0], "A pessoa mais similar a pessoa1 deve ser pessoa2");
+
+    similares = dataset.getSimilar(pessoa1, 3);
+    assertEquals(
+        3,
+        similares.length,
+        "O array deve conter apenas as pessoas disponíveis no dataset, já que n é maior");
+    assertEquals(pessoa2, similares[0], "A pessoa mais similar a pessoa1 deve ser pessoa2");
+    assertEquals(pessoa3, similares[1], "A segunda pessoa mais similar a pessoa1 deve ser pessoa3");
   }
 }

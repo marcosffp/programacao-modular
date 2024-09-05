@@ -2,6 +2,7 @@ package br.lpm.business;
 
 public class DistanceMeasure {
   private Dataset dataset;
+  private final int NUMERO_ATRIBUTO = 10;
 
   public DistanceMeasure(Dataset dataset) {
     this.dataset = dataset;
@@ -14,80 +15,99 @@ public class DistanceMeasure {
     for (int i = 0; i < valoresNormalizados.length; i++) {
       valoresNormalizados[i] = normalizeAtributo(pessoas[i], fieldName);
     }
+
     return valoresNormalizados;
   }
 
   private float normalizeAtributo(Pessoa pessoa, String fieldName) {
     switch (fieldName.toUpperCase()) {
       case "PESO":
-        return normalize(pessoa.getPeso(), dataset.minPeso(), dataset.maxPeso());
+        return normalizeFloat(pessoa.getPeso(), dataset.minPeso(), dataset.maxPeso());
       case "ALTURA":
-        return normalize(pessoa.getAltura(), dataset.minAltura(), dataset.maxAltura());
+        return normalizeFloat(pessoa.getAltura(), dataset.minAltura(), dataset.maxAltura());
       case "RENDA":
-        return normalize(pessoa.getRenda(), dataset.minRenda(), dataset.maxRenda());
+        return normalizeFloat(pessoa.getRenda(), dataset.minRenda(), dataset.maxRenda());
+      case "IDADE":
+        return normalizeFloat(
+            dataset.calcularIdade(pessoa), dataset.minIdade(), dataset.maxIdade());
       default:
         return 0.0f;
     }
-  }
-
-  private float normalize(float x, float minx, float maxx) {
-    if (maxx == minx) {
-      return 0;
-    }
-    return (x - minx) / (maxx - minx);
   }
 
   public float calcDistance(Pessoa first, Pessoa second) {
     if (first == null || second == null) {
       return 0.0f;
     }
-    float[] diferencas = calcularDiferenças(first, second);
-    float somaDosQuadrados = calcularSomaDosQuadrados(diferencas);
-    return calcularRaizQuadrada(somaDosQuadrados / diferencas.length);
+    int numeroEnumBoolean = 6;
+    int[] distanciasEnumBoolean = calcularDistanciasEnumBoolean(first, second, numeroEnumBoolean);
+    float[] distanciasReaisInteiros = calcularDistanciasNormalizados(first, second, numeroEnumBoolean, dataset);
+    float somaDosQuadrado = calcularSomaDosQuadrado(distanciasEnumBoolean, distanciasReaisInteiros);
+    return (float) Math.sqrt(somaDosQuadrado / NUMERO_ATRIBUTO);
   }
 
-  private float[] calcularDiferenças(Pessoa first, Pessoa second) {
-    return new float[] {
-      calcularDistanciaFloat(
-          first.getPeso(), second.getPeso(), dataset.minPeso(), dataset.maxPeso()),
-      calcularDistanciaFloat(
-          first.getAltura(), second.getAltura(), dataset.minAltura(), dataset.maxAltura()),
-      calcularDistanciaFloat(
-          first.getRenda(), second.getRenda(), dataset.minRenda(), dataset.maxRenda()),
-      calcularDistanciaEnum(first.getEscolaridade(), second.getEscolaridade()),
-      calcularDistanciaEnum(first.getHobby(), second.getHobby()),
-      calcularDistanciaEnum(first.getEstadoCivil(), second.getEstadoCivil()),
-      calcularDistanciaBoolean(first.isFeliz(), second.isFeliz()),
-      calcularDistanciaEnum(first.getMoradia(), second.getMoradia()),
-      calcularDistanciaEnum(first.getGenero(), second.getGenero())
-    };
-  }
 
-  private float calcularDistanciaFloat(float valor1, float valor2, float min, float max) {
-    return Math.abs(normalize(valor1, min, max) - normalize(valor2, min, max));
-  }
-
-  private float calcularDistanciaEnum(Enum<?> first, Enum<?> second) {
-    return (first == second) ? 1.0f : 0.0f;
-  }
-
-  private int calcularDistanciaBoolean(boolean first, boolean second) {
-    return first == second ? 1 : 0;
-  }
-
-  private float calcularSomaDosQuadrados(float[] diferencas) {
-    float soma = 0;
-    for (float diferenca : diferencas) {
-      soma += quadrarDistancia(diferenca);
+  private float normalizeFloat(float valor, float min, float max) {
+    if (max == min) {
+      return 0;
     }
-    return soma;
+    return (valor - min) / (max - min);
   }
 
-  private float calcularRaizQuadrada(float valor) {
-    return (float) Math.sqrt(valor);
+  private float normalizeInt(int valor, int min, int max) {
+    if (max == min) {
+      return 0;
+    }
+    return (valor - min) / (max - min);
   }
 
-  private float quadrarDistancia(float distancia) {
-    return distancia * distancia;
+  private int[] calcularDistanciasEnumBoolean(Pessoa first, Pessoa second, int numeroEnumBoolean) {
+
+    int[] distancias = new int[numeroEnumBoolean];
+
+    distancias[0] = first.getEscolaridade().equals(second.getEscolaridade()) ? 0 : 1;
+    distancias[1] = first.getEstadoCivil().equals(second.getEstadoCivil()) ? 0 : 1;
+    distancias[2] = first.getGenero().equals(second.getGenero()) ? 0 : 1;
+    distancias[3] = first.getHobby().equals(second.getHobby()) ? 0 : 1;
+    distancias[4] = first.getMoradia().equals(second.getMoradia()) ? 0 : 1;
+    distancias[5] = first.isFeliz() == second.isFeliz() ? 0 : 1;
+
+    return distancias;
+  }
+
+  private float[] calcularDistanciasNormalizados(Pessoa first, Pessoa second, int numeroReaisInteiro, Dataset dataset) {
+
+    float[] distancias = new float[numeroReaisInteiro];
+
+    float normalizadoIdadeFirst = normalizeInt(dataset.calcularIdade(first), dataset.minIdade(), dataset.maxIdade());
+    float normalizadoIdadeSecond = normalizeInt(dataset.calcularIdade(second), dataset.minIdade(), dataset.maxIdade());
+    distancias[0] = Math.abs(normalizadoIdadeFirst - normalizadoIdadeSecond);
+
+    float normalizadoPesoFirst = normalizeInt(first.getPeso(), dataset.minPeso(), dataset.maxPeso());
+    float normalizadoPesoSecond = normalizeInt(second.getPeso(), dataset.minPeso(), dataset.maxPeso());
+    distancias[1] = Math.abs(normalizadoPesoFirst - normalizadoPesoSecond);
+
+    float normalizadoAlturaFirst = normalizeFloat(first.getAltura(), dataset.minAltura(), dataset.maxAltura());
+    float normalizadoAlturaSecond = normalizeFloat(second.getAltura(), dataset.minAltura(), dataset.maxAltura());
+    distancias[2] = Math.abs(normalizadoAlturaFirst - normalizadoAlturaSecond);
+
+    float normalizadoRendaFirst = normalizeFloat(first.getRenda(), dataset.minRenda(), dataset.maxRenda());
+    float normalizadoRendaSecond = normalizeFloat(second.getRenda(), dataset.minRenda(), dataset.maxRenda());
+    distancias[3] = Math.abs(normalizadoRendaFirst - normalizadoRendaSecond);
+
+    return distancias;
+  }
+
+  private float calcularSomaDosQuadrado(int[] distanciasEnumBoolean, float[] distanciasReaisInteiros) {
+    int[] distanciasEbs = distanciasEnumBoolean;
+    float[] distanciasRis = distanciasReaisInteiros;
+    float somaDosQuadrado = 0.0F;
+    for (int i = 0; i < distanciasRis.length; i++) {
+      somaDosQuadrado += distanciasRis[i] * distanciasRis[i];
+    }
+    for (int i = 0; i < distanciasEbs.length; i++) {
+      somaDosQuadrado += distanciasEbs[i] * distanciasEbs[i];
+    }
+    return somaDosQuadrado;
   }
 }

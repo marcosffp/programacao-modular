@@ -54,7 +54,7 @@ public class Dataset {
   }
 
   public void removePessoaByName(String nome) {
-    if (nome == null) {
+    if (nome == null || nome.isEmpty()) {
       return;
     }
     for (int i = 0; i < quantidadePessoa; i++) {
@@ -66,11 +66,16 @@ public class Dataset {
   }
 
   public void replacePessoa(Pessoa velha, Pessoa nova) {
-    if (velha == null || nova == null) {
+    if (velha == null || nova == null||velha.equals(nova)) {
       return;
     }
     for (int i = 0; i < quantidadePessoa; i++) {
       if (pessoas[i].equals(velha)) {
+        for (int j = 0; j < quantidadePessoa; j++) {
+          if (pessoas[i].equals(nova)) {
+            return;
+          }
+        }
         pessoas[i] = nova;
         return;
       }
@@ -78,6 +83,9 @@ public class Dataset {
   }
 
   public Pessoa getPessoaByName(String nome) {
+    if (nome == null || nome.isEmpty()) {
+      return null; 
+    }
     for (int i = 0; i < quantidadePessoa; i++) {
       if (pessoas[i].getNome().equalsIgnoreCase(nome)) {
         return pessoas[i];
@@ -191,6 +199,10 @@ public class Dataset {
   }
 
   public int calcularIdade(Pessoa pessoa) {
+    if (pessoa == null || pessoa.getDataNascimento() == null) {
+      return 0;
+    }
+
     LocalDate dataNascimento = pessoa.getDataNascimento();
     LocalDate dataAtual = LocalDate.now();
     int idade = dataAtual.getYear() - dataNascimento.getYear();
@@ -220,6 +232,9 @@ public class Dataset {
   }
 
   public float percentEstadoCivil(EstadoCivil estadoCivil) {
+    if (estadoCivil==null) {
+      return 0.0f;
+    }
     int estadoCivilDeterminado = 0;
     for (int i = 0; i < quantidadePessoa; i++) {
       if (pessoas[i].getEstadoCivil().equals(estadoCivil)) {
@@ -230,6 +245,9 @@ public class Dataset {
   }
 
   public float percentEscolaridade(Escolaridade escolaridade) {
+    if (escolaridade == null) {
+      return 0.0f;
+    }
     int escolaridadeDeterminado = 0;
     for (int i = 0; i < quantidadePessoa; i++) {
       if (pessoas[i].getEscolaridade().equals(escolaridade)) {
@@ -240,6 +258,9 @@ public class Dataset {
   }
 
   public float percentMoradia(Moradia moradia) {
+    if (moradia == null) {
+      return 0.0f;
+    }
     int moradiaDeterminado = 0;
     for (int i = 0; i < quantidadePessoa; i++) {
       if (pessoas[i].getMoradia().equals(moradia)) {
@@ -469,17 +490,29 @@ public class Dataset {
   }
 
   private float[] calcularDistancias(Pessoa pessoa, Pessoa[] pessoas) {
-    float[] similares = new float[quantidadePessoa];
+    if (pessoa == null || pessoas == null) {
+      return new float[0];
+    }
+
+    float[] similares =
+        new float[quantidadePessoa - 1]; // Reduz o tamanho, pois ignoramos a própria pessoa
+    int index = 0;
     for (int i = 0; i < quantidadePessoa; i++) {
-      similares[i] = distanceMeasure.calcDistance(pessoa, pessoas[i]);
+      if (!pessoas[i].equals(pessoa)) { // Ignora a comparação com a própria pessoa
+        similares[index++] = distanceMeasure.calcDistance(pessoa, pessoas[i]);
+      }
     }
     return similares;
   }
 
   private void ordenarPessoas(Pessoa[] pessoas, float[] similares) {
+    if (similares == null || pessoas == null) {
+      return;
+    }
+
     for (int i = 1; i < quantidadePessoa; i++) {
       for (int j = 0; j < i; j++) {
-        if (similares[i] > similares[j]) {
+        if (similares[i] < similares[j]) {
           float aux = similares[i];
           similares[i] = similares[j];
           similares[j] = aux;
@@ -493,6 +526,10 @@ public class Dataset {
   }
 
   private Pessoa[] selecionarMaisSimilares(Pessoa[] pessoas, int n) {
+    if (pessoas == null || n <= 0) {
+      return new Pessoa[0];
+    }
+
     Pessoa[] maisSimilares = new Pessoa[n];
     for (int i = 0; i < n; i++) {
       maisSimilares[i] = pessoas[i];
@@ -501,15 +538,48 @@ public class Dataset {
   }
 
   public Pessoa[] getSimilar(Pessoa pessoa, int n) {
-    if (n <= 0 || quantidadePessoa == 0) {
-      return new Pessoa[0];
+    if (pessoa == null) {
+      return new Pessoa
+          [0];
     }
 
     Pessoa[] pessoas = getAll();
-    float[] similares = calcularDistancias(pessoa, pessoas);
-    ordenarPessoas(pessoas, similares);
+    float[] distancias = new float[pessoas.length];
 
-    return selecionarMaisSimilares(pessoas, n);
+    // Calcula a distância entre a pessoa fornecida e todas as outras no dataset
+    for (int i = 0; i < pessoas.length; i++) {
+      if (pessoas[i].equals(pessoa)) {
+        distancias[i] =
+            Float.MAX_VALUE; // Define uma distância máxima para ignorar a própria pessoa
+      } else {
+        distancias[i] = distanceMeasure.calcDistance(pessoa, pessoas[i]);
+      }
+    }
+
+    // Ordena as pessoas pelo vetor de distâncias usando um algoritmo de ordenação simples (como
+    // selection sort)
+    for (int i = 0; i < distancias.length - 1; i++) {
+      int minIndex = i;
+      for (int j = i + 1; j < distancias.length; j++) {
+        if (distancias[j] < distancias[minIndex]) {
+          minIndex = j;
+        }
+      }
+      // Troca as distâncias e as pessoas correspondentes
+      float tempDist = distancias[i];
+      distancias[i] = distancias[minIndex];
+      distancias[minIndex] = tempDist;
+
+      Pessoa tempPessoa = pessoas[i];
+      pessoas[i] = pessoas[minIndex];
+      pessoas[minIndex] = tempPessoa;
+    }
+
+    // Retorna as `n` pessoas mais similares
+    Pessoa[] similares = new Pessoa[Math.min(n, pessoas.length)];
+    System.arraycopy(pessoas, 0, similares, 0, similares.length);
+
+    return similares;
   }
 
   public void setDistanceMeasure(DistanceMeasure distanceMeasure) {

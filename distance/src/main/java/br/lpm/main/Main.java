@@ -1,16 +1,17 @@
 package br.lpm.main;
 
 import br.lpm.business.Dataset;
+import br.lpm.business.DistanceMeasure;
 import br.lpm.business.Escolaridade;
 import br.lpm.business.EstadoCivil;
 import br.lpm.business.Genero;
 import br.lpm.business.Hobby;
 import br.lpm.business.Moradia;
 import br.lpm.business.Pessoa;
+import java.awt.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
@@ -19,24 +20,24 @@ import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 
 public class Main {
-  public static Dataset dataset = new Dataset();
   private static int totalCadastrado = 0;
   private static DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+  private static DistanceMeasure distanceMeasure;
+  public static Dataset dataset;
 
   public static void main(String[] args) throws Exception {
     int opcaoMenu;
 
     do {
-      opcaoMenu =
-          JOptionPane.showOptionDialog(
-              null,
-              "Escolha uma opção do menu:",
-              "Cadastro de Pessoas",
-              JOptionPane.DEFAULT_OPTION,
-              JOptionPane.QUESTION_MESSAGE,
-              null,
-              menu(),
-              menu()[0]);
+      opcaoMenu = JOptionPane.showOptionDialog(
+          null,
+          "Escolha uma opção do menu:",
+          "Cadastro de Pessoas",
+          JOptionPane.DEFAULT_OPTION,
+          JOptionPane.QUESTION_MESSAGE,
+          null,
+          menu(),
+          menu()[0]);
       switch (opcaoMenu) {
         case 0:
           cadastrarPessoas();
@@ -61,14 +62,23 @@ public class Main {
           substituirPessoa();
           break;
         case 7:
+          pesquisarSimiliar();
+          break;
+        case 8:
           sairDoSistema();
           break;
         default:
           break;
       }
 
-    } while (opcaoMenu != 7);
+    } while (opcaoMenu != 8);
   }
+  
+   static {
+    distanceMeasure = new DistanceMeasure(null); 
+    dataset = new Dataset(distanceMeasure);
+    distanceMeasure = new DistanceMeasure(dataset);
+    }
 
   private static void sairDoSistema() {
     JOptionPane.showMessageDialog(
@@ -85,6 +95,7 @@ public class Main {
       "Mostrar EstatÍsticas",
       "Remover Pessoa",
       "Substituir Pessoa",
+      "Pesquisar Similares",
       "Sair do sistema"
     };
   }
@@ -162,21 +173,57 @@ public class Main {
   }
 
   private static String solicitarNome() {
-    return JOptionPane.showInputDialog(
-        null,
-        "Digite o nome:",
-        "Cadastro n°" + (totalCadastrado + 1),
-        JOptionPane.QUESTION_MESSAGE);
+    String nome;
+    Pessoa pessoa = new Pessoa();
+    do {
+      nome =
+          JOptionPane.showInputDialog(
+              null,
+              "Digite o nome:",
+              "Cadastro n°" + (totalCadastrado + 1),
+              JOptionPane.QUESTION_MESSAGE);
+      pessoa.setNome(nome);
+      if (pessoa.getNome() == null) {
+        JOptionPane.showMessageDialog(
+            null,
+            "Nome inválido. Por favor, insira um nome contendo apenas letras e espaços.",
+            "Erro",
+            JOptionPane.ERROR_MESSAGE);
+      }
+
+    } while (pessoa.getNome() == null);
+    return pessoa.getNome();
   }
 
   private static LocalDate solicitarDataNascimento() {
-    String dataNascimentoString =
-        JOptionPane.showInputDialog(
-            null,
-            "Digite a data de nascimento (DD/MM/AAAA): ",
-            "Cadastro n°" + (totalCadastrado + 1),
-            JOptionPane.QUESTION_MESSAGE);
-    return LocalDate.parse(dataNascimentoString, formatadorData);
+    Pessoa pessoa = new Pessoa();
+    String dataNascimentoString;
+    LocalDate dataNascimento = null;
+
+    do {
+      dataNascimentoString =
+          JOptionPane.showInputDialog(
+              null,
+              "Digite a data de nascimento (DD/MM/AAAA): ",
+              "Cadastro n°" + (totalCadastrado + 1),
+              JOptionPane.QUESTION_MESSAGE);
+
+      if (dataNascimentoString != null && !dataNascimentoString.isEmpty()) {
+        dataNascimento = LocalDate.parse(dataNascimentoString, formatadorData);
+        pessoa.setDataNascimento(dataNascimento);
+
+        if (pessoa.getDataNascimento() == null) {
+          JOptionPane.showMessageDialog(
+              null,
+              "Data de nascimento inválida. A data deve ser anterior à data atual.",
+              "Erro",
+              JOptionPane.ERROR_MESSAGE);
+        }
+      }
+
+    } while (pessoa.getDataNascimento() == null); 
+
+    return pessoa.getDataNascimento();
   }
 
   private static Genero solicitarGenero() {
@@ -208,38 +255,97 @@ public class Main {
   }
 
   private static Float solicitarAltura() {
-    return Float.parseFloat(
+    float altura;
+    Pessoa pessoa = new Pessoa();
+    do {
+      altura=    Float.parseFloat(
         JOptionPane.showInputDialog(
             null,
             "Digite a altura: ",
             "Cadastro n°" + (totalCadastrado + 1),
             JOptionPane.QUESTION_MESSAGE));
+      pessoa.setAltura(altura);
+      if (pessoa.getAltura()==0) {
+
+        JOptionPane.showMessageDialog(
+            null,
+            "Altura inválida. Insira um valor entre 1 e 2.59 metros.",
+            "Erro",
+            JOptionPane.ERROR_MESSAGE);
+      }
+    } while (pessoa.getAltura() == 0);
+    return pessoa.getAltura();
   }
 
   private static int solicitarPeso() {
-    return Integer.parseInt(
-        JOptionPane.showInputDialog(
+    int peso;
+    Pessoa pessoa = new Pessoa();
+    do {
+      peso =
+          Integer.parseInt(
+              JOptionPane.showInputDialog(
+                  null,
+                  "Digite o peso: ",
+                  "Cadastro n°" + (totalCadastrado + 1),
+                  JOptionPane.QUESTION_MESSAGE));
+      pessoa.setPeso(peso);
+      if (pessoa.getPeso() == 0) {
+
+        JOptionPane.showMessageDialog(
             null,
-            "Digite o peso: ",
-            "Cadastro n°" + (totalCadastrado + 1),
-            JOptionPane.QUESTION_MESSAGE));
+            "Peso inválido. Insira um valor entre 1 e 599 quilogramas.",
+            "Erro",
+            JOptionPane.ERROR_MESSAGE);
+      }
+    } while (pessoa.getPeso() == 0);
+    return pessoa.getPeso();
   }
 
   private static float solicitarRenda() {
-    return Float.parseFloat(
-        JOptionPane.showInputDialog(
+    float renda;
+    Pessoa pessoa = new Pessoa();
+    do {
+      renda =
+          Float.parseFloat(
+              JOptionPane.showInputDialog(
+                  null,
+                  "Digite a renda: ",
+                  "Cadastro n°" + (totalCadastrado + 1),
+                  JOptionPane.QUESTION_MESSAGE));
+      pessoa.setRenda(renda);
+      if (pessoa.getRenda() < 0) {
+
+        JOptionPane.showMessageDialog(
             null,
-            "Digite a renda: ",
-            "Cadastro n°" + (totalCadastrado + 1),
-            JOptionPane.QUESTION_MESSAGE));
+            "Renda inválida. A renda deve ser um valor positivo.",
+            "Erro",
+            JOptionPane.ERROR_MESSAGE);
+      }
+    } while (pessoa.getRenda()< 0);
+    return pessoa.getRenda();
   }
 
   private static String solicitarNaturalidade() {
-    return JOptionPane.showInputDialog(
+    String naturalidade;
+    Pessoa pessoa = new Pessoa();
+    do {
+      naturalidade =
+          JOptionPane.showInputDialog(
         null,
         "Digite a naturalidade:",
         "Cadastro n°" + (totalCadastrado + 1),
         JOptionPane.QUESTION_MESSAGE);
+      pessoa.setNaturalidade(naturalidade);
+      if (pessoa.getNaturalidade() == null) {
+        JOptionPane.showMessageDialog(
+            null,
+            "Naturalidade inválida. Por favor, insira um nome contendo apenas letras e espaços.",
+            "Erro",
+            JOptionPane.ERROR_MESSAGE);
+      }
+
+    } while (pessoa.getNaturalidade() == null);
+    return pessoa.getNaturalidade();
   }
 
   private static Hobby solicitarHobby() {
@@ -329,12 +435,23 @@ public class Main {
   }
 
   private static boolean solicitarFeliz() {
-    int opcaoFeliz =
-        JOptionPane.showConfirmDialog(
+    int opcaoFeliz;
+    do {
+      opcaoFeliz =
+          JOptionPane.showConfirmDialog(
+              null,
+              "Você é feliz?",
+              "Cadastro n°" + (totalCadastrado + 1),
+              JOptionPane.YES_NO_OPTION);
+      if (opcaoFeliz == JOptionPane.CLOSED_OPTION) {
+        JOptionPane.showMessageDialog(
             null,
-            "Você é feliz?",
-            "Cadastro n°" + (totalCadastrado + 1),
-            JOptionPane.YES_NO_OPTION);
+            "Por favor, responda à pergunta.",
+            "Resposta Necessária",
+            JOptionPane.WARNING_MESSAGE);
+      }
+    } while (opcaoFeliz == JOptionPane.CLOSED_OPTION);
+
     return opcaoFeliz == JOptionPane.YES_OPTION;
   }
 
@@ -377,17 +494,30 @@ public class Main {
           JOptionPane.INFORMATION_MESSAGE);
       return;
     }
- 
-    Pessoa[] pessoas = dataset.getAll();
-    String listarPessoas = "";
-    for (int i = 0; i < totalCadastrado; i++) {
-      listarPessoas += pessoas[i].toString() + "\n";
-    }
-    JOptionPane.showMessageDialog(
-        null, listarPessoas, "Lista de Pessoas Cadastradas", JOptionPane.INFORMATION_MESSAGE);
-  }
 
-  
+    JTextArea textArea = new JTextArea();
+    textArea.setEditable(false); 
+    textArea.setLineWrap(true); 
+    textArea.setWrapStyleWord(true); 
+
+    StringBuilder sb = new StringBuilder();
+    Pessoa[] pessoas = dataset.getAll();
+    for (int i = 0; i < totalCadastrado; i++) {
+      sb.append(pessoas[i].toString())
+          .append("\n\n"); 
+    }
+    textArea.setText(sb.toString());
+
+    JScrollPane scrollPane = new JScrollPane(textArea);
+    scrollPane.setPreferredSize(
+        new Dimension(500, 400)); 
+
+    JDialog dialog = new JDialog((Frame) null, "Lista de Pessoas Cadastradas", true);
+    dialog.getContentPane().add(scrollPane, BorderLayout.CENTER);
+    dialog.pack(); 
+    dialog.setLocationRelativeTo(null); 
+    dialog.setVisible(true);
+  }
 
   public static void histogramaFormacaoAcadêmica() {
     if (totalCadastrado == 0) {
@@ -465,7 +595,6 @@ public class Main {
         ChartFactory.createPieChart(
             "Distribuição dos Estados Civis", datasetGrafico, true, true, false);
 
-
     ChartPanel painelGrafico = new ChartPanel(grafico);
     painelGrafico.setPreferredSize(new java.awt.Dimension(400, 300));
 
@@ -503,7 +632,10 @@ public class Main {
           null, pessoa.toString(), "Pessoa Encontrada", JOptionPane.INFORMATION_MESSAGE);
     } else {
       JOptionPane.showMessageDialog(
-          null, "Pessoa "+nome+" não encontrada.", "Resultado da Pesquisa", JOptionPane.INFORMATION_MESSAGE);
+          null,
+          "Pessoa " + nome + " não encontrada.",
+          "Resultado da Pesquisa",
+          JOptionPane.INFORMATION_MESSAGE);
     }
   }
 
@@ -543,12 +675,15 @@ public class Main {
     dataset.removePessoaByName(nome);
     totalCadastrado--;
     JOptionPane.showMessageDialog(
-        null, "Pessoa "+nome+" removida com sucesso!", "Remover Pessoa", JOptionPane.INFORMATION_MESSAGE);
+        null,
+        "Pessoa " + nome + " removida com sucesso!",
+        "Remover Pessoa",
+        JOptionPane.INFORMATION_MESSAGE);
   }
 
   private static void substituirPessoa() {
     if (totalCadastrado == 0) {
-           JOptionPane.showMessageDialog(
+      JOptionPane.showMessageDialog(
           null,
           "Não há pessoas cadastradas no sistema. Por favor, cadastre algumas pessoas para"
               + " substituir pessoa.",
@@ -562,7 +697,10 @@ public class Main {
     Pessoa pessoaAntiga = dataset.getPessoaByName(nomeAntigo);
     if (pessoaAntiga == null) {
       JOptionPane.showMessageDialog(
-          null, "Pessoa "+nomeAntigo +" não encontrada.", "Substituir Pessoa", JOptionPane.INFORMATION_MESSAGE);
+          null,
+          "Pessoa " + nomeAntigo + " não encontrada.",
+          "Substituir Pessoa",
+          JOptionPane.INFORMATION_MESSAGE);
       return;
     }
 
@@ -581,20 +719,19 @@ public class Main {
     boolean feliz = solicitarFeliz();
     Moradia moradia = solicitarMoradia();
 
-    Pessoa novaPessoa =
-        new Pessoa(
-            nomeNovo,
-            dataNascimento,
-            genero,
-            altura,
-            peso,
-            renda,
-            naturalidade,
-            hobby,
-            estadoCivil,
-            escolaridade,
-            feliz,
-            moradia);
+    Pessoa novaPessoa = new Pessoa(
+        nomeNovo,
+        dataNascimento,
+        genero,
+        altura,
+        peso,
+        renda,
+        naturalidade,
+        hobby,
+        estadoCivil,
+        escolaridade,
+        feliz,
+        moradia);
 
     dataset.replacePessoa(pessoaAntiga, novaPessoa);
     JOptionPane.showMessageDialog(
@@ -603,4 +740,72 @@ public class Main {
         "Substituir Pessoa",
         JOptionPane.INFORMATION_MESSAGE);
   }
+  
+private static void pesquisarSimiliar() {
+    if (totalCadastrado == 0) {
+        JOptionPane.showMessageDialog(
+            null,
+            "Não há pessoas cadastradas no sistema. Por favor, cadastre algumas pessoas para"
+                + " pesquisar pessoa.",
+            "Nenhum Cadastro Encontrado",
+            JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+
+    String nome = JOptionPane.showInputDialog(
+        null,
+        "Digite o nome da pessoa para pesquisa:",
+        "Pesquisar Pessoa",
+        JOptionPane.QUESTION_MESSAGE);
+
+    if (nome == null || nome.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(
+            null,
+            "Nome inválido. Por favor, insira um nome válido.",
+            "Erro",
+            JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    String quantidadeStr = JOptionPane.showInputDialog(
+        null,
+        "Digite a quantidade de pessoas mais similares:",
+        "Pesquisar Pessoa",
+        JOptionPane.QUESTION_MESSAGE);
+
+
+    int n = Integer.parseInt(quantidadeStr);
+    if (n <= 0) {
+        JOptionPane.showMessageDialog(
+            null,
+            "Quantidade inválida. Por favor, insira um número inteiro positivo.",
+            "Erro",
+            JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    Pessoa pessoa = dataset.getPessoaByName(nome);
+
+    if (pessoa == null) {
+        JOptionPane.showMessageDialog(
+            null,
+            "Pessoa não encontrada no sistema.",
+            "Erro",
+            JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    Pessoa[] pessoasSimilares = dataset.getSimilar(pessoa, n);
+    StringBuilder lista = new StringBuilder();
+    for (Pessoa p : pessoasSimilares) {
+        lista.append(p.toString()).append("\n");
+    }
+
+    JOptionPane.showMessageDialog(
+        null,
+        lista.toString(),
+        "Pessoas Similares",
+        JOptionPane.INFORMATION_MESSAGE);
+}
+
 }

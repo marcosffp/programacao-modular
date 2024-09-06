@@ -8,7 +8,14 @@ public class DistanceMeasure {
     this.dataset = dataset;
   }
 
+  public DistanceMeasure() {
+    
+  }
+
   public float[] normalizeField(String fieldName) {
+    if (fieldName == null || fieldName.isEmpty()) {
+      return new float[0];
+    }
     Pessoa[] pessoas = dataset.getAll();
     float[] valoresNormalizados = new float[dataset.size()];
 
@@ -20,6 +27,9 @@ public class DistanceMeasure {
   }
 
   private float normalizeAtributo(Pessoa pessoa, String fieldName) {
+    if (pessoa==null) {
+      return 0.0f;
+    }
     switch (fieldName.toUpperCase()) {
       case "PESO":
         return normalizeFloat(pessoa.getPeso(), dataset.minPeso(), dataset.maxPeso());
@@ -62,6 +72,9 @@ public class DistanceMeasure {
   }
 
   private int[] calcularDistanciasEnumBoolean(Pessoa first, Pessoa second, int numeroEnumBoolean) {
+    if (first == null || second == null) {
+      return new int[0];
+    }
 
     int[] distancias = new int[numeroEnumBoolean];
 
@@ -76,6 +89,9 @@ public class DistanceMeasure {
   }
 
   private float[] calcularDistanciasNormalizados(Pessoa first, Pessoa second, int numeroReaisInteiro, Dataset dataset) {
+    if (first == null || second == null || dataset == null) {
+      return new float[0];
+    }
 
     float[] distancias = new float[numeroReaisInteiro];
 
@@ -99,6 +115,10 @@ public class DistanceMeasure {
   }
 
   private float calcularSomaDosQuadrado(int[] distanciasEnumBoolean, float[] distanciasReaisInteiros) {
+    if (distanciasEnumBoolean == null || distanciasReaisInteiros == null) {
+      return 0.0f;
+    }
+
     int[] distanciasEbs = distanciasEnumBoolean;
     float[] distanciasRis = distanciasReaisInteiros;
     float somaDosQuadrado = 0.0F;

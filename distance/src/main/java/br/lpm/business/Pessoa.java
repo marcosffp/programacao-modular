@@ -106,7 +106,7 @@ public class Pessoa {
   public void setAltura(float altura) {
     if (isAlturaValida(altura)) {
       this.altura = altura;
-    }
+    } 
   }
 
   public int getPeso() {
@@ -189,50 +189,53 @@ public class Pessoa {
 
   @Override
   public String toString() {
+    StringBuilder sb = new StringBuilder();
 
-    return "**************************************************************"
-        + "\n"
-        + "Atura: "
-        + String.format("%.2f", altura)
-        + "m"
-        + "  |  "
-        + "Data de nascimento: "
-        + (formatadorData.format(dataNascimento) != null
-            ? formatadorData.format(dataNascimento)
-            : "Não informada")
-        + "\n"
-        + "Escolaridade: "
-        + escolaridade
-        + "  |  "
-        + "Estado civil: "
-        + estadoCivil
-        + "\n"
-        + "Feliz: "
-        + (feliz ? "Sim" : "Não")
-        + "  |  "
-        + "Gênero: "
-        + genero
-        + "  |  "
-        + "Hobby: "
-        + hobby
-        + "\n"
-        + "Moradia: "
-        + moradia
-        + "  |  "
-        + "Naturalidade: "
-        + (naturalidade != null ? naturalidade : "Não informada")
-        + "\n"
-        + "Nome: "
-        + (nome != null ? nome : "Não informado")
-        + "  |  "
-        + "Peso: "
-        + peso
-        + "kg"
-        + "  |  "
-        + "Renda: R$ "
-        + String.format("%.2f", renda)
-        + "\n"
-        + "**************************************************************"
-        + "\n";
+    sb.append("**************************************************************")
+        .append("\n")
+        .append("Altura: ")
+        .append(String.format("%.2f", altura))
+        .append("m")
+        .append("  |  ")
+        .append("Data de nascimento: ")
+        .append(
+            formatadorData.format(dataNascimento) != null
+                ? formatadorData.format(dataNascimento)
+                : "Não informada")
+        .append("\n")
+        .append("Escolaridade: ")
+        .append(escolaridade)
+        .append("  |  ")
+        .append("Estado civil: ")
+        .append(estadoCivil)
+        .append("\n")
+        .append("Feliz: ")
+        .append(feliz ? "Sim" : "Não")
+        .append("  |  ")
+        .append("Gênero: ")
+        .append(genero)
+        .append("  |  ")
+        .append("Hobby: ")
+        .append(hobby)
+        .append("\n")
+        .append("Moradia: ")
+        .append(moradia)
+        .append("  |  ")
+        .append("Naturalidade: ")
+        .append(naturalidade != null ? naturalidade : "Não informada")
+        .append("\n")
+        .append("Nome: ")
+        .append(nome != null ? nome : "Não informado")
+        .append("  |  ")
+        .append("Peso: ")
+        .append(peso)
+        .append("kg")
+        .append("  |  ")
+        .append("Renda: R$ ")
+        .append(String.format("%.2f", renda))
+        .append("\n")
+        .append("**************************************************************")
+        .append("\n");
+    return sb.toString();
   }
 }

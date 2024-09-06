@@ -94,22 +94,22 @@ public class DistanceMeasureTest {
   }
 
   @Test
-  @DisplayName("Testando normalizeFields para diferentes atributos")
+  @DisplayName("Testando normalização dos campos para diferentes atributos")
   public void testNormalizeFields() {
     float[] normalizacaoPesos = distanceMeasure.normalizeField("Peso");
-    assertEquals(
-        0.5f, normalizacaoPesos[0], "Valor normalizado para peso da pessoa1 está incorreto");
+    assertEquals(0.5f, normalizacaoPesos[0], "Valor normalizado para peso da pessoa1 deve ser 0.5");
 
     float[] normalizacaoAlturas = distanceMeasure.normalizeField("Altura");
     assertEquals(
-        0.0f, normalizacaoAlturas[1], "Valor normalizado para altura da pessoa2 está incorreto");
+        0.0f, normalizacaoAlturas[1], "Valor normalizado para altura da pessoa2 deve ser 0.0");
 
     float[] normalizacaoRendas = distanceMeasure.normalizeField("Renda");
     assertEquals(
-        1.0f, normalizacaoRendas[2], "Valor normalizado para renda da pessoa3 está incorreto");
+        1.0f, normalizacaoRendas[2], "Valor normalizado para renda da pessoa3 deve ser 1.0");
+
     float[] normalizacaoIdades = distanceMeasure.normalizeField("Idade");
     assertEquals(
-        0.0f, normalizacaoIdades[2], "Valor normalizado para idade da pessoa3 está incorreto");
+        0.0f, normalizacaoIdades[2], "Valor normalizado para idade da pessoa3 deve ser 0.0");
   }
 
   @Test
@@ -120,9 +120,9 @@ public class DistanceMeasureTest {
         0.84079534f,
         distance1,
         0.01f,
-        "A distância calculada entre pessoa1 e pessoa2 está incorreta.");
+        "A distância calculada entre pessoa1 e pessoa2 deve ser 0.84079534");
 
     float distance2 = distanceMeasure.calcDistance(pessoa1, pessoaIdenticaApessoa1);
-    assertEquals(0.0f, distance2, 0.01f, "A distância entre pessoas idênticas deveria ser 0.");
+    assertEquals(0.0f, distance2, 0.01f, "A distância entre pessoas idênticas deve ser 0.0");
   }
 }

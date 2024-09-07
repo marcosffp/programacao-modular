@@ -52,15 +52,14 @@ public class Pessoa {
     return nome;
   }
 
-  private boolean isStringValido(String nome) {
+  public boolean isStringValido(String nome) {
     if (nome == null || nome.isEmpty()) {
-      System.out.println("Nome nulo ou vazio");
       return false;
     }
-    char[] nomeChar = nome.toCharArray();
-    for (int i = 0; i < nomeChar.length; i++) {
-      if (!(Character.isLetter(nomeChar[i]) || nomeChar[i] == ' ')) {
-        System.out.println("Nome com símbolo ou número");
+
+    char[] caracteresNome = nome.toCharArray();
+    for (int i = 0; i < caracteresNome.length; i++) {
+      if (!(Character.isLetter(caracteresNome[i]) || caracteresNome[i] == ' ')) {
         return false;
       }
     }
@@ -77,12 +76,12 @@ public class Pessoa {
     return dataNascimento;
   }
 
-  private boolean isDataNascimentoValido(LocalDate dataNascimento) {
+  private boolean isDataNascimentoAntesHoje(LocalDate dataNascimento) {
     return dataNascimento.isBefore(LocalDate.now());
   }
 
   public void setDataNascimento(LocalDate dataNascimento) {
-    if (isDataNascimentoValido(dataNascimento)) {
+    if (isDataNascimentoAntesHoje(dataNascimento)) {
       this.dataNascimento = dataNascimento;
     }
   }
@@ -99,12 +98,12 @@ public class Pessoa {
     return altura;
   }
 
-  private boolean isAlturaValida(float altura) {
+  private boolean isAlturaDentroDosLimites(float altura) {
     return altura > 0 && altura < 2.60f;
   }
 
   public void setAltura(float altura) {
-    if (isAlturaValida(altura)) {
+    if (isAlturaDentroDosLimites(altura)) {
       this.altura = altura;
     } 
   }
@@ -113,12 +112,12 @@ public class Pessoa {
     return peso;
   }
 
-  private boolean isPesoValido(int peso) {
+  private boolean isPesoDentroDosLimites(int peso) {
     return peso > 0 && peso < 600;
   }
 
   public void setPeso(int peso) {
-    if (isPesoValido(peso)) {
+    if (isPesoDentroDosLimites(peso)) {
       this.peso = peso;
     }
   }
@@ -127,12 +126,12 @@ public class Pessoa {
     return renda;
   }
 
-  private boolean isRendaValida(float renda) {
+  private boolean isRendaPositiva(float renda) {
     return renda >= 0;
   }
 
   public void setRenda(float renda) {
-    if (isRendaValida(renda)) {
+    if (isRendaPositiva(renda)) {
       this.renda = renda;
     }
   }

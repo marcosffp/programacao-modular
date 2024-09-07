@@ -14,45 +14,38 @@ public class DistanceMeasure {
     if (fieldName == null || fieldName.isEmpty()) {
       return new float[0];
     }
-    
-    if (this.dataset == null) {
-      throw new IllegalStateException("Dataset não foi inicializado.");
-    }
-
     Pessoa[] pessoas = dataset.getAll();
     float[] valoresNormalizados = new float[pessoas.length];
-    normalizarCampo(pessoas, valoresNormalizados, fieldName);
+    aplicarNormalizacao(pessoas, valoresNormalizados, fieldName);
     return valoresNormalizados;
   }
 
-  private void normalizarCampo(Pessoa[] pessoas, float[] valoresNormalizados, String fieldName) {
-    switch (fieldName.toLowerCase()) {
+  private void aplicarNormalizacao(
+      Pessoa[] pessoas, float[] valoresNormalizados, String nomeCampo) {
+    switch (nomeCampo.toLowerCase()) {
       case "peso":
-        calcularNormalize(
+        calcularNormalizacao(
             pessoas, valoresNormalizados, dataset.minPeso(), dataset.maxPeso(), "peso");
-        return; 
+        return;
       case "altura":
-        calcularNormalize(
+        calcularNormalizacao(
             pessoas, valoresNormalizados, dataset.minAltura(), dataset.maxAltura(), "altura");
         return;
       case "renda":
-        calcularNormalize(
+        calcularNormalizacao(
             pessoas, valoresNormalizados, dataset.minRenda(), dataset.maxRenda(), "renda");
         return;
       case "idade":
-        calcularNormalize(
+        calcularNormalizacao(
             pessoas, valoresNormalizados, dataset.minIdade(), dataset.maxIdade(), "idade");
-        return; 
+        return;
       default:
-        for (int i = 0; i < pessoas.length; i++) {
-          valoresNormalizados[i] = 0.0f;
-        }
-        return; 
+        return;
     }
   }
 
-  private float getField(Pessoa pessoa, String fieldName) {
-    switch (fieldName) {
+  private float obterValorCampo(Pessoa pessoa, String nomeCampo) {
+    switch (nomeCampo) {
       case "peso":
         return (float) pessoa.getPeso();
       case "idade":
@@ -65,11 +58,12 @@ public class DistanceMeasure {
         return 0.0f;
     }
   }
-  
-  private void calcularNormalize(Pessoa[] pessoas, float[] valoresNormalizados, float minino, float maximo,String fieldName) {
+
+  private void calcularNormalizacao(
+      Pessoa[] pessoas, float[] valoresNormalizados, float minino, float maximo, String nomeCampo) {
     for (int i = 0; i < dataset.size(); i++) {
-      float valor = getField(pessoas[i], fieldName);
-      valoresNormalizados[i] = (maximo == minino) ? 0 : ((valor - minino) / (maximo - minino));
+      float x = obterValorCampo(pessoas[i], nomeCampo);
+      valoresNormalizados[i] = (maximo == minino) ? 0 : ((x - minino) / (maximo - minino));
     }
   }
 
@@ -77,45 +71,48 @@ public class DistanceMeasure {
     if (first == null || second == null) {
       return 0.0f;
     }
-    int[] distanciasEnumBooleans = calcularDistanciasEnunsBoolenan(first, second);
-    int qtdAtributosNumerico=QUANTIDADE_ATRIBUTO-6;
-    float[] distanciasCamposNumericos =new float[qtdAtributosNumerico];
-      distanciasCamposNumericos[0] = calcularDistanciasCamposNumericos(first, second, "idade");
-      distanciasCamposNumericos[1] = calcularDistanciasCamposNumericos(first, second, "peso");
-      distanciasCamposNumericos[2] = calcularDistanciasCamposNumericos(first, second, "altura");
-      distanciasCamposNumericos[3] = calcularDistanciasCamposNumericos(first, second, "renda");
-    float somaDosQuadrados = somaAoQuadrado(distanciasEnumBooleans, distanciasCamposNumericos);
-    return (float) Math.sqrt(
-        somaDosQuadrados / QUANTIDADE_ATRIBUTO);
+    int[] distanciasAtributosCategorizados =
+        calcularDistanciasAtributosCategorizados(first, second);
+    int quantidadeAtributosNumerico = QUANTIDADE_ATRIBUTO - 6;
+    float[] distanciasAtributosNumericos = new float[quantidadeAtributosNumerico];
+    distanciasAtributosNumericos[0] = calcularDistanciaAtributoNumerico(first, second, "idade");
+    distanciasAtributosNumericos[1] = calcularDistanciaAtributoNumerico(first, second, "peso");
+    distanciasAtributosNumericos[2] = calcularDistanciaAtributoNumerico(first, second, "altura");
+    distanciasAtributosNumericos[3] = calcularDistanciaAtributoNumerico(first, second, "renda");
+    float somaQuadrado =
+        calcularSomaQuadrados(distanciasAtributosCategorizados, distanciasAtributosNumericos);
+    return (float) Math.sqrt(somaQuadrado / QUANTIDADE_ATRIBUTO);
   }
-  
-  private int[] calcularDistanciasEnunsBoolenan(Pessoa first, Pessoa second) {
-    int[] distanciasEnumBoolean = {
-        first.getEscolaridade().equals(second.getEscolaridade()) ? 0 : 1,
-        first.getEstadoCivil().equals(second.getEstadoCivil()) ? 0 : 1,
-        first.getGenero().equals(second.getGenero()) ? 0 : 1,
-        first.getHobby().equals(second.getHobby()) ? 0 : 1,
-        first.getMoradia().equals(second.getMoradia()) ? 0 : 1,
-        first.isFeliz() == second.isFeliz() ? 0 : 1
+
+  private int[] calcularDistanciasAtributosCategorizados(Pessoa first, Pessoa second) {
+    int[] distanciasAtributosCategorizados = {
+      first.getEscolaridade().equals(second.getEscolaridade()) ? 0 : 1,
+      first.getEstadoCivil().equals(second.getEstadoCivil()) ? 0 : 1,
+      first.getGenero().equals(second.getGenero()) ? 0 : 1,
+      first.getHobby().equals(second.getHobby()) ? 0 : 1,
+      first.getMoradia().equals(second.getMoradia()) ? 0 : 1,
+      first.isFeliz() == second.isFeliz() ? 0 : 1
     };
-    return distanciasEnumBoolean;
+    return distanciasAtributosCategorizados;
   }
-  
-  private float calcularDistanciasCamposNumericos(Pessoa first, Pessoa second, String fieldName) {
-    float[] valorNormalizados = normalizeField(fieldName);
-    int posicaoPessoaFirst = dataset.getPosicaoDaPessoa(first);
-    int posicaoPessoaSecond = dataset.getPosicaoDaPessoa(second);
-    float valorDistancia = valorNormalizados[posicaoPessoaFirst] - valorNormalizados[posicaoPessoaSecond];
-    return Math.abs(valorDistancia);
+
+  private float calcularDistanciaAtributoNumerico(Pessoa first, Pessoa second, String nomeCampo) {
+    float[] valoresNormalizados = normalizeField(nomeCampo);
+    int posicaoPrimeiraPessoa = dataset.obterPosicaoPessoa(first);
+    int posicaoSegundaPessoa = dataset.obterPosicaoPessoa(second);
+    float distanciaAtributo =
+        valoresNormalizados[posicaoPrimeiraPessoa] - valoresNormalizados[posicaoSegundaPessoa];
+    return Math.abs(distanciaAtributo);
   }
-  
-  private float somaAoQuadrado(int[] distanciasEnumBooleans, float[] distanciasCamposNumericos) {
+
+  private float calcularSomaQuadrados(
+      int[] distanciasAtributosCategorizados, float[] distanciasAtributosNumericos) {
     float soma = 0.0f;
-    for (int i = 0; i < distanciasEnumBooleans.length; i++) {
-      soma += (distanciasEnumBooleans[i] * distanciasEnumBooleans[i]);
+    for (int i = 0; i < distanciasAtributosCategorizados.length; i++) {
+      soma += (distanciasAtributosCategorizados[i] * distanciasAtributosCategorizados[i]);
     }
-    for (int i = 0; i < distanciasCamposNumericos.length; i++) {
-      soma += (distanciasCamposNumericos[i] * distanciasCamposNumericos[i]);
+    for (int i = 0; i < distanciasAtributosNumericos.length; i++) {
+      soma += (distanciasAtributosNumericos[i] * distanciasAtributosNumericos[i]);
     }
     return soma;
   }

@@ -61,7 +61,7 @@ br.lpm.business::Dataset
 --
 _-MAX_PESSOAS = 100: int_
 _-pessoas: Pessoas[MAX_PESSOAS]_
--quantidadePessoa: int
+-quantidadePessoas: int
 --
 +addPessoa(pessoa: Pessoa): void
 -executarRemocao(i :int): void

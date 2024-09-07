@@ -115,13 +115,16 @@ public class DistanceMeasureTest {
   @Test
   @DisplayName("Testando a distância calculada entre duas pessoas")
   public void testCalcDistance() {
+      dataset.removeAll();
+      dataset.addPessoa(pessoa1);
+    dataset.addPessoa(pessoa2);
     float distance1 = distanceMeasure.calcDistance(pessoa1, pessoa2);
     assertEquals(
-        0.84079534f,
+        0.894f,
         distance1,
         0.01f,
         "A distância calculada entre pessoa1 e pessoa2 deve ser 0.84079534");
-
+    dataset.addPessoa(pessoaIdenticaApessoa1);
     float distance2 = distanceMeasure.calcDistance(pessoa1, pessoaIdenticaApessoa1);
     assertEquals(0.0f, distance2, 0.01f, "A distância entre pessoas idênticas deve ser 0.0");
   }

@@ -25,19 +25,25 @@ public class Main {
   private static DistanceMeasure distanceMeasure;
   public static Dataset dataset;
 
+
+  
+
   public static void main(String[] args) throws Exception {
+    dataset = new Dataset();
+    distanceMeasure = new DistanceMeasure(dataset);
     int opcaoMenu;
 
     do {
-      opcaoMenu = JOptionPane.showOptionDialog(
-          null,
-          "Escolha uma opção do menu:",
-          "Cadastro de Pessoas",
-          JOptionPane.DEFAULT_OPTION,
-          JOptionPane.QUESTION_MESSAGE,
-          null,
-          menu(),
-          menu()[0]);
+      opcaoMenu =
+          JOptionPane.showOptionDialog(
+              null,
+              "Escolha uma opção do menu:",
+              "Cadastro de Pessoas",
+              JOptionPane.DEFAULT_OPTION,
+              JOptionPane.QUESTION_MESSAGE,
+              null,
+              menu(),
+              menu()[0]);
       switch (opcaoMenu) {
         case 0:
           cadastrarPessoas();
@@ -73,13 +79,6 @@ public class Main {
 
     } while (opcaoMenu != 8);
   }
-  
-   static {
-    distanceMeasure = new DistanceMeasure(null); 
-    dataset = new Dataset(distanceMeasure);
-    distanceMeasure = new DistanceMeasure(dataset);
-    }
-
   private static void sairDoSistema() {
     JOptionPane.showMessageDialog(
         null, "Saindo do sistema", "Sair", JOptionPane.INFORMATION_MESSAGE);
@@ -221,7 +220,7 @@ public class Main {
         }
       }
 
-    } while (pessoa.getDataNascimento() == null); 
+    } while (pessoa.getDataNascimento() == null);
 
     return pessoa.getDataNascimento();
   }
@@ -258,14 +257,15 @@ public class Main {
     float altura;
     Pessoa pessoa = new Pessoa();
     do {
-      altura=    Float.parseFloat(
-        JOptionPane.showInputDialog(
-            null,
-            "Digite a altura: ",
-            "Cadastro n°" + (totalCadastrado + 1),
-            JOptionPane.QUESTION_MESSAGE));
+      altura =
+          Float.parseFloat(
+              JOptionPane.showInputDialog(
+                  null,
+                  "Digite a altura: ",
+                  "Cadastro n°" + (totalCadastrado + 1),
+                  JOptionPane.QUESTION_MESSAGE));
       pessoa.setAltura(altura);
-      if (pessoa.getAltura()==0) {
+      if (pessoa.getAltura() == 0) {
 
         JOptionPane.showMessageDialog(
             null,
@@ -321,7 +321,7 @@ public class Main {
             "Erro",
             JOptionPane.ERROR_MESSAGE);
       }
-    } while (pessoa.getRenda()< 0);
+    } while (pessoa.getRenda() < 0);
     return pessoa.getRenda();
   }
 
@@ -331,10 +331,10 @@ public class Main {
     do {
       naturalidade =
           JOptionPane.showInputDialog(
-        null,
-        "Digite a naturalidade:",
-        "Cadastro n°" + (totalCadastrado + 1),
-        JOptionPane.QUESTION_MESSAGE);
+              null,
+              "Digite a naturalidade:",
+              "Cadastro n°" + (totalCadastrado + 1),
+              JOptionPane.QUESTION_MESSAGE);
       pessoa.setNaturalidade(naturalidade);
       if (pessoa.getNaturalidade() == null) {
         JOptionPane.showMessageDialog(
@@ -496,26 +496,24 @@ public class Main {
     }
 
     JTextArea textArea = new JTextArea();
-    textArea.setEditable(false); 
-    textArea.setLineWrap(true); 
-    textArea.setWrapStyleWord(true); 
+    textArea.setEditable(false);
+    textArea.setLineWrap(true);
+    textArea.setWrapStyleWord(true);
 
     StringBuilder sb = new StringBuilder();
     Pessoa[] pessoas = dataset.getAll();
     for (int i = 0; i < totalCadastrado; i++) {
-      sb.append(pessoas[i].toString())
-          .append("\n\n"); 
+      sb.append(pessoas[i].toString()).append("\n\n");
     }
     textArea.setText(sb.toString());
 
     JScrollPane scrollPane = new JScrollPane(textArea);
-    scrollPane.setPreferredSize(
-        new Dimension(500, 400)); 
+    scrollPane.setPreferredSize(new Dimension(500, 400));
 
     JDialog dialog = new JDialog((Frame) null, "Lista de Pessoas Cadastradas", true);
     dialog.getContentPane().add(scrollPane, BorderLayout.CENTER);
-    dialog.pack(); 
-    dialog.setLocationRelativeTo(null); 
+    dialog.pack();
+    dialog.setLocationRelativeTo(null);
     dialog.setVisible(true);
   }
 
@@ -719,19 +717,20 @@ public class Main {
     boolean feliz = solicitarFeliz();
     Moradia moradia = solicitarMoradia();
 
-    Pessoa novaPessoa = new Pessoa(
-        nomeNovo,
-        dataNascimento,
-        genero,
-        altura,
-        peso,
-        renda,
-        naturalidade,
-        hobby,
-        estadoCivil,
-        escolaridade,
-        feliz,
-        moradia);
+    Pessoa novaPessoa =
+        new Pessoa(
+            nomeNovo,
+            dataNascimento,
+            genero,
+            altura,
+            peso,
+            renda,
+            naturalidade,
+            hobby,
+            estadoCivil,
+            escolaridade,
+            feliz,
+            moradia);
 
     dataset.replacePessoa(pessoaAntiga, novaPessoa);
     JOptionPane.showMessageDialog(
@@ -740,72 +739,66 @@ public class Main {
         "Substituir Pessoa",
         JOptionPane.INFORMATION_MESSAGE);
   }
-  
-private static void pesquisarSimiliar() {
+
+  private static void pesquisarSimiliar() {
     if (totalCadastrado == 0) {
-        JOptionPane.showMessageDialog(
-            null,
-            "Não há pessoas cadastradas no sistema. Por favor, cadastre algumas pessoas para"
-                + " pesquisar pessoa.",
-            "Nenhum Cadastro Encontrado",
-            JOptionPane.INFORMATION_MESSAGE);
-        return;
+      JOptionPane.showMessageDialog(
+          null,
+          "Não há pessoas cadastradas no sistema. Por favor, cadastre algumas pessoas para"
+              + " pesquisar pessoa.",
+          "Nenhum Cadastro Encontrado",
+          JOptionPane.INFORMATION_MESSAGE);
+      return;
     }
 
-    String nome = JOptionPane.showInputDialog(
-        null,
-        "Digite o nome da pessoa para pesquisa:",
-        "Pesquisar Pessoa",
-        JOptionPane.QUESTION_MESSAGE);
+    String nome =
+        JOptionPane.showInputDialog(
+            null,
+            "Digite o nome da pessoa para pesquisa:",
+            "Pesquisar Pessoa",
+            JOptionPane.QUESTION_MESSAGE);
 
     if (nome == null || nome.trim().isEmpty()) {
-        JOptionPane.showMessageDialog(
-            null,
-            "Nome inválido. Por favor, insira um nome válido.",
-            "Erro",
-            JOptionPane.ERROR_MESSAGE);
-        return;
+      JOptionPane.showMessageDialog(
+          null,
+          "Nome inválido. Por favor, insira um nome válido.",
+          "Erro",
+          JOptionPane.ERROR_MESSAGE);
+      return;
     }
 
-    String quantidadeStr = JOptionPane.showInputDialog(
-        null,
-        "Digite a quantidade de pessoas mais similares:",
-        "Pesquisar Pessoa",
-        JOptionPane.QUESTION_MESSAGE);
-
+    String quantidadeStr =
+        JOptionPane.showInputDialog(
+            null,
+            "Digite a quantidade de pessoas mais similares:",
+            "Pesquisar Pessoa",
+            JOptionPane.QUESTION_MESSAGE);
 
     int n = Integer.parseInt(quantidadeStr);
     if (n <= 0) {
-        JOptionPane.showMessageDialog(
-            null,
-            "Quantidade inválida. Por favor, insira um número inteiro positivo.",
-            "Erro",
-            JOptionPane.ERROR_MESSAGE);
-        return;
+      JOptionPane.showMessageDialog(
+          null,
+          "Quantidade inválida. Por favor, insira um número inteiro positivo.",
+          "Erro",
+          JOptionPane.ERROR_MESSAGE);
+      return;
     }
 
     Pessoa pessoa = dataset.getPessoaByName(nome);
 
     if (pessoa == null) {
-        JOptionPane.showMessageDialog(
-            null,
-            "Pessoa não encontrada no sistema.",
-            "Erro",
-            JOptionPane.ERROR_MESSAGE);
-        return;
+      JOptionPane.showMessageDialog(
+          null, "Pessoa não encontrada no sistema.", "Erro", JOptionPane.ERROR_MESSAGE);
+      return;
     }
 
     Pessoa[] pessoasSimilares = dataset.getSimilar(pessoa, n);
     StringBuilder lista = new StringBuilder();
     for (Pessoa p : pessoasSimilares) {
-        lista.append(p.toString()).append("\n");
+      lista.append(p.toString()).append("\n");
     }
 
     JOptionPane.showMessageDialog(
-        null,
-        lista.toString(),
-        "Pessoas Similares",
-        JOptionPane.INFORMATION_MESSAGE);
-}
-
+        null, lista.toString(), "Pessoas Similares", JOptionPane.INFORMATION_MESSAGE);
+  }
 }

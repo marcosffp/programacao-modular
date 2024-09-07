@@ -9,10 +9,14 @@ public class Dataset {
   private static Pessoa[] pessoas = new Pessoa[MAX_PESSOAS];
   private DistanceMeasure distanceMeasure;
 
-  public Dataset() {}
-
+  // Construtor com DistanceMeasure
   public Dataset(DistanceMeasure distanceMeasure) {
     this.distanceMeasure = distanceMeasure;
+  }
+
+  // Construtor vazio que cria um DistanceMeasure
+  public Dataset() {
+    this.distanceMeasure = new DistanceMeasure(this);
   }
 
   public static int getMaxPessoas() {
@@ -461,11 +465,7 @@ public class Dataset {
 
     float[] distancias = new float[quantidadePessoa]; 
     for (int i = 0; i < quantidadePessoa; i++) {
-      if (pessoas[i] != null && !pessoas[i].equals(pessoa)) {
         distancias[i] = distanceMeasure.calcDistance(pessoa, pessoas[i]);
-      } else {
-        distancias[i] = 0.0f; 
-      }
     }
 
     return distancias; 
@@ -489,97 +489,70 @@ public class Dataset {
     return distances;
   }
 
-  private float[] calcularDistancias(Pessoa pessoa, Pessoa[] pessoas) {
-    if (pessoa == null || pessoas == null) {
-      return new float[0];
-    }
-
-    float[] similares =
-        new float[quantidadePessoa - 1]; // Reduz o tamanho, pois ignoramos a própria pessoa
-    int index = 0;
-    for (int i = 0; i < quantidadePessoa; i++) {
-      if (!pessoas[i].equals(pessoa)) { // Ignora a comparação com a própria pessoa
-        similares[index++] = distanceMeasure.calcDistance(pessoa, pessoas[i]);
-      }
-    }
-    return similares;
-  }
-
-  private void ordenarPessoas(Pessoa[] pessoas, float[] similares) {
-    if (similares == null || pessoas == null) {
-      return;
-    }
-
-    for (int i = 1; i < quantidadePessoa; i++) {
-      for (int j = 0; j < i; j++) {
-        if (similares[i] < similares[j]) {
-          float aux = similares[i];
-          similares[i] = similares[j];
-          similares[j] = aux;
-
-          Pessoa temp = pessoas[i];
-          pessoas[i] = pessoas[j];
-          pessoas[j] = temp;
-        }
-      }
-    }
-  }
-
-  private Pessoa[] selecionarMaisSimilares(Pessoa[] pessoas, int n) {
-    if (pessoas == null || n <= 0) {
+  public Pessoa[] getSimilar(Pessoa pessoa, int N) {
+    if (N <= 0 || N >= quantidadePessoa || pessoa == null) {
       return new Pessoa[0];
     }
 
-    Pessoa[] maisSimilares = new Pessoa[n];
-    for (int i = 0; i < n; i++) {
-      maisSimilares[i] = pessoas[i];
-    }
-    return maisSimilares;
+
+    float[] targetDistances = calcDistanceVector(pessoa);
+    float[] closestDistances = initializeMinDistances(N);
+    Pessoa[] closestPeople = new Pessoa[N];
+
+    findSimilarPeople(targetDistances, closestDistances, closestPeople, N, pessoa);
+
+    return closestPeople;
   }
 
-  public Pessoa[] getSimilar(Pessoa pessoa, int n) {
-    if (pessoa == null) {
-      return new Pessoa
-          [0];
+  private void findSimilarPeople(
+      float[] targetDistances,
+      float[] closestDistances,
+      Pessoa[] closestPeople,
+      int N,
+      Pessoa pessoa) {
+    for (int i = 0; i < size(); i++) {
+      if (targetDistances[i] < closestDistances[N - 1] && !pessoas[i].equals(pessoa)) {
+        updateSimilarPeople(targetDistances[i], i, closestDistances, closestPeople, N);
+      }
     }
+  }
 
-    Pessoa[] pessoas = getAll();
-    float[] distancias = new float[pessoas.length];
-
-    // Calcula a distância entre a pessoa fornecida e todas as outras no dataset
-    for (int i = 0; i < pessoas.length; i++) {
-      if (pessoas[i].equals(pessoa)) {
-        distancias[i] =
-            Float.MAX_VALUE; // Define uma distância máxima para ignorar a própria pessoa
+  private void updateSimilarPeople(
+      float currentDistance, int index, float[] closestDistances, Pessoa[] closestPeople, int N) {
+    for (int j = N - 1; j > 0; j--) {
+      if (currentDistance < closestDistances[j - 1]) {
+        closestDistances[j] = closestDistances[j - 1];
+        closestPeople[j] = closestPeople[j - 1];
       } else {
-        distancias[i] = distanceMeasure.calcDistance(pessoa, pessoas[i]);
+        closestDistances[j] = currentDistance;
+        closestPeople[j] = pessoas[index];
+        break;
       }
     }
-
-    // Ordena as pessoas pelo vetor de distâncias usando um algoritmo de ordenação simples (como
-    // selection sort)
-    for (int i = 0; i < distancias.length - 1; i++) {
-      int minIndex = i;
-      for (int j = i + 1; j < distancias.length; j++) {
-        if (distancias[j] < distancias[minIndex]) {
-          minIndex = j;
-        }
-      }
-      // Troca as distâncias e as pessoas correspondentes
-      float tempDist = distancias[i];
-      distancias[i] = distancias[minIndex];
-      distancias[minIndex] = tempDist;
-
-      Pessoa tempPessoa = pessoas[i];
-      pessoas[i] = pessoas[minIndex];
-      pessoas[minIndex] = tempPessoa;
+    if (currentDistance < closestDistances[0]) {
+      closestDistances[0] = currentDistance;
+      closestPeople[0] = pessoas[index];
     }
+  }
 
-    // Retorna as `n` pessoas mais similares
-    Pessoa[] similares = new Pessoa[Math.min(n, pessoas.length)];
-    System.arraycopy(pessoas, 0, similares, 0, similares.length);
+  private float[] initializeMinDistances(int numberOfSimilarPeople) {
+    float[] minDistances = new float[numberOfSimilarPeople];
+    for (int i = 0; i < minDistances.length; i++) {
+      minDistances[i] = 43242;
+    }
+    return minDistances;
+  }
 
-    return similares;
+  public int getPosicaoDaPessoa(Pessoa pessoa) {
+    if (pessoa == null) {
+      return -1;
+    } 
+    for (int i = 0; i < quantidadePessoa; i++) {
+      if (pessoas[i] != null && pessoas[i].equals(pessoa)) {
+        return i;
+      }
+    }
+    return -1;
   }
 
   public void setDistanceMeasure(DistanceMeasure distanceMeasure) {

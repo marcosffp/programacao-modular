@@ -7,23 +7,7 @@ public class Dataset {
   private int quantidadePessoas;
   private static final int MAX_PESSOAS = 100;
   private static Pessoa[] pessoas = new Pessoa[MAX_PESSOAS];
-  private DistanceMeasure medidaDistancia;
-
-  public Dataset(DistanceMeasure distanceMeasure) {
-    this.medidaDistancia = distanceMeasure;
-  }
-
-  public Dataset() {
-    this.medidaDistancia = new DistanceMeasure(this);
-  }
-
-  public DistanceMeasure getMedidaDistancia() {
-    return medidaDistancia;
-  }
-
-  public void setDistanceMeasure(DistanceMeasure distanceMeasure) {
-    this.medidaDistancia = distanceMeasure;
-  }
+  private DistanceMeasure medidaDistancia=new DistanceMeasure(this);
 
   public static int getMaxPessoas() {
     return MAX_PESSOAS;

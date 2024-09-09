@@ -13,7 +13,7 @@ br.lpm.business::Pessoa
 -escolaridade: Escolaridade            
 -feliz: boolean                         
 -moradia: Moradia 
-__-formatadorData: DateTimeFormatter__
+__-dataFormatador: DateTimeFormatter__
 --
 -isStringValido (nome: String): boolean
 -isDataNascimentoValido (dataNascimento: LocalDate): boolean

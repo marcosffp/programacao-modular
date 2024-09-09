@@ -16,7 +16,7 @@ public class Pessoa {
   private Escolaridade escolaridade;
   private boolean feliz;
   private Moradia moradia;
-  private static DateTimeFormatter formatadorData = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+  private static DateTimeFormatter dataFormatador = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
   public Pessoa() {}
 
@@ -105,7 +105,7 @@ public class Pessoa {
   public void setAltura(float altura) {
     if (isAlturaDentroDosLimites(altura)) {
       this.altura = altura;
-    } 
+    }
   }
 
   public int getPeso() {
@@ -198,8 +198,8 @@ public class Pessoa {
         .append("  |  ")
         .append("Data de nascimento: ")
         .append(
-            formatadorData.format(dataNascimento) != null
-                ? formatadorData.format(dataNascimento)
+            dataFormatador.format(dataNascimento) != null
+                ? dataFormatador.format(dataNascimento)
                 : "Não informada")
         .append("\n")
         .append("Escolaridade: ")

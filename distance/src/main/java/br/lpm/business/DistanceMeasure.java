@@ -8,8 +8,6 @@ public class DistanceMeasure {
     this.dataset = dataset;
   }
 
-  public DistanceMeasure() {}
-
   public float[] normalizeField(String fieldName) {
     if (fieldName == null || fieldName.isEmpty()) {
       return new float[0];

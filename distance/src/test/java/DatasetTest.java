@@ -1,7 +1,6 @@
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import br.lpm.business.Dataset;
-import br.lpm.business.DistanceMeasure;
 import br.lpm.business.Escolaridade;
 import br.lpm.business.EstadoCivil;
 import br.lpm.business.Genero;
@@ -19,7 +18,6 @@ public class DatasetTest {
   private static Pessoa pessoa2;
   private static Pessoa pessoa3;
   private static Pessoa pessoaIdenticaApessoa1;
-  private DistanceMeasure distanceMeasure;
 
   @BeforeEach
   public void setUp() {

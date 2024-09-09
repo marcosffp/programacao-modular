@@ -73,10 +73,10 @@ public class DistanceMeasure {
         calcularDistanciasAtributosCategorizados(first, second);
     int quantidadeAtributosNumerico = QUANTIDADE_ATRIBUTO - 6;
     float[] distanciasAtributosNumericos = new float[quantidadeAtributosNumerico];
-    distanciasAtributosNumericos[0] = calcularDistanciaAtributoNumerico(first, second, "idade");
-    distanciasAtributosNumericos[1] = calcularDistanciaAtributoNumerico(first, second, "peso");
-    distanciasAtributosNumericos[2] = calcularDistanciaAtributoNumerico(first, second, "altura");
-    distanciasAtributosNumericos[3] = calcularDistanciaAtributoNumerico(first, second, "renda");
+    distanciasAtributosNumericos[0] = calcularDistanciaAtributosNumericos(first, second, "idade");
+    distanciasAtributosNumericos[1] = calcularDistanciaAtributosNumericos(first, second, "peso");
+    distanciasAtributosNumericos[2] = calcularDistanciaAtributosNumericos(first, second, "altura");
+    distanciasAtributosNumericos[3] = calcularDistanciaAtributosNumericos(first, second, "renda");
     float somaQuadrado =
         calcularSomaQuadrados(distanciasAtributosCategorizados, distanciasAtributosNumericos);
     return (float) Math.sqrt(somaQuadrado / QUANTIDADE_ATRIBUTO);
@@ -94,7 +94,7 @@ public class DistanceMeasure {
     return distanciasAtributosCategorizados;
   }
 
-  private float calcularDistanciaAtributoNumerico(Pessoa first, Pessoa second, String nomeCampo) {
+  private float calcularDistanciaAtributosNumericos(Pessoa first, Pessoa second, String nomeCampo) {
     float[] valoresNormalizados = normalizeField(nomeCampo);
     int posicaoPrimeiraPessoa = dataset.obterPosicaoPessoa(first);
     int posicaoSegundaPessoa = dataset.obterPosicaoPessoa(second);

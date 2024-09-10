@@ -240,7 +240,6 @@ public class Dataset {
     if (pessoa == null || pessoa.getDataNascimento() == null) {
       return 0;
     }
-
     LocalDate dataNascimento = pessoa.getDataNascimento();
     LocalDate dataAtual = LocalDate.now();
     int idade = dataAtual.getYear() - dataNascimento.getYear();
@@ -468,6 +467,50 @@ public class Dataset {
     return -1;
   }
 
+  public float[] normalizeField(String fieldName) {
+    if (fieldName == null || fieldName.isEmpty()) {
+      return new float[0];
+    }
+    float[] valoresNormalizados = new float[pessoas.length];
+    aplicarNormalizacao(valoresNormalizados, fieldName);
+    return valoresNormalizados;
+  }
+
+  
+  private void aplicarNormalizacao(float[] valoresNormalizados, String nomeCampo) {
+    switch (nomeCampo.toLowerCase()) {
+      case "peso":
+        calcularNormalizacaoInt(valoresNormalizados, minPeso(),maxPeso(), "peso");
+        return;
+      case "altura":
+        calcularNormalizacaoFloat(valoresNormalizados,minAltura(),maxAltura(), "altura");
+        return;
+      case "renda":
+        calcularNormalizacaoFloat(valoresNormalizados,minRenda(),maxRenda(), "renda");
+        return;
+      case "idade":
+        calcularNormalizacaoInt(valoresNormalizados,minIdade(),maxIdade(), "idade");
+        return;
+      default:
+        return;
+    }
+  }
+
+  private void calcularNormalizacaoInt(
+      float[] valoresNormalizados, int minino,int maximo, String nomeCampo) {
+    for (int i = 0; i < quantidadePessoas; i++) {
+      float x = obterValorPorTipoInt(pessoas[i], nomeCampo);
+      valoresNormalizados[i] = (maximo == minino) ? 0 : ((x - minino) / (maximo - minino));
+    }
+  }
+
+  private void calcularNormalizacaoFloat(float[] valoresNormalizados, float minino, float maximo, String nomeCampo) {
+    for (int i = 0; i < quantidadePessoas; i++) {
+      float x = obterValorPorTipoFloat(pessoas[i], nomeCampo);
+      valoresNormalizados[i] = (maximo == minino) ? 0 : ((x - minino) / (maximo - minino));
+    }
+  }
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -488,6 +531,18 @@ public class Dataset {
         .append(minPeso())
         .append("\n")
         .append("Peso Médio: ")
+        .append("Renda Máxima: ")
+        .append(maxRenda())
+        .append("\n")
+        .append("Renda Mínima: ")
+        .append(minRenda())
+        .append("\n")
+        .append("Idade Máxima: ")
+        .append(maxIdade())
+        .append("\n")
+        .append("Idade Mínima: ")
+        .append(minIdade())
+        .append("\n")
         .append(String.format("%.2f", avgPeso()))
         .append("\n")
         .append("Percentual de Adultos: ")

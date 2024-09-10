@@ -1,4 +1,4 @@
-<diagram program="umletino" version="15.1"><zoom_level>3</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>870</x><y>189</y><w>147</w><h>105</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
+<diagram program="umletino" version="15.1"><zoom_level>13</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>1534</x><y>234</y><w>637</w><h>455</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
 br.lpm.business::Pessoa
 --
 -nome: String
@@ -15,27 +15,27 @@ br.lpm.business::Pessoa
 -moradia: Moradia 
 __-dataFormatador: DateTimeFormatter__
 --
--isStringValido(nome: String): boolean
++isStringValido(nome: String): boolean
 -isDataNascimentoAntesHoje(dataNascimento: LocalDate): boolean
 -isAlturaDentroDosLimites(altura: float): boolean
 -isPesoDentroDosLimites(peso: int): boolean
 -isRendaPositiva(renda: float): boolean
 +toString(): String
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1080</x><y>180</y><w>63</w><h>36</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2444</x><y>208</y><w>273</w><h>156</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 br.lpm.business::Escolaridade
 --
  NENHUMA
  FUNDAMENTAL
  MEDIO
  SUPERIOR
- POS_GRADUACAO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1080</x><y>138</y><w>63</w><h>36</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+ POS_GRADUACAO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2444</x><y>26</y><w>273</w><h>156</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 br.lpm.business::EstadoCivil
 --
  SOLTEIRO
  CASADO
  VIUVO
  SEPARADO
- DIVORCIADO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1080</x><y>258</y><w>63</w><h>51</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+ DIVORCIADO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2444</x><y>546</y><w>273</w><h>221</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 br.lpm.business::Hobby
 --
  ARTE
@@ -45,12 +45,12 @@ br.lpm.business::Hobby
  MÚSICA
  CULINÁRIA
  GAME
- NENHUM</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1080</x><y>315</y><w>63</w><h>27</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+ NENHUM</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2444</x><y>793</y><w>273</w><h>117</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 br.lpm.business::Moradia
 --
  COM_FAMILIA
  ALUGUEL
- CASA_PROPRIA</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>525</x><y>135</y><w>261</w><h>234</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
+ CASA_PROPRIA</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>0</y><w>1131</w><h>1092</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
 br.lpm.business::Dataset
 --
 _-MAX_PESSOAS = 100: int_
@@ -101,47 +101,47 @@ calcularPorcentagem(quantidade: int): float
 -encontrarPessoasSemelhantes(distanciasAlvo: float[], menoresDistancias: float[], pessoasSemelhantes: Pessoa[], n: int, pessoa: Pessoa): void
 -atualizarPessoasSemelhantes(distanciaAtual: float, indice: int, menoresDistancias: float[], pessoasSemelhantes: Pessoa[], n: int): void
 +obterPosicaoPessoa(pessoa: Pessoa): int
++normalizeField(fieldName: String): float[]
+-aplicarNormalizacao(valoresNormalizados: float[], nomeCampo: String): void
+-calcularNormalizacaoFloat(valoesNormalizados: float[], minimo: float, maximo: float, nomeCampo: String): void
+-calcularNormalizacaoInt(valoesNormalizados: float[], minimo: int, maximo: int, nomeCampo: String): void
 +toString(): String
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>525</x><y>417</y><w>252</w><h>60</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>39</x><y>1235</y><w>1092</w><h>195</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
 br.lpm.business::DistanceMeasure
 --
 -dataset: Dataset
 __-QUANTIDADE_ATRIBUTO=10: int__
 --
-+normalizeField(fieldName: String): float[]
--aplicarNormalizacao(pessoas:Pessoa[], valoresNormalizados: float[], nomeCampo: String): void
--obterValorCampo(pessoa: Pessoa, nomeCampo: String): float
--calcularNormalizacao(pessoas: Pessoa[], valoesNormalizados: float[], minimo: float, maximo: float, nomeCampo: String): void
 +calcDistance(first: Pessoa, second: Pessoa): float
 -calcularDistanciaAtributosCategorizados(first: Pessoa, second: Pessoa): int[]
 -calcularDistanciaAtributosNumericos(first: Pessoa, second: Pessoa, nomeCampo: String): float
 -calcularSomaQuadrados(distanciasAtributosCategorizados: int[], distanciasAtributosNumericos: float[]): float
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1014</x><y>198</y><w>72</w><h>15</h></coordinates><panel_attributes>lt=&lt;&lt;-
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2158</x><y>273</y><w>312</w><h>78</h></coordinates><panel_attributes>lt=&lt;-
 m1=1
 m2=1
-tem</panel_attributes><additional_attributes>220;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1080</x><y>219</y><w>63</w><h>33</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
+tem</panel_attributes><additional_attributes>220;30;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2444</x><y>377</y><w>273</w><h>143</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
 br.lpm.business::Genero
 --
  FEMININO
  MASCULINO
  NAO_BINARIO
- NAO_RESPONDER</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1014</x><y>228</y><w>72</w><h>15</h></coordinates><panel_attributes>lt=&lt;&lt;-
+ NAO_RESPONDER</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2158</x><y>403</y><w>312</w><h>78</h></coordinates><panel_attributes>lt=&lt;-
 m1=1
 m2=1
-tem</panel_attributes><additional_attributes>220;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1014</x><y>264</y><w>72</w><h>21</h></coordinates><panel_attributes>lt=&lt;&lt;-
+tem</panel_attributes><additional_attributes>220;30;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>2158</x><y>559</y><w>312</w><h>104</h></coordinates><panel_attributes>lt=&lt;-
 m1=1
 m2=1
-tem</panel_attributes><additional_attributes>220;50;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1014</x><y>288</y><w>72</w><h>42</h></coordinates><panel_attributes>lt=&lt;&lt;-
+tem</panel_attributes><additional_attributes>220;60;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2158</x><y>663</y><w>312</w><h>195</h></coordinates><panel_attributes>lt=&lt;-
 m1=1
 m2=1
-tem</panel_attributes><additional_attributes>220;120;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1014</x><y>147</y><w>72</w><h>51</h></coordinates><panel_attributes>lt=&lt;&lt;-
+tem</panel_attributes><additional_attributes>220;130;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2158</x><y>65</y><w>312</w><h>208</h></coordinates><panel_attributes>lt=&lt;-
 m1=1
 m2=1
-tem</panel_attributes><additional_attributes>220;10;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>783</x><y>234</y><w>93</w><h>15</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1..*
-m2=1
-contém</panel_attributes><additional_attributes>10;20;290;20</additional_attributes></element><element><id>Relation</id><coordinates><x>642</x><y>366</y><w>15</w><h>57</h></coordinates><panel_attributes>lt=-
-m1=1
-m2=1
-tem</panel_attributes><additional_attributes>10;170;10;10</additional_attributes></element></diagram>
+tem</panel_attributes><additional_attributes>220;10;10;140</additional_attributes></element><element><id>Relation</id><coordinates><x>1118</x><y>390</y><w>442</w><h>65</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+m1=*
+m2=0..1
+possui</panel_attributes><additional_attributes>320;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>546</x><y>1079</y><w>91</w><h>182</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m1=0..1
+m2=0..1
+agrega</panel_attributes><additional_attributes>10;120;10;10</additional_attributes></element></diagram>

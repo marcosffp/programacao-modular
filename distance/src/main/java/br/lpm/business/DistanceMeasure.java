@@ -8,62 +8,6 @@ public class DistanceMeasure {
     this.dataset = dataset;
   }
 
-  public float[] normalizeField(String fieldName) {
-    if (fieldName == null || fieldName.isEmpty()) {
-      return new float[0];
-    }
-    Pessoa[] pessoas = dataset.getAll();
-    float[] valoresNormalizados = new float[pessoas.length];
-    aplicarNormalizacao(pessoas, valoresNormalizados, fieldName);
-    return valoresNormalizados;
-  }
-
-  private void aplicarNormalizacao(
-      Pessoa[] pessoas, float[] valoresNormalizados, String nomeCampo) {
-    switch (nomeCampo.toLowerCase()) {
-      case "peso":
-        calcularNormalizacao(
-            pessoas, valoresNormalizados, dataset.minPeso(), dataset.maxPeso(), "peso");
-        return;
-      case "altura":
-        calcularNormalizacao(
-            pessoas, valoresNormalizados, dataset.minAltura(), dataset.maxAltura(), "altura");
-        return;
-      case "renda":
-        calcularNormalizacao(
-            pessoas, valoresNormalizados, dataset.minRenda(), dataset.maxRenda(), "renda");
-        return;
-      case "idade":
-        calcularNormalizacao(
-            pessoas, valoresNormalizados, dataset.minIdade(), dataset.maxIdade(), "idade");
-        return;
-      default:
-        return;
-    }
-  }
-
-  private float obterValorCampo(Pessoa pessoa, String nomeCampo) {
-    switch (nomeCampo) {
-      case "peso":
-        return (float) pessoa.getPeso();
-      case "idade":
-        return (float) dataset.calcularIdade(pessoa);
-      case "altura":
-        return pessoa.getAltura();
-      case "renda":
-        return pessoa.getRenda();
-      default:
-        return 0.0f;
-    }
-  }
-
-  private void calcularNormalizacao(
-      Pessoa[] pessoas, float[] valoresNormalizados, float minino, float maximo, String nomeCampo) {
-    for (int i = 0; i < dataset.size(); i++) {
-      float x = obterValorCampo(pessoas[i], nomeCampo);
-      valoresNormalizados[i] = (maximo == minino) ? 0 : ((x - minino) / (maximo - minino));
-    }
-  }
 
   public float calcDistance(Pessoa first, Pessoa second) {
     if (first == null || second == null) {
@@ -95,7 +39,7 @@ public class DistanceMeasure {
   }
 
   private float calcularDistanciaAtributosNumericos(Pessoa first, Pessoa second, String nomeCampo) {
-    float[] valoresNormalizados = normalizeField(nomeCampo);
+    float[] valoresNormalizados = dataset.normalizeField(nomeCampo);
     int posicaoPrimeiraPessoa = dataset.obterPosicaoPessoa(first);
     int posicaoSegundaPessoa = dataset.obterPosicaoPessoa(second);
     float distanciaAtributo =

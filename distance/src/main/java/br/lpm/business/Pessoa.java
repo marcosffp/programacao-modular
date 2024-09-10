@@ -189,7 +189,6 @@ public class Pessoa {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-
     sb.append("**************************************************************")
         .append("\n")
         .append("Altura: ")

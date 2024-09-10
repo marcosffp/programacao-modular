@@ -18,7 +18,6 @@ public class DistanceMeasureTest {
   private Dataset dataset;
   private Pessoa pessoa1;
   private Pessoa pessoa2;
-  private Pessoa pessoa3;
   private Pessoa pessoaIdenticaApessoa1;
   private DistanceMeasure distanceMeasure;
 
@@ -54,21 +53,6 @@ public class DistanceMeasureTest {
             true,
             Moradia.ALUGUEL);
 
-    pessoa3 =
-        new Pessoa(
-            "Bernardo",
-            LocalDate.of(2014, 2, 10),
-            Genero.MASCULINO,
-            1.60f,
-            60,
-            2000.12f,
-            "Belo Horizonte",
-            Hobby.ESPORTE,
-            EstadoCivil.SOLTEIRO,
-            Escolaridade.MEDIO,
-            false,
-            Moradia.ALUGUEL);
-
     pessoaIdenticaApessoa1 =
         new Pessoa(
             "Marcos",
@@ -85,33 +69,8 @@ public class DistanceMeasureTest {
             Moradia.CASA_PROPRIA);
 
     dataset = new Dataset();
-    dataset.addPessoa(pessoa1);
-    dataset.addPessoa(pessoa2);
-    dataset.addPessoa(pessoa3);
-    dataset.addPessoa(pessoaIdenticaApessoa1);
-
     distanceMeasure = new DistanceMeasure(dataset);
   }
-
-  @Test
-  @DisplayName("Testando normalização dos campos para diferentes atributos")
-  public void testNormalizeFields() {
-    float[] normalizacaoPesos = distanceMeasure.normalizeField("Peso");
-    assertEquals(0.5f, normalizacaoPesos[0], "Valor normalizado para peso da pessoa1 deve ser 0.5");
-
-    float[] normalizacaoAlturas = distanceMeasure.normalizeField("Altura");
-    assertEquals(
-        0.0f, normalizacaoAlturas[1], "Valor normalizado para altura da pessoa2 deve ser 0.0");
-
-    float[] normalizacaoRendas = distanceMeasure.normalizeField("Renda");
-    assertEquals(
-        1.0f, normalizacaoRendas[2], "Valor normalizado para renda da pessoa3 deve ser 1.0");
-
-    float[] normalizacaoIdades = distanceMeasure.normalizeField("Idade");
-    assertEquals(
-        0.0f, normalizacaoIdades[2], "Valor normalizado para idade da pessoa3 deve ser 0.0");
-  }
-
   @Test
   @DisplayName("Testando a distância calculada entre duas pessoas")
   public void testCalcDistance() {

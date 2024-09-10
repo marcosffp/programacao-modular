@@ -29,7 +29,7 @@ public class DatasetTest {
             1.70f,
             70,
             600.54f,
-            "Mineira",
+            "Santa Luzia",
             Hobby.NENHUM,
             EstadoCivil.CASADO,
             Escolaridade.SUPERIOR,
@@ -44,7 +44,7 @@ public class DatasetTest {
             1.40f,
             80,
             100.12f,
-            "Mineira",
+            "Santa Luzia",
             Hobby.ESPORTE,
             EstadoCivil.SOLTEIRO,
             Escolaridade.MEDIO,
@@ -59,7 +59,7 @@ public class DatasetTest {
             1.60f,
             60,
             2000.12f,
-            "Salvador",
+            "Belo Horizonte",
             Hobby.ESPORTE,
             EstadoCivil.SOLTEIRO,
             Escolaridade.MEDIO,
@@ -74,7 +74,7 @@ public class DatasetTest {
             1.70f,
             70,
             600.54f,
-            "Mineira",
+            "Santa Luzia",
             Hobby.NENHUM,
             EstadoCivil.CASADO,
             Escolaridade.SUPERIOR,
@@ -437,5 +437,27 @@ public class DatasetTest {
         pessoaIdenticaApessoa1,
         similares2[0],
         "A pessoa mais similar a pessoa1 deve ser pessoaIdenticaApessoa1");
+  }
+
+  @Test
+  @DisplayName("Testando normalização dos campos para diferentes atributos")
+  public void testNormalizeFields() {
+    dataset.addPessoa(pessoa1);
+    dataset.addPessoa(pessoa2);
+    dataset.addPessoa(pessoa3);
+    float[] normalizacaoPesos = dataset.normalizeField("Peso");
+    assertEquals(0.5f, normalizacaoPesos[0], "Valor normalizado para peso da pessoa1 deve ser 0.5");
+
+    float[] normalizacaoAlturas = dataset.normalizeField("Altura");
+    assertEquals(
+        0.0f, normalizacaoAlturas[1], "Valor normalizado para altura da pessoa2 deve ser 0.0");
+
+    float[] normalizacaoRendas = dataset.normalizeField("Renda");
+    assertEquals(
+        1.0f, normalizacaoRendas[2], "Valor normalizado para renda da pessoa3 deve ser 1.0");
+
+    float[] normalizacaoIdades = dataset.normalizeField("Idade");
+    assertEquals(
+        0.0f, normalizacaoIdades[2], "Valor normalizado para idade da pessoa3 deve ser 0.0");
   }
 }

@@ -380,7 +380,7 @@ public class Main {
     areaTexto.setText(sb.toString());
 
     JScrollPane painelRolagem = new JScrollPane(areaTexto);
-    painelRolagem.setPreferredSize(new Dimension(500, 400));
+    painelRolagem.setPreferredSize(new Dimension(400, 400));
 
     JDialog janelaDialogo = new JDialog((Frame) null, "Lista de Pessoas Cadastradas", true);
     janelaDialogo.getContentPane().add(painelRolagem, BorderLayout.CENTER);

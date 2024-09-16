@@ -1,17 +1,24 @@
 package br.lpm.business;
 
+
 public class Veiculo {
   private String modelo;
   private int ano;
   private String placa;
-  private float quilometragem;
+  private int km;
   private Estado estado;
+  private static final int MAX_MANUTENCOES = 1000;
+  private static final int MAX_MOTORISTAS = 1000;
+  private int numManutencoes = 0;
+  private int numMotoristas = 0;
+  private Manutencao[] manutencoes = new Manutencao[MAX_MANUTENCOES];
+  private Motorista[] motoristas = new Motorista[MAX_MOTORISTAS];
 
-  public Veiculo(String modelo, int ano, String placa, float quilometragem, Estado estado) {
+  public Veiculo(String modelo, int ano, String placa, int km, Estado estado) {
     this.modelo = modelo;
     this.ano = ano;
     this.placa = placa;
-    this.quilometragem = quilometragem;
+    this.km = km;
     this.estado = estado;
   }
 
@@ -39,12 +46,12 @@ public class Veiculo {
     this.placa = placa;
   }
 
-  public float getQuilometragem() {
-    return quilometragem;
+  public int getKm() {
+    return km;
   }
 
-  public void setQuilometragem(float quilometragem) {
-    this.quilometragem = quilometragem;
+  public void setKm(int km) {
+    this.km = km;
   }
 
   public Estado getEstado() {
@@ -53,5 +60,53 @@ public class Veiculo {
 
   public void setEstado(Estado estado) {
     this.estado = estado;
+  }
+
+      public void addManutencao(Manutencao manutencao) {
+        manutencoes[numManutencoes++] = manutencao;
+    }
+
+  private void executarRemocaoManutencao(int i) {
+    for (int j = i; j < numManutencoes - 1; j++) {
+      manutencoes[j] = manutencoes[j + 1];
+    }
+    manutencoes[--numManutencoes] = null;
+  }
+
+  public void removeManutencao(Manutencao manutencao) {
+    for (int i = 0; i < numManutencoes; i++) {
+      if (manutencoes[i].equals(manutencao)) {
+        executarRemocaoManutencao(i);
+        return;
+      }
+    }
+  }
+
+  public Manutencao[] getAllManutencoes() {
+    return manutencoes;
+  }
+
+  public void addMotorista(Motorista motorista) {
+    motoristas[numMotoristas++] = motorista;
+  }
+
+  private void executarRemocaoMotorista(int i) {
+    for (int j = i; j < numMotoristas - 1; j++) {
+      motoristas[j] = motoristas[j + 1];
+    }
+    motoristas[--numMotoristas] = null;
+  }
+
+  public void removeMotorista(Motorista motorista) {
+    for (int i = 0; i < numMotoristas; i++) {
+      if (motoristas[i].equals(motorista)) {
+        executarRemocaoMotorista(i);
+        return;
+      }
+    }
+  }
+
+  public Motorista[] getAllMotoristas() {
+    return motoristas;
   }
 }

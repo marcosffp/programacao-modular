@@ -3,20 +3,20 @@ package br.lpm.business;
 import java.time.LocalDate;
 
 public class Manutencao {
-  private LocalDate dataTermino;
+  private LocalDate previsao;
   private Veiculo veiculo;
+  private Oficina oficina;
 
-  public Manutencao(LocalDate dataTermino, Veiculo veiculo) {
-    this.dataTermino = dataTermino;
-    this.veiculo = veiculo;
+  public Manutencao(LocalDate previsao) {
+    this.previsao = previsao;
   }
 
-  public LocalDate getDataTermino() {
-    return dataTermino;
+  public LocalDate getPrevisao() {
+    return previsao;
   }
 
-  public void setDataTermino(LocalDate dataTermino) {
-    this.dataTermino = dataTermino;
+  public void setPrevisao(LocalDate previsao) {
+    this.previsao = previsao;
   }
 
   public Veiculo getVeiculo() {
@@ -26,4 +26,13 @@ public class Manutencao {
   public void setVeiculo(Veiculo veiculo) {
     this.veiculo = veiculo;
   }
+
+  public Oficina getOficina() {
+    return oficina;
+  }
+
+  public void setOficina(Oficina oficina) {
+    this.oficina = oficina;
+  }
+
 }

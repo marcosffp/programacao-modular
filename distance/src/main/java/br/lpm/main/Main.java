@@ -220,12 +220,74 @@ public class Main {
         "Digite a renda: ", "Renda inválida. A renda deve ser um valor positivo.", 0f, 0f, true);
   }
 
+  private static Float validarEntradaFloat(
+      String mensagemSolicitacao,
+      String mensagemErro,
+      float valorMinimo,
+      float valorMaximo,
+      boolean semValorMaximo) {
+    float valorEntrada;
+    Pessoa pessoa = new Pessoa();
+    do {
+      valorEntrada =
+          Float.parseFloat(
+              JOptionPane.showInputDialog(
+                  null,
+                  mensagemSolicitacao,
+                  "Cadastro n°" + (totalUsuariosCadastrado + 1),
+                  JOptionPane.QUESTION_MESSAGE));
+
+      if (semValorMaximo) {
+        pessoa.setRenda(valorEntrada);
+        if (pessoa.getRenda() < valorMinimo) {
+          JOptionPane.showMessageDialog(null, mensagemErro, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+      } else {
+        pessoa.setAltura(valorEntrada);
+        if (pessoa.getAltura() < valorMinimo || pessoa.getAltura() > valorMaximo) {
+          JOptionPane.showMessageDialog(null, mensagemErro, "Erro", JOptionPane.ERROR_MESSAGE);
+        }
+      }
+    } while ((!semValorMaximo
+            && (pessoa.getAltura() < valorMinimo || pessoa.getAltura() > valorMaximo))
+        || (semValorMaximo && pessoa.getRenda() < valorMinimo));
+
+    return semValorMaximo ? pessoa.getRenda() : pessoa.getAltura();
+  }
+
   private static String obterNome() {
     return validarEntradaString("nome");
   }
 
   private static String obterNaturalidade() {
     return validarEntradaString("naturalidade");
+  }
+
+  private static String validarEntradaString(String tipoInformacao) {
+    String entradaInformacao;
+    Pessoa pessoa = new Pessoa();
+    do {
+      entradaInformacao =
+          JOptionPane.showInputDialog(
+              null,
+              "Digite o " + tipoInformacao + ":",
+              "Cadastro n°" + (totalUsuariosCadastrado + 1),
+              JOptionPane.QUESTION_MESSAGE);
+      if (pessoa.isStringValido(entradaInformacao)) {
+        if ("nome".equals(tipoInformacao)) {
+          pessoa.setNome(entradaInformacao);
+        } else if ("naturalidade".equals(tipoInformacao)) {
+          pessoa.setNaturalidade(entradaInformacao);
+        }
+      } else {
+        JOptionPane.showMessageDialog(
+            null,
+            "inválido. Por favor, insira um texto contendo apenas letras e espaços.",
+            "Erro",
+            JOptionPane.ERROR_MESSAGE);
+      }
+    } while (!pessoa.isStringValido(entradaInformacao));
+    return entradaInformacao;
   }
 
   private static Genero obterGenero() {
@@ -370,7 +432,6 @@ public class Main {
     JTextArea areaTexto = new JTextArea();
     areaTexto.setEditable(false);
     areaTexto.setLineWrap(true);
-    areaTexto.setWrapStyleWord(true);
 
     StringBuilder sb = new StringBuilder();
     Pessoa[] pessoas = dataset.getAll();
@@ -386,7 +447,9 @@ public class Main {
     janelaDialogo.getContentPane().add(painelRolagem, BorderLayout.CENTER);
     janelaDialogo.pack();
     janelaDialogo.setLocationRelativeTo(null);
-    janelaDialogo.setVisible(true);
+
+    JOptionPane.showMessageDialog(
+        null, janelaDialogo.getContentPane(), "Lista de Pessoas Cadastradas", JOptionPane.PLAIN_MESSAGE);
   }
 
   private static void pesquisarPessoa() {
@@ -599,67 +662,5 @@ public class Main {
     }
   }
 
-  private static Float validarEntradaFloat(
-      String mensagemSolicitacao,
-      String mensagemErro,
-      float valorMinimo,
-      float valorMaximo,
-      boolean semValorMaximo) {
-    float valorEntrada;
-    Pessoa pessoa = new Pessoa();
-    do {
-      valorEntrada =
-          Float.parseFloat(
-              JOptionPane.showInputDialog(
-                  null,
-                  mensagemSolicitacao,
-                  "Cadastro n°" + (totalUsuariosCadastrado + 1),
-                  JOptionPane.QUESTION_MESSAGE));
-
-      if (!semValorMaximo) {
-        pessoa.setAltura(valorEntrada);
-        if (pessoa.getAltura() < valorMinimo || pessoa.getAltura() > valorMaximo) {
-          JOptionPane.showMessageDialog(null, mensagemErro, "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-      } else {
-        pessoa.setRenda(valorEntrada);
-        if (pessoa.getRenda() < valorMinimo) {
-          JOptionPane.showMessageDialog(null, mensagemErro, "Erro", JOptionPane.ERROR_MESSAGE);
-        }
-      }
-    } while ((!semValorMaximo
-            && (pessoa.getAltura() < valorMinimo || pessoa.getAltura() > valorMaximo))
-        || (semValorMaximo && pessoa.getRenda() < valorMinimo));
-
-    return semValorMaximo ? pessoa.getRenda() : pessoa.getAltura();
-  }
-
-  private static String validarEntradaString(String tipoInformacao) {
-    String entradaInformacao;
-    Pessoa pessoa = new Pessoa();
-    do {
-      entradaInformacao =
-          JOptionPane.showInputDialog(
-              null,
-              "Digite o " + tipoInformacao + ":",
-              "Cadastro n°" + (totalUsuariosCadastrado + 1),
-              JOptionPane.QUESTION_MESSAGE);
-      if (pessoa.isStringValido(entradaInformacao)) {
-        if ("nome".equals(tipoInformacao)) {
-          pessoa.setNome(entradaInformacao);
-        } else if ("naturalidade".equals(tipoInformacao)) {
-          pessoa.setNaturalidade(entradaInformacao);
-        }
-      } else {
-        JOptionPane.showMessageDialog(
-            null,
-            tipoInformacao.substring(0, 1).toUpperCase()
-                + tipoInformacao.substring(1)
-                + " inválido. Por favor, insira um texto contendo apenas letras e espaços.",
-            "Erro",
-            JOptionPane.ERROR_MESSAGE);
-      }
-    } while (!pessoa.isStringValido(entradaInformacao));
-    return entradaInformacao;
-  }
+  
 }

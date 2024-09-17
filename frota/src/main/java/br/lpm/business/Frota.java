@@ -3,84 +3,175 @@ package br.lpm.business;
 import java.time.LocalDate;
 
 public class Frota {
-  private static final int MAX_VEICULOS = 1000;
+  private static final int MAX_VALOR = 1000;
   private int numVeiculos = 0;
-  private Veiculo[] veiculos = new Veiculo[MAX_VEICULOS];
-  private static final int MAX_ROTAS = 1000;
+  private int numMecanicos = 0;
+  private int numMotoristas = 0;
+  private int numOficinas = 0;
   private int numRotas = 0;
-  private Rota[] rotas = new Rota[MAX_ROTAS];
-
-  public Veiculo[] getAllVeiculos() {
-    return veiculos;
-  }
+  private Veiculo[] veiculos = new Veiculo[MAX_VALOR];
+  private Rota[] rotas = new Rota[MAX_VALOR];
+  private Mecanico[] mecanicos = new Mecanico[MAX_VALOR];
+  private Motorista[] motoristas = new Motorista[MAX_VALOR];
+  private Oficina[] oficinas = new Oficina[MAX_VALOR];
 
   public void addVeiculo(Veiculo veiculo) {
-    veiculos[numVeiculos++] = veiculo;
+    numVeiculos=ManipuladorDeArrays.adicionar(veiculo, veiculos, numVeiculos, MAX_VALOR);
+  }
+
+  public void addRota(Rota rota) {
+    numRotas=ManipuladorDeArrays.adicionar(rota, rotas, numRotas, MAX_VALOR);
+  }
+
+  public void cadastrarMotorista(Motorista motorista) {
+    numMotoristas=ManipuladorDeArrays.adicionar(motorista, motoristas, numMotoristas, MAX_VALOR);
+  }
+
+  public void cadastrarOficina(Oficina oficina) {
+    numOficinas=ManipuladorDeArrays.adicionar(oficina, oficinas, numOficinas, MAX_VALOR);
+  }
+
+  public void cadastrarMecanico(Mecanico mecanico) {
+    numMecanicos=ManipuladorDeArrays.adicionar(mecanico, mecanicos, numMecanicos, MAX_VALOR);
+  }
+
+  public void removeRota(Rota rota) {
+    numRotas=ManipuladorDeArrays.remover(rota, rotas, numRotas, MAX_VALOR);
+  }
+
+  public void removeVeiculo(Veiculo veiculo) {
+    numVeiculos=ManipuladorDeArrays.remover(veiculo, veiculos, numVeiculos, MAX_VALOR);
+  }
+
+  public void removeMotorista(Motorista motorista) {
+    numMotoristas=ManipuladorDeArrays.remover(motorista, motoristas, numMotoristas, MAX_VALOR);
+  }
+
+  public void removeMecanico(Mecanico mecanico) {
+    numMecanicos=ManipuladorDeArrays.remover(mecanico, mecanicos, numMecanicos, MAX_VALOR);
+  }
+
+  public void removeOficina(Oficina oficina) {
+    numOficinas=ManipuladorDeArrays.remover(oficina, oficinas, numOficinas, MAX_VALOR);
   }
 
   public Veiculo getVeiculoByPlaca(String placa) {
-    for (int i = 0; i < numVeiculos; i++) {
-      if (veiculos[i].getPlaca().equals(placa)) {
-        return veiculos[i];
+    for (Veiculo veiculo : veiculos) {
+      if (veiculo!= null && veiculo.getPlaca().equalsIgnoreCase(placa)) {
+        return veiculo;
       }
     }
     return null;
   }
 
-  private void executarRemocao(int i) {
-    for (int j = i; j < numVeiculos - 1; j++) {
-      veiculos[j] = veiculos[j + 1];
-    }
-    veiculos[--numVeiculos] = null;
-  }
-
-  public void removeVeiculoByPlaca(String placa) {
-
-    for (int i = 0; i < numVeiculos; i++) {
-      if (veiculos[i].getPlaca().equals(placa)) {
-        executarRemocao(i);
-        return;
+  public Rota getRotaByVeiculo(Veiculo veiculo) {
+    for (Rota rota : rotas) {
+      if (rota != null && rota.getVeiculo().equals(veiculo)) {
+        return rota;
       }
     }
+    return null;
   }
 
-
-  public void replaceVeiculo(Veiculo velho, Veiculo novo) {
-
-    for (int i = 0; i < numVeiculos; i++) {
-      if (veiculos[i].equals(velho)) {
-        veiculos[i] = novo;
-        return;
+  public Motorista getMotoristaById(int id) {
+    for (Motorista motorista : motoristas) {
+      if (motorista != null&&motorista.getId() == id) {
+        return motorista;
       }
     }
+    return null;
   }
 
-  public Rota newRota(Motorista motorista, Veiculo veiculo, String origem, String destino) {
-    Rota rota = new Rota(origem, destino, veiculo, motorista, LocalDate.now());
-    return rota;
-  }
-
-  public void addRota(Rota rota) {
-    rotas[numRotas++] = rota;
-  }
-
-  private void executarRemocaoRota(int i) {
-    for (int j = i; j < numRotas - 1; j++) {
-      rotas[j] = rotas[j + 1];
-    }
-    rotas[--numRotas] = null;
-  }
-
-  public void removeRota(Rota rota) {
-    for (int i = 0; i < numRotas; i++) {
-      if (rotas[i].equals(rota)) {
-        executarRemocaoRota(i);
-        return;
+  public Mecanico getMecanicoById(int id) {
+    for (Mecanico mecanico : mecanicos) {
+      if (mecanico != null && mecanico.getId() == id) {
+        return mecanico;
       }
     }
+    return null;
+  }
+
+  public Oficina getOficinaByName(String nome) {
+    for (Oficina oficina : oficinas) {
+      if (oficina != null && oficina.getNome().equalsIgnoreCase(nome)) {
+        return oficina;
+      }
+    }
+    return null;
+  }
+
+  public Veiculo[] getAllVeiculos() {
+    return veiculos;
   }
 
   public Rota[] getAllRotas() {
     return rotas;
+  }
+
+  public Mecanico[] getAllMecanicos() {
+    return mecanicos;
+  }
+
+  public Motorista[] getAllMotoristas() {
+    return motoristas;
+  }
+
+  public Oficina[] getAllOficinas() {
+    return oficinas;
+  }
+
+  public void replaceVeiculo(Veiculo velho, Veiculo novo) {
+    ManipuladorDeArrays.replace(velho, novo, veiculos);
+  }
+
+  public void replaceRota(Rota velha, Rota nova) {
+    ManipuladorDeArrays.replace(velha, nova, rotas);
+  }
+
+  public void replaceMotorista(Motorista velho, Motorista novo) {
+    ManipuladorDeArrays.replace(velho, novo, motoristas);
+  }
+
+  public void replaceMecanico(Mecanico velho, Mecanico novo) {
+    ManipuladorDeArrays.replace(velho, novo, mecanicos);
+  }
+
+  public void replaceOficina(Oficina velha, Oficina nova) {
+    ManipuladorDeArrays.replace(velha, nova, oficinas);
+  }
+
+  public Rota newRota(Motorista motorista, Veiculo veiculo, String origem, String destino) {
+    Rota rota = new Rota();
+    rota.setMotorista(motorista);
+    rota.setVeiculo(veiculo);
+    rota.setOrigem(origem);
+    rota.setDestino(destino);
+    rota.setData(LocalDate.now());
+    addRota(rota);
+    return rota;
+  }
+
+  public int getNumVeiculos() {
+    return numVeiculos;
+  }
+
+  public static int getMaxValor() {
+    return MAX_VALOR;
+  }
+
+  public int getNumMecanicos() {
+    return numMecanicos;
+  }
+
+  public int getNumMotoristas() {
+    return numMotoristas;
+  }
+
+  public int getNumOficinas() {
+    return numOficinas;
+  }
+
+  public int getNumRotas() {
+    return numRotas;
   }
 }

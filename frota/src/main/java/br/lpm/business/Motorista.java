@@ -1,67 +1,55 @@
 package br.lpm.business;
 
-public class Motorista {
-  private String nome;
-  private int id;
-  private static int cont = 0;
-  Veiculo veiculoAtual;
+public class Motorista extends Pessoa {
+  private Veiculo veiculoAtual;
   private static final int MAX_VEICULOS = 1000;
   private int numVeiculos = 0;
   private Veiculo[] veiculos = new Veiculo[MAX_VEICULOS];
 
   public Motorista(String nome, int id, Veiculo veiculo) {
-    this.nome = nome;
-    this.id = id;
+    super(nome, id);
     this.veiculoAtual = veiculo;
     addVeiculo(veiculo);
-    cont++;
   }
 
-  public String getNome() {
-    return nome;
+  public int getNumVeiculos() {
+    return numVeiculos;
   }
 
-  public void setNome(String nome) {
-    this.nome = nome;
+  public void setVeiculoAtual(Veiculo veiculoAtual) {
+    this.veiculoAtual = veiculoAtual;
   }
 
-  public int getId() {
-    return id;
-  }
-
-  public void setId(int id) {
-    this.id = id;
-  }
-
-  public static int getCont() {
-    return cont;
-  }
-
-  public static void setCont(int cont) {
-    Motorista.cont = cont;
+  public Veiculo getVeiculoAtual() {
+    return veiculoAtual;
   }
 
   public void addVeiculo(Veiculo veiculo) {
-    veiculos[numVeiculos++] = veiculo;
-  }
-
-  private void executarRemocao(int i) {
-    for (int j = i; j < numVeiculos - 1; j++) {
-      veiculos[j] = veiculos[j + 1];
-    }
-    veiculos[--numVeiculos] = null;
+    ManipuladorDeArrays.adicionar(veiculo, veiculos, numVeiculos, MAX_VEICULOS);
   }
 
   public void removeVeiculo(Veiculo veiculo) {
-    for (int i = 0; i < numVeiculos; i++) {
-      if (veiculos[i].equals(veiculo)) {
-        executarRemocao(i);
-        return;
+    ManipuladorDeArrays.remover(veiculo, veiculos, numVeiculos, MAX_VEICULOS);
+  }
+
+  public Veiculo getVeiculoByPlaca(String placa) {
+    for (Veiculo veiculo : veiculos) {
+      if (veiculo.getPlaca().equalsIgnoreCase(placa)) {
+        return veiculo;
       }
     }
+    return null;
   }
 
   public Veiculo[] getAllVeiculos() {
     return veiculos;
+  }
+
+  public void replaceVeiculo(Veiculo velho, Veiculo novo) {
+    ManipuladorDeArrays.replace(velho, novo, veiculos);
+  }
+
+  public static int getMaxVeiculos() {
+    return MAX_VEICULOS;
   }
 }

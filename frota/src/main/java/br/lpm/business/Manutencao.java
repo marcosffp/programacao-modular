@@ -34,5 +34,4 @@ public class Manutencao {
   public void setOficina(Oficina oficina) {
     this.oficina = oficina;
   }
-
 }

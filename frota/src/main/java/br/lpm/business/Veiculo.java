@@ -1,5 +1,6 @@
 package br.lpm.business;
 
+import java.time.LocalDate;
 
 public class Veiculo {
   private String modelo;
@@ -7,12 +8,11 @@ public class Veiculo {
   private String placa;
   private int km;
   private Estado estado;
-  private static final int MAX_MANUTENCOES = 1000;
-  private static final int MAX_MOTORISTAS = 1000;
+  private static final int VALOR_MAXIMO = 1000;
   private int numManutencoes = 0;
   private int numMotoristas = 0;
-  private Manutencao[] manutencoes = new Manutencao[MAX_MANUTENCOES];
-  private Motorista[] motoristas = new Motorista[MAX_MOTORISTAS];
+  private Manutencao[] manutencoes = new Manutencao[VALOR_MAXIMO];
+  private Motorista[] motoristas = new Motorista[VALOR_MAXIMO];
 
   public Veiculo(String modelo, int ano, String placa, int km, Estado estado) {
     this.modelo = modelo;
@@ -20,6 +20,10 @@ public class Veiculo {
     this.placa = placa;
     this.km = km;
     this.estado = estado;
+  }
+
+  public static int getValorMaximo() {
+    return VALOR_MAXIMO;
   }
 
   public String getModelo() {
@@ -62,51 +66,61 @@ public class Veiculo {
     this.estado = estado;
   }
 
-      public void addManutencao(Manutencao manutencao) {
-        manutencoes[numManutencoes++] = manutencao;
-    }
+  public void addManutencao(Manutencao manutencao) {
+    ManipuladorDeArrays.adicionar(manutencao, manutencoes, numManutencoes, VALOR_MAXIMO);
+  }
 
-  private void executarRemocaoManutencao(int i) {
-    for (int j = i; j < numManutencoes - 1; j++) {
-      manutencoes[j] = manutencoes[j + 1];
-    }
-    manutencoes[--numManutencoes] = null;
+  public void addMotorista(Motorista motorista) {
+    ManipuladorDeArrays.adicionar(motorista, motoristas, numMotoristas, VALOR_MAXIMO);
   }
 
   public void removeManutencao(Manutencao manutencao) {
-    for (int i = 0; i < numManutencoes; i++) {
-      if (manutencoes[i].equals(manutencao)) {
-        executarRemocaoManutencao(i);
-        return;
+    ManipuladorDeArrays.remover(manutencao, manutencoes, numManutencoes, VALOR_MAXIMO);
+  }
+
+  public void removeMotorista(Motorista motorista) {
+    ManipuladorDeArrays.remover(motorista, motoristas, numMotoristas, VALOR_MAXIMO);
+  }
+
+  public Manutencao getManutencaoByDate(LocalDate previsao) {
+    for (Manutencao manutencao : manutencoes) {
+      if (manutencao.getPrevisao().equals(previsao)) {
+        return manutencao;
       }
     }
+    return null;
+  }
+
+  public Motorista getMotoristaById(int id) {
+    for (Motorista motorista : motoristas) {
+      if (motorista.getId() == id) {
+        return motorista;
+      }
+    }
+    return null;
   }
 
   public Manutencao[] getAllManutencoes() {
     return manutencoes;
   }
 
-  public void addMotorista(Motorista motorista) {
-    motoristas[numMotoristas++] = motorista;
-  }
-
-  private void executarRemocaoMotorista(int i) {
-    for (int j = i; j < numMotoristas - 1; j++) {
-      motoristas[j] = motoristas[j + 1];
-    }
-    motoristas[--numMotoristas] = null;
-  }
-
-  public void removeMotorista(Motorista motorista) {
-    for (int i = 0; i < numMotoristas; i++) {
-      if (motoristas[i].equals(motorista)) {
-        executarRemocaoMotorista(i);
-        return;
-      }
-    }
-  }
-
   public Motorista[] getAllMotoristas() {
     return motoristas;
+  }
+
+  public void replaceManutencao(Manutencao velho, Manutencao novo) {
+    ManipuladorDeArrays.replace(velho, novo, manutencoes);
+  }
+
+  public void replaceMotorista(Motorista velho, Motorista novo) {
+    ManipuladorDeArrays.replace(velho, novo, motoristas);
+  }
+
+  public int getNumManutencoes() {
+    return numManutencoes;
+  }
+
+  public int getNumMotoristas() {
+    return numMotoristas;
   }
 }

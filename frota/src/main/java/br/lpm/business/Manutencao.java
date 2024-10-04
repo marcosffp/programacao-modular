@@ -34,4 +34,23 @@ public class Manutencao {
   public void setOficina(Oficina oficina) {
     this.oficina = oficina;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("Manutenção Detalhes:\n");
+    sb.append("***********************************\n");
+
+    sb.append("Data da Manutenção: ").append(previsao).append("\n");
+    sb.append("Veículo: ")
+        .append(veiculo != null ? veiculo: "Nenhum veículo associado")
+        .append("\n");
+    sb.append("Oficina: ")
+        .append(oficina != null ? oficina: "Nenhuma oficina associada")
+        .append("\n");
+
+    sb.append("***********************************\n");
+    return sb.toString();
+  }
 }

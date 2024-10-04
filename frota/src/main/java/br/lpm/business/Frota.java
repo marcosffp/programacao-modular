@@ -174,4 +174,64 @@ public class Frota {
   public int getNumRotas() {
     return numRotas;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("Frota Detalhes:\n");
+    sb.append("***********************************\n");
+
+    sb.append("Veículos:\n");
+    if (numVeiculos > 0) {
+      for (int i = 0; i < numVeiculos; i++) {
+        sb.append(veiculos[i]).append("\n");
+      }
+    } else {
+      sb.append("Nenhum veículo cadastrado.\n");
+    }
+    sb.append("\n");
+
+    sb.append("Rotas:\n");
+    if (numRotas > 0) {
+      for (int i = 0; i < numRotas; i++) {
+        sb.append(rotas[i]).append("\n");
+      }
+    } else {
+      sb.append("Nenhuma rota cadastrada.\n");
+    }
+    sb.append("\n");
+
+    sb.append("Oficinas:\n");
+    if (numOficinas > 0) {
+      for (int i = 0; i < numOficinas; i++) {
+        sb.append(oficinas[i]).append("\n");
+      }
+    } else {
+      sb.append("Nenhuma oficina cadastrada.\n");
+    }
+    sb.append("\n");
+
+    sb.append("Motoristas:\n");
+    if (numMotoristas > 0) {
+      for (int i = 0; i < numMotoristas; i++) {
+        sb.append(motoristas[i]).append("\n");
+      }
+    } else {
+      sb.append("Nenhum motorista cadastrado.\n");
+    }
+    sb.append("\n");
+
+    sb.append("Mecânicos:\n");
+    if (numMecanicos > 0) {
+      for (int i = 0; i < numMecanicos; i++) {
+        sb.append(mecanicos[i]).append("\n");
+      }
+    } else {
+      sb.append("Nenhum mecânico cadastrado.\n");
+    }
+
+    sb.append("***********************************\n");
+    return sb.toString();
+  }
 }

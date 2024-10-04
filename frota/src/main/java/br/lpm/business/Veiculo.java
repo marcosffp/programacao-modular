@@ -67,19 +67,19 @@ public class Veiculo {
   }
 
   public void addManutencao(Manutencao manutencao) {
-    ManipuladorDeArrays.adicionar(manutencao, manutencoes, numManutencoes, VALOR_MAXIMO);
+    numManutencoes=ManipuladorDeArrays.adicionar(manutencao, manutencoes, numManutencoes, VALOR_MAXIMO);
   }
 
   public void addMotorista(Motorista motorista) {
-    ManipuladorDeArrays.adicionar(motorista, motoristas, numMotoristas, VALOR_MAXIMO);
+    numMotoristas=ManipuladorDeArrays.adicionar(motorista, motoristas, numMotoristas, VALOR_MAXIMO);
   }
 
   public void removeManutencao(Manutencao manutencao) {
-    ManipuladorDeArrays.remover(manutencao, manutencoes, numManutencoes, VALOR_MAXIMO);
+    numManutencoes=ManipuladorDeArrays.remover(manutencao, manutencoes, numManutencoes, VALOR_MAXIMO);
   }
 
   public void removeMotorista(Motorista motorista) {
-    ManipuladorDeArrays.remover(motorista, motoristas, numMotoristas, VALOR_MAXIMO);
+    numMotoristas=ManipuladorDeArrays.remover(motorista, motoristas, numMotoristas, VALOR_MAXIMO);
   }
 
   public Manutencao getManutencaoByDate(LocalDate previsao) {
@@ -122,5 +122,42 @@ public class Veiculo {
 
   public int getNumMotoristas() {
     return numMotoristas;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("Detalhes do Veículo:\n");
+    sb.append("***********************************\n");
+
+    sb.append("Modelo: ").append(modelo).append("\n");
+    sb.append("Ano: ").append(ano).append("\n");
+    sb.append("Placa: ").append(placa).append("\n");
+    sb.append("Quilometragem: ").append(km).append(" km\n");
+    sb.append("Estado: ").append(estado != null ? estado : "Não definido").append("\n");
+
+    sb.append("Número de Manutenções: ").append(numManutencoes).append("\n");
+    sb.append("Manutenções:\n");
+    if (numManutencoes > 0) {
+      for (int i = 0; i < numManutencoes; i++) {
+        sb.append(manutencoes[i]).append("\n");
+      }
+    } else {
+      sb.append("Nenhuma manutenção registrada.\n");
+    }
+
+    sb.append("Número de Motoristas: ").append(numMotoristas).append("\n");
+    sb.append("Motoristas:\n");
+    if (numMotoristas > 0) {
+      for (int i = 0; i < numMotoristas; i++) {
+        sb.append(motoristas[i]).append("\n");
+      }
+    } else {
+      sb.append("Nenhum motorista registrado.\n");
+    }
+
+    sb.append("***********************************\n");
+    return sb.toString();
   }
 }

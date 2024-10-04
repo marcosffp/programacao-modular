@@ -25,11 +25,11 @@ public class Motorista extends Pessoa {
   }
 
   public void addVeiculo(Veiculo veiculo) {
-    ManipuladorDeArrays.adicionar(veiculo, veiculos, numVeiculos, MAX_VEICULOS);
+    numVeiculos = ManipuladorDeArrays.adicionar(veiculo, veiculos, numVeiculos, MAX_VEICULOS);
   }
 
   public void removeVeiculo(Veiculo veiculo) {
-    ManipuladorDeArrays.remover(veiculo, veiculos, numVeiculos, MAX_VEICULOS);
+    numVeiculos = ManipuladorDeArrays.remover(veiculo, veiculos, numVeiculos, MAX_VEICULOS);
   }
 
   public Veiculo getVeiculoByPlaca(String placa) {
@@ -51,5 +51,34 @@ public class Motorista extends Pessoa {
 
   public static int getMaxVeiculos() {
     return MAX_VEICULOS;
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+
+  
+    sb.append("***********************************\n");
+    sb.append("Detalhes do Motorista:\n");
+
+    sb.append(super.toString());
+    sb.append("\n");
+    sb.append("Veículo Atual: \n")
+        .append(veiculoAtual != null ? veiculoAtual : "Nenhum veículo atual")
+        .append("\n");
+
+    sb.append("Número de Veículos: ").append(numVeiculos).append("\n");
+
+    if (numVeiculos > 0) {
+      sb.append("Veículos Associados:\n");
+      for (int i = 0; i < numVeiculos; i++) {
+        sb.append(veiculos[i]).append("\n");
+      }
+    } else {
+      sb.append("Nenhum veículo associado.\n");
+    }
+
+    sb.append("***********************************\n");
+    return sb.toString();
   }
 }

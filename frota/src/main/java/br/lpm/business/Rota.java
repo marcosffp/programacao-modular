@@ -57,4 +57,26 @@ public class Rota {
   public Motorista getMotorista() {
     return motorista;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("Detalhes da Rota:\n");
+    sb.append("***********************************\n");
+
+    sb.append("Origem: ").append(origem != null ? origem : "Não definida").append("\n");
+    sb.append("Destino: ").append(destino != null ? destino : "Não definido").append("\n");
+    sb.append("Data: ").append(data != null ? data : "Não definida").append("\n");
+    sb.append("Veículo: ")
+        .append(veiculo != null ? veiculo : "Nenhum veículo associado")
+        .append("\n");
+    sb.append("Motorista: ")
+        .append(motorista != null ? motorista : "Nenhum motorista associado")
+        .append("\n");
+    sb.append("Frota: ").append(frota != null ? frota : "Nenhuma frota associada").append("\n");
+
+    sb.append("***********************************\n");
+    return sb.toString();
+  }
 }

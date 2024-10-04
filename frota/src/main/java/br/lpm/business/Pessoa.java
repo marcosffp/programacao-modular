@@ -30,4 +30,15 @@ public class Pessoa {
   public static int getCont() {
     return cont;
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+
+    sb.append("Nome: ").append(nome).append("\n");
+    sb.append("ID: ").append(id).append("\n");
+    sb.append("Contador Total de Pessoas: ").append(cont).append("\n");
+
+    return sb.toString();
+  }
 }

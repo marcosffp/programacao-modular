@@ -1,6 +1,7 @@
 package br.lpm.main;
 
 import br.lpm.business.DataSet;
+import br.lpm.business.DistanceMeasure;
 import br.lpm.business.Attribute;
 import br.lpm.business.DataPoint;
 import br.lpm.business.FelizMetric;
@@ -10,64 +11,105 @@ import br.lpm.business.EuclideanDistanceMetric;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception {
-        DataSet datasetFeliz = new DataSet();
-        datasetFeliz.loadDataFromCSV(
-                "C:\\Users\\marco\\OneDrive\\Documentos\\GitHub\\programacao-modular\\knn_generico\\LPM - Turma 1 - Cadastro de Pessoas.csv");
+        public static void main(String[] args) throws Exception {
+                DataSet conjuntoDeDados = new DataSet();
+                conjuntoDeDados.loadDataFromCSV(
+                                "C:\\Users\\marco\\OneDrive\\Documentos\\GitHub\\programacao-modular\\knn_generico\\LPM - Turma 1 - Cadastro de Pessoas.csv");
 
-        DataPoint primeiroPonto = datasetFeliz.getDataPoints().get(0);
-        DataPoint segundoPonto = datasetFeliz.getDataPoints().get(3);
+                DataPoint pontoA = conjuntoDeDados.getDataPoints().get(0);
+                DataPoint pontoB = conjuntoDeDados.getDataPoints().get(5);
 
-        Metric metricFeliz = new FelizMetric();
-        System.out.println(
-                primeiroPonto + "\nDistância (mesmo ponto): " + metricFeliz.distance(primeiroPonto, primeiroPonto));
-        System.out.println(
-                segundoPonto + "\nDistância (mesmo ponto): " + metricFeliz.distance(segundoPonto, segundoPonto));
-        System.out.println(
-                "\nDistância entre o primeiro e o segundo ponto: " + metricFeliz.distance(primeiroPonto, segundoPonto));
-        System.out.println(
-                "\nDistância entre o segundo e o primeiro ponto: " + metricFeliz.distance(segundoPonto, primeiroPonto));
+          
+                displayDistancesAndClassifications(conjuntoDeDados, pontoA, pontoB);
 
-        Knn classificadorKnn = new Knn(datasetFeliz, metricFeliz, 3);
-        System.out.println("Classificação do primeiro ponto: " + classificadorKnn.classify(primeiroPonto));
-        System.out.println("Classificação do segundo ponto: " + classificadorKnn.classify(segundoPonto));
+  
+                classifyAdditionalPoints(conjuntoDeDados);
+        }
 
-        DataPoint pessoaTeste1 = new DataPoint();
-        pessoaTeste1.addAttribute(new Attribute("Bruna"));
-        pessoaTeste1.addAttribute(new Attribute("6/23/1999"));
-        pessoaTeste1.addAttribute(new Attribute("Feminino"));
-        pessoaTeste1.addAttribute(new Attribute(1.60));
-        pessoaTeste1.addAttribute(new Attribute(62));
-        pessoaTeste1.addAttribute(new Attribute(2000.00));
-        pessoaTeste1.addAttribute(new Attribute("Belo Horizonte"));
-        pessoaTeste1.addAttribute(new Attribute("Com a família"));
-        pessoaTeste1.addAttribute(new Attribute("Solteiro"));
-        pessoaTeste1.addAttribute(new Attribute("Ensino Médio"));
-        pessoaTeste1.addAttribute(new Attribute("Música"));
-        pessoaTeste1.addAttribute(new Attribute("Sim"));
+        private static void displayDistancesAndClassifications(DataSet conjuntoDeDados, DataPoint pontoA,
+                        DataPoint pontoB) {
+        
+                Metric metricaEuclidiana = new EuclideanDistanceMetric();
+                Knn classificadorKnnEuclidiano = new Knn(conjuntoDeDados, metricaEuclidiana, 1);
 
-        System.out.println("Classificação de Bruna: " + classificadorKnn.classify(pessoaTeste1));
+                System.out.printf("Distância Euclidiana - Mesmo Ponto (A): %.2f%n",
+                                metricaEuclidiana.distance(pontoA, pontoA));
+                System.out.printf("Distância Euclidiana - Mesmo Ponto (B): %.2f%n",
+                                metricaEuclidiana.distance(pontoB, pontoB));
+                System.out.printf("Distância Euclidiana entre Ponto A e B: %.2f%n",
+                                metricaEuclidiana.distance(pontoA, pontoB));
 
-        DataPoint pessoaTeste2 = new DataPoint();
-        pessoaTeste2.addAttribute(new Attribute("Paulo André Sousa"));
-        pessoaTeste2.addAttribute(new Attribute("1/25/2002"));
-        pessoaTeste2.addAttribute(new Attribute("Masculino"));
-        pessoaTeste2.addAttribute(new Attribute(1.82));
-        pessoaTeste2.addAttribute(new Attribute(90));
-        pessoaTeste2.addAttribute(new Attribute(5000.00));
-        pessoaTeste2.addAttribute(new Attribute("Paracatu"));
-        pessoaTeste2.addAttribute(new Attribute("Com a família"));
-        pessoaTeste2.addAttribute(new Attribute("Solteiro"));
-        pessoaTeste2.addAttribute(new Attribute("Ensino Superior"));
-        pessoaTeste2.addAttribute(new Attribute("Game"));
-        pessoaTeste2.addAttribute(new Attribute("Sim"));
+                System.out.println("Classificação de Ponto A usando Métrica Euclidiana: "
+                                + getClassificationResult(classificadorKnnEuclidiano, pontoA));
+                System.out.println("Classificação de Ponto B usando Métrica Euclidiana: "
+                                + getClassificationResult(classificadorKnnEuclidiano, pontoB));
 
-        System.out.println("Classificação de Paulo: " + classificadorKnn.classify(pessoaTeste2));
+      
+                Metric metricaDistanceMeasure = new DistanceMeasure();
+                Knn classificadorKnnDistanceMeasure = new Knn(conjuntoDeDados, metricaDistanceMeasure, 1);
 
-        Metric metricEuclidiana = new EuclideanDistanceMetric();
-        System.out.println("Distância entre primeiro e segundo ponto (Euclidiana): "
-                + metricEuclidiana.distance(primeiroPonto, segundoPonto));
-        System.out.println("Distância entre pessoaTeste1 e pessoaTeste2 (Euclidiana): "
-                + metricEuclidiana.distance(pessoaTeste1, pessoaTeste2));
-    }
+                System.out.printf("Distância (DistanceMeasure) - Mesmo Ponto (A): %.2f%n",
+                                metricaDistanceMeasure.distance(pontoA, pontoA));
+                System.out.printf("Distância (DistanceMeasure) - Mesmo Ponto (B): %.2f%n",
+                                metricaDistanceMeasure.distance(pontoB, pontoB));
+                System.out.printf("Distância entre Ponto A e B (DistanceMeasure): %.2f%n",
+                                metricaDistanceMeasure.distance(pontoA, pontoB));
+
+                System.out.println("Classificação de Ponto A usando DistanceMeasure: "
+                                + getClassificationResult(classificadorKnnDistanceMeasure, pontoA));
+                System.out.println("Classificação de Ponto B usando DistanceMeasure: "
+                                + getClassificationResult(classificadorKnnDistanceMeasure, pontoB));
+
+     
+                Metric metricaFeliz = new FelizMetric();
+                Knn classificadorKnnFeliz = new Knn(conjuntoDeDados, metricaFeliz, 1);
+
+                System.out.printf("Distância (FelizMetric) - Mesmo Ponto (A): %.2f%n",
+                                metricaFeliz.distance(pontoA, pontoA));
+                System.out.printf("Distância (FelizMetric) - Mesmo Ponto (B): %.2f%n",
+                                metricaFeliz.distance(pontoB, pontoB));
+                System.out.printf("Distância entre Ponto A e B (FelizMetric): %.2f%n",
+                                metricaFeliz.distance(pontoA, pontoB));
+
+                System.out.println("Classificação de Ponto A usando FelizMetric: "
+                                + getClassificationResult(classificadorKnnFeliz, pontoA));
+                System.out.println("Classificação de Ponto B usando FelizMetric: "
+                                + getClassificationResult(classificadorKnnFeliz, pontoB));
+        }
+
+        private static void classifyAdditionalPoints(DataSet conjuntoDeDados) {
+                DataPoint pessoaMarcos = createDataPoint("Marcos", "10/3/2005", "Masculino", 1.60, 68, 2000.00,
+                                "Belo Horizonte", "Com a família", "Solteiro",
+                                "Ensino Superior", "Música", "Sim");
+                DataPoint pessoaBernardo = createDataPoint("Bernardo", "3/1/2006", "Masculino", 1.72, 80, 600.00,
+                                "Belo Horizonte", "Com a família", "Solteiro",
+                                "Ensino Superior", "Game", "Sim");
+
+                System.out.printf("Distância Euclidiana entre Marcos e Bernardo: %.2f%n",
+                                new EuclideanDistanceMetric().distance(pessoaMarcos, pessoaBernardo));
+        }
+
+        private static DataPoint createDataPoint(String nome, String dataNascimento, String genero, double altura,
+                        int peso, double renda, String cidade, String moradia,
+                        String estadoCivil, String escolaridade, String hobby, String feliz) {
+                DataPoint ponto = new DataPoint();
+                ponto.addAttribute(new Attribute(nome));
+                ponto.addAttribute(new Attribute(dataNascimento));
+                ponto.addAttribute(new Attribute(genero));
+                ponto.addAttribute(new Attribute(altura));
+                ponto.addAttribute(new Attribute(peso));
+                ponto.addAttribute(new Attribute(renda));
+                ponto.addAttribute(new Attribute(cidade));
+                ponto.addAttribute(new Attribute(moradia));
+                ponto.addAttribute(new Attribute(estadoCivil));
+                ponto.addAttribute(new Attribute(escolaridade));
+                ponto.addAttribute(new Attribute(hobby));
+                ponto.addAttribute(new Attribute(feliz));
+                return ponto;
+        }
+
+        private static String getClassificationResult(Knn classificador, DataPoint ponto) {
+                String result = classificador.classify(ponto);
+                return result != null ? result : "Classe Indefinida";
+        }
 }

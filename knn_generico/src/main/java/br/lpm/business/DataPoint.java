@@ -43,10 +43,15 @@ public class DataPoint {
       } else if (input.equalsIgnoreCase("Não") || input.equalsIgnoreCase("false")) {
         return false;
       }
+      DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("M/d/yyyy");
+      DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("d/M/yyyy");
 
-      DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
       try {
-        return LocalDate.parse(input, formatter);
+        return LocalDate.parse(input, formatter1);
+      } catch (DateTimeParseException ignored) {
+      }
+      try {
+        return LocalDate.parse(input, formatter2);
       } catch (DateTimeParseException ignored) {
       }
 
@@ -55,7 +60,9 @@ public class DataPoint {
       }
       return Integer.parseInt(input);
     } catch (NumberFormatException e) {
-      throw new InvalidFormatException("Input format is invalid: " + input);
+      // Retorna o input original como String se não corresponder a nenhum tipo
+      // específico
+      return input;
     }
   }
 

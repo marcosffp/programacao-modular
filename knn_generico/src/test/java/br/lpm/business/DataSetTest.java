@@ -4,8 +4,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
-
-
+import java.io.File;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class DataSetTest {
@@ -80,7 +82,42 @@ public class DataSetTest {
     assertEquals("MyState", dataSet.getStateName(), "O nome do estado deve ser 'MyState'.");
   }
 
+  @Test
+  void testLoadDataFromCSV() {
+    File tempFile = null;
+    try {
+      tempFile = File.createTempFile("test", ".csv");
+      try (BufferedWriter writer = new BufferedWriter(new FileWriter(tempFile))) {
+        writer.write("Attribute1;Attribute2;State\n");
+        writer.write("10;20;ClassA\n");
+        writer.write("30;40;ClassB\n");
+      }
 
+      dataSet.loadDataFromCSV(tempFile.getAbsolutePath());
+
+      assertEquals(2, dataSet.numDataPoints(), "Deveria haver 2 DataPoints carregados.");
+      assertEquals("Attribute1", dataSet.getAttributeName(0), "O primeiro atributo deveria ser 'Attribute1'.");
+      assertEquals("Attribute2", dataSet.getAttributeName(1), "O segundo atributo deveria ser 'Attribute2'.");
+      assertEquals("State", dataSet.getStateName(), "O nome do estado deveria ser 'State'.");
+
+      DataPoint loadedPoint1 = dataSet.getDataPoint(0);
+      DataPoint loadedPoint2 = dataSet.getDataPoint(1);
+
+      assertEquals(10, (int) loadedPoint1.getAttribute(0).getValue(),
+          "O valor do primeiro atributo do primeiro ponto deveria ser '10'.");
+      assertEquals("ClassA", loadedPoint1.getState(), "O estado do primeiro ponto deveria ser 'ClassA'.");
+      assertEquals(30, (int) loadedPoint2.getAttribute(0).getValue(),
+          "O valor do primeiro atributo do segundo ponto deveria ser '30'.");
+      assertEquals("ClassB", loadedPoint2.getState(), "O estado do segundo ponto deveria ser 'ClassB'.");
+
+    } catch (IOException | InvalidFormatException e) {
+      fail("Erro durante o teste de carregamento de CSV: " + e.getMessage());
+    } finally {
+      if (tempFile != null && tempFile.exists()) {
+        tempFile.delete();
+      }
+    }
+  }
 
   @Test
   void testNumDataPoints() {

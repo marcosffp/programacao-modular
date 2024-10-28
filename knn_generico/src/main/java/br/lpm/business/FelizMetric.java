@@ -7,6 +7,7 @@ public class FelizMetric implements Metric {
   private static final double MAX_ALTURA = 2.60;
   private static final double MAX_PESO = 600.00;
   private static final double MAX_RENDA = 10000.00;
+  private static final int INVALID = -1;
 
   @Override
   public double distance(DataPoint p1, DataPoint p2) {
@@ -14,7 +15,7 @@ public class FelizMetric implements Metric {
     List<Attribute> atributosPonto2 = p2.getAttributes();
 
     if (atributosPonto1.size() != atributosPonto2.size()) {
-      return -1; // Retorno de erro em caso de inconsistência
+      return INVALID;
     }
 
     double distance = 0;

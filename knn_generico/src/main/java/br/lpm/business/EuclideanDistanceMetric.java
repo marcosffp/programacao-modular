@@ -28,6 +28,6 @@ public class EuclideanDistanceMetric implements Metric {
         distance += value1.equals(value2) ? 0 : 1;
       }
     }
-    return Math.sqrt(distance); 
+    return Math.sqrt(distance/attributesP1.size()); 
   }
 }

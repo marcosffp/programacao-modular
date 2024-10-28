@@ -1,7 +1,6 @@
 package br.lpm.main;
 
 import br.lpm.business.DataSet;
-import br.lpm.business.DistanceMeasure;
 import br.lpm.business.Attribute;
 import br.lpm.business.DataPoint;
 import br.lpm.business.FelizMetric;
@@ -19,16 +18,14 @@ public class Main {
                 DataPoint pontoA = conjuntoDeDados.getDataPoints().get(0);
                 DataPoint pontoB = conjuntoDeDados.getDataPoints().get(5);
 
-          
                 displayDistancesAndClassifications(conjuntoDeDados, pontoA, pontoB);
 
-  
                 classifyAdditionalPoints(conjuntoDeDados);
         }
 
         private static void displayDistancesAndClassifications(DataSet conjuntoDeDados, DataPoint pontoA,
                         DataPoint pontoB) {
-        
+
                 Metric metricaEuclidiana = new EuclideanDistanceMetric();
                 Knn classificadorKnnEuclidiano = new Knn(conjuntoDeDados, metricaEuclidiana, 1);
 
@@ -44,23 +41,6 @@ public class Main {
                 System.out.println("Classificação de Ponto B usando Métrica Euclidiana: "
                                 + getClassificationResult(classificadorKnnEuclidiano, pontoB));
 
-      
-                Metric metricaDistanceMeasure = new DistanceMeasure();
-                Knn classificadorKnnDistanceMeasure = new Knn(conjuntoDeDados, metricaDistanceMeasure, 1);
-
-                System.out.printf("Distância (DistanceMeasure) - Mesmo Ponto (A): %.2f%n",
-                                metricaDistanceMeasure.distance(pontoA, pontoA));
-                System.out.printf("Distância (DistanceMeasure) - Mesmo Ponto (B): %.2f%n",
-                                metricaDistanceMeasure.distance(pontoB, pontoB));
-                System.out.printf("Distância entre Ponto A e B (DistanceMeasure): %.2f%n",
-                                metricaDistanceMeasure.distance(pontoA, pontoB));
-
-                System.out.println("Classificação de Ponto A usando DistanceMeasure: "
-                                + getClassificationResult(classificadorKnnDistanceMeasure, pontoA));
-                System.out.println("Classificação de Ponto B usando DistanceMeasure: "
-                                + getClassificationResult(classificadorKnnDistanceMeasure, pontoB));
-
-     
                 Metric metricaFeliz = new FelizMetric();
                 Knn classificadorKnnFeliz = new Knn(conjuntoDeDados, metricaFeliz, 1);
 

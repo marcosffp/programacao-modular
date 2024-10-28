@@ -13,8 +13,6 @@ public class DataSet {
   private List<String> attributeNames = new ArrayList<>();
   private String stateName;
 
-
-
   public void addDataPoint(DataPoint dataPoint) {
     dataPoints.add(dataPoint);
   }
@@ -107,7 +105,7 @@ public class DataSet {
       }
 
       String[] nomesAtributos = line.split(";");
-      for (int i = 0; i < nomesAtributos.length - 1; i++) { 
+      for (int i = 0; i < nomesAtributos.length - 1; i++) {
         addAttributeName(nomesAtributos[i].trim());
       }
 
@@ -121,7 +119,6 @@ public class DataSet {
       while ((line = file.readLine()) != null) {
         String[] fields = line.split(";");
         DataPoint dataPoint = new DataPoint();
-
 
         for (int i = 0; i < fields.length - 1; i++) {
           try {
@@ -138,6 +135,18 @@ public class DataSet {
       throw new InvalidFormatException("Erro ao ler arquivo CSV: " + e.getMessage());
     }
   }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("Attributes: ");
+    for (String attributeName : attributeNames) {
+      sb.append(attributeName).append(", ");
+    }
+    sb.append("\nState Name: ").append(stateName).append("\nData Points:\n");
+    for (DataPoint dataPoint : dataPoints) {
+      sb.append(dataPoint.toString()).append("\n");
+    }
+    return sb.toString();
+  }
 }
-
-

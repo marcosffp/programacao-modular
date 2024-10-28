@@ -91,4 +91,9 @@ public class Knn {
         return (String) vencedor.getKey();
     }
 
+    @Override
+    public String toString() {
+        return "Knn [dataset=" + dataset + ", metric=" + metric + ", k=" + k + "]";
+    }
+
 }

@@ -10,6 +10,9 @@ public class DataPoint {
   private List<Attribute> attributes = new ArrayList<>();
   private Object state;
 
+  public DataPoint() {
+  }
+
   public void addAttribute(Attribute attribute) {
     attributes.add(attribute);
   }
@@ -60,20 +63,15 @@ public class DataPoint {
       }
       return Integer.parseInt(input);
     } catch (NumberFormatException e) {
-      // Retorna o input original como String se não corresponder a nenhum tipo
-      // específico
       return input;
     }
   }
 
   @Override
   public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append(state);
-    for (Attribute attribute : attributes) {
-      sb.append(" ");
-      sb.append(attribute);
-    }
-    return sb.toString();
+    return state + "\n" + attributes.stream()
+        .map(Attribute::toString)
+        .reduce((attr1, attr2) -> attr1 + attr2)
+        .orElse("");
   }
 }

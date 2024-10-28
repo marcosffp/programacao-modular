@@ -1,155 +1,95 @@
-<diagram program="umletino" version="15.1"><zoom_level>2</zoom_level><help_text>Space for diagram notes</help_text><element><id>UMLClass</id><coordinates><x>586</x><y>484</y><w>98</w><h>70</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-br.lpm.business::Pessoa
+<diagram program="umletino" version="15.1"><zoom_level>9</zoom_level><element><id>UMLClass</id><coordinates><x>117</x><y>180</y><w>297</w><h>207</h></coordinates><panel_attributes>Knn
 --
--nome: String
--dataNascimento: LocalDate 
--altura: float
--peso: int
--renda: float                             
--naturalidade: String                   
--hobby: Hobby                                     
--feliz: boolean                         
-__-dataFormatador: DateTimeFormatter__
+- dataset: DataSet
+- metric: Metric
+- k: int
 --
-+isStringValido(nome: String): boolean
--isDataNascimentoAntesHoje(dataNascimento: LocalDate): boolean
--isAlturaDentroDosLimites(altura: float): boolean
--isPesoDentroDosLimites(peso: int): boolean
--isRendaPositiva(renda: float): boolean
-+toString(): String
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>726</x><y>480</y><w>42</w><h>24</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
-br.lpm.business::Escolaridade
++ Knn(dataset: DataSet, metric: Metric, k: int)
++ setK(k: int): void
++ getK(): int
++ getDataset(): DataSet
++ setDataset(dataset: DataSet): void
++ getMetric(): Metric
++ setMetric(metric: Metric): void
+- calculateDistances(attributes: DataPoint): List&lt;Double&gt;
++ classify(attributes: DataPoint): String
++ toString(): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>459</x><y>0</y><w>414</w><h>387</h></coordinates><panel_attributes>DataSet
 --
- NENHUMA
- FUNDAMENTAL
- MEDIO
- SUPERIOR
- POS_GRADUACAO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>726</x><y>452</y><w>42</w><h>24</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
-br.lpm.business::EstadoCivil
+- dataPoints: List&lt;DataPoint&gt;
+- attributeNames: List&lt;String&gt;
+- stateName: String
 --
- SOLTEIRO
- CASADO
- VIUVO
- SEPARADO
- DIVORCIADO</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>726</x><y>532</y><w>42</w><h>34</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
-br.lpm.business::Hobby
++ addDataPoint(dataPoint: DataPoint): void
++ addDataPoints(dataPoints: List&lt;DataPoint&gt;): void
++ addAttributeName(attributeName: String): void
++ addAttributeNames(attributeNames: List&lt;String&gt;): void
++ getDataPoint(index: int): DataPoint
++ getDataPoints(): List&lt;DataPoint&gt;
++ getStateName(): String
++ getAttributeName(index: int): String
++ getAttributeNames(): List&lt;String&gt;
++ numDataPoints(): int
++ size(): int
++ removeAttribute(index: int): void
++ removeDataPoint(index: int): void
++ removeDataPoint(dataPoint: DataPoint): void
++ removeDataPoints(dataPoints: List&lt;DataPoint&gt;): void
++ removeAttributeName(attributeName: String): void
++ removeAttributeNames(attributeNames: List&lt;String&gt;): void
++ setStateName(stateName: String): void
++ getSateName(): String
++ removeAllDataPoints(): void
++ removeAllAttributeNames(): void
++ loadDataFromCSV(filename: String): void {exceptions=IllegalFormatException}
++ toString(): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>423</x><y>468</y><w>342</w><h>189</h></coordinates><panel_attributes>DataPoint
 --
- ARTE
- ESPORTE
- CINEMA
- LIVRO
- MÚSICA
- CULINÁRIA
- GAME
- NENHUM</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>726</x><y>570</y><w>42</w><h>18</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
-br.lpm.business::Moradia
+- attributes: List&lt;Attribute&gt;
+- state: Object
 --
- COM_FAMILIA
- ALUGUEL
- CASA_PROPRIA</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>350</x><y>448</y><w>174</w><h>180</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-br.lpm.business::Dataset
---
-_-MAX_PESSOAS = 100_
-_-NOT_FUND=-1_
--quantidadePessoas: int
---
-+addPessoa(pessoa: Pessoa): void
--removerPessoaPorIndice(indice :int): void
-+removePessoa(pessoa: Pessoa): void
-+removePessoaByName(nome: String): void
-+replacePessoa(pessoaAntiga: Pessoa, pessoaNova: Pessoa): void
-+getPessoaByName(nome: String): Pessoa
-+getAll(): Pessoa[]
-+removeAll(): void
-+size(): int
-+maxAltura(): float
-+minAltura(): float
-+maxRenda(): float
-+minRenda(): float
-+avgRenda(): float
--calcularValorMaximoFloat(pessoas: Pessoas[], tipo: String): float
--calcularValorMinimoFloat(pessoas: Pessoas[], tipo: String): float
--obterValorPorTipoFloat(pessoa: Pessoas, tipo: String): float
-+avgAltura(): float
-+maxPeso(): int
-+maxIdade(): int
-+minIdade(): int
-+minPeso(): int
-+avgPeso(): float
--calcularValorMaximoInt(pessoas: Pessoas[], tipo: String): int
--calcularValorMinimoInt(pessoas: Pessoa[], tipo: String): int
--obterValorPorTipoInt(pessoa: Pessoa, tipo: String): int
--calcularIdade(pessoa: Pessoa): int
-calcularPorcentagem(quantidade: int): float
-+percentAdult(): float
-+percentEstadoCivil(estado: EstadoCivil): float
-+modeEstadoCivil(): EstadoCivil
-+percentEscolaridade(escolaridade: Escolaridade): float
-+percentGenero(genero: Genero): float
-+modeEscolaridade(): Escolaridade
-+percentMoradia(moradia: Moradia): float
-+percentHobby(): float
-+percentFeliz(): float
-+modeMoradia(): Moradia
-+calcDistanceVector(pessoa: Pessoa): float[]
-+calcDistanceMatriz(): float[][]
-+getSimilar(pessoa: Pessoa, n: int): Pessoa[]
--inicializarMenoresDistancias(quantidadePessoasSemelhante): float[]
--encontrarPessoasSemelhantes(distanciasAlvo: float[], menoresDistancias: float[], pessoasSemelhantes: Pessoa[], n: int, pessoa: Pessoa): void
--atualizarPessoasSemelhantes(distanciaAtual: float, indice: int, menoresDistancias: float[], pessoasSemelhantes: Pessoa[], n: int): void
-+obterPosicaoPessoa(pessoa: Pessoa): int
-+normalizeField(fieldName: String): float[]
--aplicarNormalizacao(valoresNormalizados: float[], nomeCampo: String): void
--calcularNormalizacaoFloat(nomeCampo: String, valoesNormalizados: float[], minimo: float, maximo: float): void
--calcularNormalizacaoInt(nomeCampo: String, valoesNormalizados: float[], minimo: int, maximo: int): void
-+loadDataFromCSV(filename: String): void
--
-+toString(): String
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>356</x><y>658</y><w>168</w><h>30</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-br.lpm.business::DistanceMeasure
---
--dataset: Dataset
-__-QUANTIDADE_ATRIBUTO=10: int__
---
-+calcDistance(first: Pessoa, second: Pessoa): float
--calcularDistanciaAtributosCategorizados(first: Pessoa, second: Pessoa): int[]
--calcularDistanciaAtributosNumericos(first: Pessoa, second: Pessoa, nomeCampo: String): float
--calcularSomaQuadrados(distanciasAtributosCategorizados: int[], distanciasAtributosNumericos: float[]): float
++ DataPoint()
++ addAttribute(attribute: Attribute): void
++ addAttributes(attributes: List&lt;Attribute&gt;): void
++ setState(state: Object): DataPoint
++ getAttribute(index: int): Attribute
++ getAttributes(): List&lt;Attribute&gt;
++ getState&lt;T&gt;(): T
++ parse(input: String): Object {exceptions=IllegalFormatException}
++ toString(): String
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>682</x><y>490</y><w>48</w><h>18</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
-m2=1
-</panel_attributes><additional_attributes>10;70;220;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>726</x><y>506</y><w>42</w><h>22</h></coordinates><panel_attributes>&lt;&lt;enum&gt;&gt;
-br.lpm.business::Genero
+DataPoint
 --
- FEMININO
- MASCULINO
- NAO_BINARIO
- NAO_RESPONDER</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>682</x><y>516</y><w>48</w><h>12</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
-m2=1
-</panel_attributes><additional_attributes>10;30;220;10</additional_attributes></element><element><id>Relation</id><coordinates><x>682</x><y>532</y><w>48</w><h>14</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
-m2=1
-</panel_attributes><additional_attributes>10;40;220;10</additional_attributes></element><element><id>Relation</id><coordinates><x>682</x><y>550</y><w>48</w><h>32</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
-m2=1
-</panel_attributes><additional_attributes>10;10;220;140</additional_attributes></element><element><id>Relation</id><coordinates><x>682</x><y>464</y><w>48</w><h>28</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
-m2=1
-</panel_attributes><additional_attributes>10;120;220;10</additional_attributes></element><element><id>Relation</id><coordinates><x>522</x><y>500</y><w>68</w><h>10</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1..*
-m2=0..1
-</panel_attributes><additional_attributes>10;20;320;20</additional_attributes></element><element><id>Relation</id><coordinates><x>446</x><y>626</y><w>8</w><h>36</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
-m1=1
-m2=1
-</panel_attributes><additional_attributes>10;10;10;160</additional_attributes></element><element><id>UMLClass</id><coordinates><x>348</x><y>404</y><w>172</w><h>24</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-br.lpm.business::Knn
+-attributes: List&lt;Attribute&gt;
+-state: Object
 --
--k: int
---
-+classifyFeliz(pessoa: Pessoa): boolean
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>434</x><y>426</y><w>8</w><h>26</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
++getAttributes(): List&lt;Attributes&gt;
++&lt;T&gt; getState(): T
++parse(: String): Object {exceptions=IllegalFormatException}</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>558</x><y>378</y><w>45</w><h>108</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
-m2=1
-</panel_attributes><additional_attributes>10;110;10;10</additional_attributes></element></diagram>
+m2=0..*</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>Relation</id><coordinates><x>243</x><y>36</y><w>234</w><h>162</h></coordinates><panel_attributes>lt=&lt;-
+m1=0..1
+</panel_attributes><additional_attributes>240;20;10;20;10;160</additional_attributes></element><element><id>UMLClass</id><coordinates><x>486</x><y>738</y><w>198</w><h>99</h></coordinates><panel_attributes>Attribute
+--
+- value: Object
+--
++ Attribute(value: Object)
++ setValue(value: Object): Attribute
++ getValue&lt;T&gt;(): T
++ toString(): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>108</x><y>522</y><w>261</w><h>63</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
+Metric
+--
+--
++distance(p1: DataPoint, p2: Datapoint): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>225</x><y>378</y><w>36</w><h>162</h></coordinates><panel_attributes>lt=&lt;-
+m1=1</panel_attributes><additional_attributes>10;160;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>360</x><y>531</y><w>81</w><h>36</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;uses&gt;&gt;</panel_attributes><additional_attributes>10;20;70;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>72</x><y>612</y><w>252</w><h>45</h></coordinates><panel_attributes>EuclideanDistanceMetric
+--
+--
++distance(p1: DataPoint, p2: Datapoint): double</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>576</y><w>45</w><h>54</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>30;10;10;40</additional_attributes></element><element><id>UMLClass</id><coordinates><x>171</x><y>684</y><w>252</w><h>45</h></coordinates><panel_attributes>FelizMetric
+--
+--
++distance(p1: DataPoint, p2: Datapoint): double</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>342</x><y>576</y><w>27</w><h>126</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;120</additional_attributes></element><element><id>Relation</id><coordinates><x>576</x><y>648</y><w>45</w><h>108</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+m1=1
+m2=1..*</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element></diagram>

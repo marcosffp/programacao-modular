@@ -4,6 +4,9 @@ import java.util.List;
 
 public class EuclideanDistanceMetric implements Metric {
 
+  private static final double MAX_ALTURA = 2.60;
+  private static final double MAX_PESO = 600.00;
+  private static final double MAX_RENDA = 10000.00;
   private static final int INVALID = -1;
 
   @Override
@@ -23,11 +26,19 @@ public class EuclideanDistanceMetric implements Metric {
       if (value1 instanceof Number && value2 instanceof Number) {
         double d1 = ((Number) value1).doubleValue();
         double d2 = ((Number) value2).doubleValue();
-        distance += Math.pow(d1 - d2, 2);
+        if (i == 3) {
+          distance += Math.pow((d1 - d2) / MAX_ALTURA, 2);
+        } else if (i == 4) {
+          distance += Math.pow((d1 - d2) / MAX_PESO, 2);
+        } else if (i == 5) {
+          distance += Math.pow((d1 - d2) / MAX_RENDA, 2);
+        } else {
+          distance += Math.pow(d1 - d2, 2);
+        }
       } else {
         distance += value1.equals(value2) ? 0 : 1;
       }
     }
-    return Math.sqrt(distance/attributesP1.size()); 
+    return Math.sqrt(distance / attributesP1.size());
   }
 }

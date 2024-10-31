@@ -1,10 +1,9 @@
-package br.lpm.business;
+package br.lpm.business.datamodel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class DataSet {
+public abstract class BaseDataSet {
   private List<DataPoint> dataPoints = new ArrayList<>();
   private List<String> attributeNames = new ArrayList<>();
   private String stateName;

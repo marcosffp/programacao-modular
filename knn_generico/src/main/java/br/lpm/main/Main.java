@@ -3,7 +3,10 @@ package br.lpm.main;
 import br.lpm.business.DataSet;
 import br.lpm.business.Attribute;
 import br.lpm.business.DataPoint;
+import br.lpm.business.DataReader;
 import br.lpm.business.FelizMetric;
+import br.lpm.business.ImplDataReaderCsv;
+import br.lpm.business.InvalidFormatException;
 import br.lpm.business.Knn;
 import br.lpm.business.Metric;
 import br.lpm.business.EuclideanDistanceMetric;
@@ -12,8 +15,7 @@ public class Main {
 
         public static void main(String[] args) throws Exception {
                 DataSet conjuntoDeDados = new DataSet();
-                conjuntoDeDados.loadDataFromCSV(
-                                "C:\\Users\\marco\\OneDrive\\Documentos\\GitHub\\programacao-modular\\knn_generico\\LPM - Turma 1 - Cadastro de Pessoas.csv");
+                loadDataFromCSV(conjuntoDeDados, "C:\\Users\\marco\\OneDrive\\Documentos\\GitHub\\programacao-modular\\knn_generico\\LPM - Turma 1 - Cadastro de Pessoas.csv");
 
                 DataPoint pontoA = conjuntoDeDados.getDataPoints().get(0);
                 DataPoint pontoB = conjuntoDeDados.getDataPoints().get(5);
@@ -89,7 +91,17 @@ public class Main {
         }
 
         private static String getClassificationResult(Knn classificador, DataPoint ponto) {
-                String result = classificador.classify(ponto);
-                return result != null ? result : "Classe Indefinida";
+                // Implement the method logic here
+                return classificador.classify(ponto);
+        }
+
+        // Removed unused loadDataFromCSV method
+        private static void loadDataFromCSV(DataSet conjuntosDados, String filemane) {
+                DataReader dataReader = new ImplDataReaderCsv();
+                try {
+                        dataReader.loadDataFrom(filemane, conjuntosDados);
+                } catch (InvalidFormatException e) {
+                        e.printStackTrace();
+                }
         }
 }

@@ -6,14 +6,17 @@ import java.util.List;
 public class ImplCompositeDataParser implements CompositeDataParser {
   private List<DataParser> parsers = new ArrayList<>();
 
+  @Override
   public void addParser(DataParser parser) {
     parsers.add(parser);
   }
 
+  @Override
   public List<DataParser> getParsers() {
     return parsers;
   }
 
+  @Override
   public void removeParser(DataParser parser) {
     parsers.remove(parser);
   }

@@ -5,5 +5,4 @@ public class SimpleDataSet extends BaseDataSet {
   public String toString() {
     return "Simple DataSet: " + super.toString();
   }
-
 }

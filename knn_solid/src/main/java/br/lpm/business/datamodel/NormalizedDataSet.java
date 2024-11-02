@@ -13,7 +13,7 @@ public class NormalizedDataSet extends BaseDataSet {
       return;
     }
 
-    List<DataPoint> dataPoints = super.getDataPoints();
+    List<BaseDataPoint> dataPoints = super.getDataPoints();
     OptionalDouble minOpt = dataPoints.stream()
         .mapToDouble(dp -> (Double) dp.getAttributes().get(index).getValue())
         .min();
@@ -29,7 +29,7 @@ public class NormalizedDataSet extends BaseDataSet {
     double max = maxOpt.getAsDouble();
     double range = max - min;
 
-    for (DataPoint dataPoint : dataPoints) {
+    for (BaseDataPoint dataPoint : dataPoints) {
       double value = (Double) dataPoint.getAttributes().get(index).getValue();
       double normalizedValue = (value - min) / range;
       dataPoint.getAttributes().get(index).setValue(normalizedValue);

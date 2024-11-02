@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>br.lpm</groupId>
-    <artifactId>knn_generico</artifactId>
+    <artifactId>knn_solid</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <properties>

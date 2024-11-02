@@ -1,24 +1,13 @@
 package br.lpm.business.datamodel;
 
-public class Attribute {
-  private Object value;
+public class Attribute extends BaseAttribute {
 
   public Attribute(Object value) {
-    this.value = value;
-  }
-
-  @SuppressWarnings("unchecked")
-  public <T> T getValue() {
-    return (T) value;
-  }
-
-  public Attribute setValue(Object value) {
-    this.value = value;
-    return this;
+    super(value);
   }
 
   @Override
   public String toString() {
-    return value != null ? value.toString() : "null";
+    return "Attribute: " + super.toString();
   }
 }

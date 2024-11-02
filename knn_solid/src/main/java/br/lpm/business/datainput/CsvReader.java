@@ -55,4 +55,9 @@ public class CsvReader implements DataReader {
     }
 
   }
+
+  @Override
+  public void setCompositeDataParser(CompositeDataParser compositeDataParser) {
+    this.compositeDataParser = compositeDataParser;
+  }
 }

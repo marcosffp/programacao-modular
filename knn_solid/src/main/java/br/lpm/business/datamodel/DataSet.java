@@ -4,20 +4,20 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class BaseDataSet {
-  private List<BaseDataPoint> dataPoints = new ArrayList<>();
+public class DataSet {
+  private List<DataPoint> dataPoints = new ArrayList<>();
   private List<String> attributeNames = new ArrayList<>();
   private String stateName;
 
-  public void addDataPoint(BaseDataPoint dataPoint) {
+  public void addDataPoint(DataPoint dataPoint) {
     dataPoints.add(dataPoint);
   }
 
-  public void addDataPoints(List<BaseDataPoint> dataPoints) {
+  public void addDataPoints(List<DataPoint> dataPoints) {
     this.dataPoints.addAll(dataPoints);
   }
 
-  public void removeDataPoint(BaseDataPoint dataPoint) {
+  public void removeDataPoint(DataPoint dataPoint) {
     dataPoints.remove(dataPoint);
   }
 
@@ -37,15 +37,15 @@ public abstract class BaseDataSet {
     return dataPoints.size();
   }
 
-  public BaseDataPoint getDataPoint(int index) {
+  public DataPoint getDataPoint(int index) {
     return dataPoints.get(index);
   }
 
-  public BaseDataPoint getDataPoint(Object state) {
+  public DataPoint getDataPoint(Object state) {
     return dataPoints.stream().filter(dataPoint -> dataPoint.getState().equals(state)).findFirst().orElse(null);
   }
 
-  public List<BaseDataPoint> getDataPoints() {
+  public List<DataPoint> getDataPoints() {
     return dataPoints;
   }
 
@@ -80,7 +80,7 @@ public abstract class BaseDataSet {
   public String getAttributeName(String name) {
     return attributeNames.stream().filter(attributeName -> attributeName.equals(name)).findFirst().orElse(null);
   }
-  
+
   public List<String> getAttributeNames() {
     return attributeNames;
   }
@@ -93,20 +93,20 @@ public abstract class BaseDataSet {
     this.stateName = stateName;
   }
 
-@Override
-public String toString() {
+  @Override
+  public String toString() {
     return "BaseDataSet{" +
-        "dataPoints=" + (dataPoints != null ? 
-            dataPoints.stream()
-                      .map(Object::toString)
-                      .collect(Collectors.joining(", ")) 
-            : "[]") +
-        ", attributeNames=" + (attributeNames != null ? 
-            attributeNames.stream()
-                          .collect(Collectors.joining(", ")) 
-            : "[]") +
+        "dataPoints=" + (dataPoints != null ? dataPoints.stream()
+            .map(Object::toString)
+            .collect(Collectors.joining(", "))
+            : "[]")
+        +
+        ", attributeNames=" + (attributeNames != null ? attributeNames.stream()
+            .collect(Collectors.joining(", "))
+            : "[]")
+        +
         ", stateName='" + stateName + '\'' +
         '}';
-}
+  }
 
 }

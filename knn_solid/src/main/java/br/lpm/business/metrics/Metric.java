@@ -1,8 +1,8 @@
 package br.lpm.business.metrics;
 
-import br.lpm.business.datamodel.BaseDataPoint;
+import br.lpm.business.datamodel.DataPoint;
 
 @FunctionalInterface
 public interface Metric {
-   public double distance(BaseDataPoint p1, BaseDataPoint p2);
+   public double distance(DataPoint p1, DataPoint p2);
 }

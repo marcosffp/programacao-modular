@@ -7,18 +7,18 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class BaseDataSetTest {
-  private BaseDataSet dataSet;
-  private BaseDataPoint dataPoint;
-  private BaseDataPoint dataPoint2;
-  private BaseDataPoint dataPoint3;
+public class DataSetTest {
+  private DataSet dataSet;
+  private DataPoint dataPoint;
+  private DataPoint dataPoint2;
+  private DataPoint dataPoint3;
 
   @BeforeEach
   void setUp() {
-    dataSet = new SimpleDataSet();
-    dataPoint = new SimpleDataPoint();
-    dataPoint2 = new SimpleDataPoint();
-    dataPoint3 = new SimpleDataPoint();
+    dataSet = new DataSet();
+    dataPoint = new DataPoint();
+    dataPoint2 = new DataPoint();
+    dataPoint3 = new DataPoint();
   }
 
   @Test

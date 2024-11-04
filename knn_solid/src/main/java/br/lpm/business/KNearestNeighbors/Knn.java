@@ -1,7 +1,7 @@
 package br.lpm.business.KNearestNeighbors;
 
-import br.lpm.business.datamodel.BaseDataPoint;
+import br.lpm.business.datamodel.DataPoint;
 
 interface Knn<T> {
-  T predict(BaseDataPoint attributes);
+  T predict(DataPoint attributes);
 }

@@ -5,12 +5,12 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class BaseAttributeTest {
-  private BaseAttribute attribute;
+public class AttributeTest {
+  private Attribute attribute;
 
   @BeforeEach
   void setUp() {
-    attribute = new SimpleAttribute("testValue");
+    attribute = new Attribute("testValue");
   }
 
   @Test

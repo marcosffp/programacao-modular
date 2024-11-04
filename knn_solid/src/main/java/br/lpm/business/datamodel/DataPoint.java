@@ -4,31 +4,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class BaseDataPoint {
-  private List<BaseAttribute> attributes = new ArrayList<>();
+public class DataPoint {
+  private List<Attribute> attributes = new ArrayList<>();
   private Object state;
 
-  public void addAttribute(BaseAttribute attribute) {
+  public void addAttribute(Attribute attribute) {
     attributes.add(attribute);
   }
 
-  public void addAttributes(List<BaseAttribute> attributes) {
+  public void addAttributes(List<Attribute> attributes) {
     this.attributes.addAll(attributes);
   }
 
-  public BaseAttribute getAtribute(int index) {
+  public Attribute getAtribute(int index) {
     return attributes.get(index);
   }
 
-  public BaseAttribute getAttribute(Object value) {
+  public Attribute getAttribute(Object value) {
     return attributes.stream().filter(attribute -> attribute.getValue().equals(value)).findFirst().orElse(null);
   }
 
-  public List<BaseAttribute> getAttributes() {
+  public List<Attribute> getAttributes() {
     return attributes;
   }
 
-  public void removeAttribute(BaseAttribute attribute) {
+  public void removeAttribute(Attribute attribute) {
     attributes.remove(attribute);
   }
 
@@ -57,14 +57,11 @@ public abstract class BaseDataPoint {
     this.state = state;
   }
 
-@Override
-public String toString() {
-    return "State: " + state + "\nAttributes: " + 
-        (attributes != null ? 
-            attributes.stream()
-                      .map(Object::toString)
-                      .collect(Collectors.joining(", ")) 
-            : "No attributes available");
-}
+  @Override
+  public String toString() {
+    return "State: " + state + ", Attributes: [" + attributes.stream()
+        .map(attribute -> String.format("%.2f", attribute.getValue()))
+        .collect(Collectors.joining(", ")) + "]";
+  }
 
 }

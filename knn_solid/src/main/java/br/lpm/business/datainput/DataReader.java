@@ -1,6 +1,6 @@
 package br.lpm.business.datainput;
 
-import br.lpm.business.datamodel.BaseDataSet;
+import br.lpm.business.datamodel.DataSet;
 import br.lpm.business.dataparser.CompositeDataParser;
 
 public abstract class DataReader {
@@ -10,7 +10,7 @@ public abstract class DataReader {
   public DataReader(CompositeDataParser compositeDataParser) {
     this.compositeDataParser = compositeDataParser;
   }
-  public abstract void loadDataFrom(String filename, BaseDataSet dataSet);
+  public abstract void loadDataFrom(String filename, DataSet dataSet);
 
   public void setCompositeDataParser(CompositeDataParser compositeDataParser) {
     this.compositeDataParser = compositeDataParser;

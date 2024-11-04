@@ -1,39 +1,63 @@
 package br.lpm.business.datamodel;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.OptionalDouble;
 
-public class NormalizedDataSet extends BaseDataSet {
+public class NormalizedDataSet extends DataSet implements Normalize {
 
-  public void normalizeField(String fieldName) {
+  @Override
+  public List<DataPoint> normalizeData(List<DataPoint> data) {
     List<String> attributeNames = super.getAttributeNames();
-    int index = attributeNames.indexOf(fieldName);
+    List<DataPoint> normalizedDataPoints = new ArrayList<>();
 
-    if (index == -1) {
-      return;
+    double[] minValues = new double[attributeNames.size()];
+    double[] maxValues = new double[attributeNames.size()];
+
+    for (int i = 0; i < attributeNames.size(); i++) {
+      minValues[i] = Double.MAX_VALUE;
+      maxValues[i] = Double.NEGATIVE_INFINITY;
     }
 
-    List<BaseDataPoint> dataPoints = super.getDataPoints();
-    OptionalDouble minOpt = dataPoints.stream()
-        .mapToDouble(dp -> (Double) dp.getAttributes().get(index).getValue())
-        .min();
-    OptionalDouble maxOpt = dataPoints.stream()
-        .mapToDouble(dp -> (Double) dp.getAttributes().get(index).getValue())
-        .max();
-
-    if (!minOpt.isPresent() || !maxOpt.isPresent()) {
-      return;
+    for (DataPoint dp : data) {
+      for (int i = 0; i < attributeNames.size(); i++) {
+        Object value = dp.getAttributes().get(i).getValue();
+        if (value instanceof Double) {
+          double doubleValue = (Double) value;
+          if (doubleValue < minValues[i]) {
+            minValues[i] = doubleValue;
+          }
+          if (doubleValue > maxValues[i]) {
+            maxValues[i] = doubleValue;
+          }
+        }
+      }
     }
 
-    double min = minOpt.getAsDouble();
-    double max = maxOpt.getAsDouble();
-    double range = max - min;
-
-    for (BaseDataPoint dataPoint : dataPoints) {
-      double value = (Double) dataPoint.getAttributes().get(index).getValue();
-      double normalizedValue = (value - min) / range;
-      dataPoint.getAttributes().get(index).setValue(normalizedValue);
+    for (int i = 0; i < attributeNames.size(); i++) {
+      System.out.println("Atributo: " + attributeNames.get(i) +
+          " | Mínimo: " + minValues[i] +
+          " | Máximo: " + maxValues[i]);
     }
+
+    for (DataPoint originalDataPoint : data) {
+      DataPoint normalizedDataPoint = new DataPoint();
+      normalizedDataPoint.setState(originalDataPoint.getState());
+
+      for (int i = 0; i < attributeNames.size(); i++) {
+        Object value = originalDataPoint.getAttributes().get(i).getValue();
+        if (value instanceof Double) {
+          double originalValue = (Double) value;
+          double range = maxValues[i] - minValues[i];
+          double normalizedValue = range == 0 ? 0 : (originalValue - minValues[i]) / range;
+          normalizedDataPoint.addAttribute(new Attribute(normalizedValue));
+        } else {
+          normalizedDataPoint.addAttribute(originalDataPoint.getAttributes().get(i));
+        }
+      }
+      normalizedDataPoints.add(normalizedDataPoint);
+    }
+
+    return normalizedDataPoints;
   }
 
   @Override

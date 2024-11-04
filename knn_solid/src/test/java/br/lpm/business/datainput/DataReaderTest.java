@@ -6,8 +6,8 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import br.lpm.business.datamodel.BaseDataSet;
-import br.lpm.business.datamodel.SimpleDataSet;
+
+import br.lpm.business.datamodel.DataSet;
 import br.lpm.business.dataparser.CompositeDataParser;
 import br.lpm.business.dataparser.NumericParser;
 import java.io.FileWriter;
@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public class DataReaderTest {
   private CsvReader dataReader;
-  private BaseDataSet dataSet;
+  private DataSet dataSet;
   private CompositeDataParser compositeDataParser;
   private NumericParser numericParser;
   private static final String TEST_CSV_FILE = "C:\\Users\\marco\\OneDrive\\Documentos\\GitHub\\programacao-modular\\knn_solid\\LPM - Turma 1 - Cadastro de Pessoas.csv";
@@ -26,7 +26,7 @@ public class DataReaderTest {
     compositeDataParser = new CompositeDataParser();
     compositeDataParser.addParser(numericParser);
     dataReader = new CsvReader(compositeDataParser);
-    dataSet = new SimpleDataSet();
+    dataSet = new DataSet();
   }
 
   @Test

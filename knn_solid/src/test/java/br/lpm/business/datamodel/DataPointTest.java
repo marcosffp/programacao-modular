@@ -6,18 +6,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import java.util.List;
 
-public class BaseDataPointTest {
-  private BaseDataPoint dataPoint;
-  private BaseAttribute attribute;
-  private BaseAttribute attribute2;
-  private BaseAttribute attribute3;
+public class DataPointTest {
+  private DataPoint dataPoint;
+  private Attribute attribute;
+  private Attribute attribute2;
+  private Attribute attribute3;
 
   @BeforeEach
   void setUp() {
-    dataPoint = new SimpleDataPoint();
-    attribute = new SimpleAttribute("testValue");
-    attribute2 = new SimpleAttribute("testValue2");
-    attribute3 = new SimpleAttribute("testValue3");
+    dataPoint = new DataPoint();
+    attribute = new Attribute("testValue");
+    attribute2 = new Attribute("testValue2");
+    attribute3 = new Attribute("testValue3");
   }
 
   @Test

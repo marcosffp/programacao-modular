@@ -1,8 +1,8 @@
 package br.lpm.business.metrics;
 
 import java.util.List;
-import br.lpm.business.datamodel.BaseAttribute;
-import br.lpm.business.datamodel.BaseDataPoint;
+import br.lpm.business.datamodel.Attribute;
+import br.lpm.business.datamodel.DataPoint;
 
 
 public class FelizMetric implements Metric {
@@ -12,9 +12,9 @@ public class FelizMetric implements Metric {
   private static final int INVALID = -1;
 
   @Override
-  public double distance(BaseDataPoint p1, BaseDataPoint p2) {
-    List<BaseAttribute> atributosPonto1 = p1.getAttributes();
-    List<BaseAttribute> atributosPonto2 = p2.getAttributes();
+  public double distance(DataPoint p1, DataPoint p2) {
+    List<Attribute> atributosPonto1 = p1.getAttributes();
+    List<Attribute> atributosPonto2 = p2.getAttributes();
 
     if (atributosPonto1.size() != atributosPonto2.size()) {
       return INVALID;
@@ -29,7 +29,7 @@ public class FelizMetric implements Metric {
         double val1 = ((Number) valorPonto1).doubleValue();
         double val2 = ((Number) valorPonto2).doubleValue();
 
-        // Usando um método separado para calcular a distância baseada no índice
+
         distance += calculateDistance(i, val1, val2);
       } else {
         distance += valorPonto1.equals(valorPonto2) ? 0 : 1;

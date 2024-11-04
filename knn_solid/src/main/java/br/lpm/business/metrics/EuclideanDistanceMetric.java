@@ -2,16 +2,17 @@ package br.lpm.business.metrics;
 
 import java.util.List;
 
-import br.lpm.business.datamodel.BaseAttribute;
-import br.lpm.business.datamodel.BaseDataPoint;
+import br.lpm.business.datamodel.Attribute;
+import br.lpm.business.datamodel.DataPoint;
+
 
 
 public class EuclideanDistanceMetric implements Metric {
 
   @Override
-  public double distance(BaseDataPoint p1, BaseDataPoint p2) {
-    List<BaseAttribute> attributesP1 = p1.getAttributes();
-    List<BaseAttribute> attributesP2 = p2.getAttributes();
+  public double distance(DataPoint p1, DataPoint p2) {
+    List<Attribute> attributesP1 = p1.getAttributes();
+    List<Attribute> attributesP2 = p2.getAttributes();
 
     if (attributesP1.size() != attributesP2.size()) {
       return -1; 

@@ -1,8 +1,8 @@
 package br.lpm.business.datamodel;
 
-public class Attribute extends BaseAttribute {
+public class SimpleAttribute extends BaseAttribute {
 
-  public Attribute(Object value) {
+  public SimpleAttribute(Object value) {
     super(value);
   }
 

@@ -14,10 +14,10 @@ public class BaseDataPointTest {
 
   @BeforeEach
   void setUp() {
-    dataPoint = new DataPoint();
-    attribute = new Attribute("testValue");
-    attribute2 = new Attribute("testValue2");
-    attribute3 = new Attribute("testValue3");
+    dataPoint = new SimpleDataPoint();
+    attribute = new SimpleAttribute("testValue");
+    attribute2 = new SimpleAttribute("testValue2");
+    attribute3 = new SimpleAttribute("testValue3");
   }
 
   @Test

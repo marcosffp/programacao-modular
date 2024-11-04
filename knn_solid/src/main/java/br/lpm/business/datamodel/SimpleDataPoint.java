@@ -1,6 +1,6 @@
 package br.lpm.business.datamodel;
 
-public class DataPoint extends BaseDataPoint {
+public class SimpleDataPoint extends BaseDataPoint {
 
   @Override
   public String toString() {

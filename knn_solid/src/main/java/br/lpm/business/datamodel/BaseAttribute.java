@@ -1,5 +1,7 @@
 package br.lpm.business.datamodel;
 
+import java.util.Optional;
+
 public abstract class BaseAttribute {
 
   private Object value;
@@ -18,8 +20,11 @@ public abstract class BaseAttribute {
     return this;
   }
 
-  @Override
-  public String toString() {
-    return value != null ? value.toString() : "null";
-  }
+@Override
+public String toString() {
+    return Optional.ofNullable(value)
+                   .map(Object::toString)
+                   .orElse("null");
+}
+
 }

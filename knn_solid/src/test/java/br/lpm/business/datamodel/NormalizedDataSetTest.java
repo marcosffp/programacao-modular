@@ -16,11 +16,11 @@ public class NormalizedDataSetTest {
   @BeforeEach
   void setUp() {
     normalizedDataSet = new NormalizedDataSet();
-    attribute1 = new Attribute(10.0);
-    attribute2 = new Attribute(20.0);
+    attribute1 = new SimpleAttribute(10.0);
+    attribute2 = new SimpleAttribute(20.0);
 
-    dataPoint1 = new DataPoint();
-    dataPoint2 = new DataPoint();
+    dataPoint1 = new SimpleDataPoint();
+    dataPoint2 = new SimpleDataPoint();
     dataPoint1.addAttribute(attribute1);
     dataPoint2.addAttribute(attribute2);
 

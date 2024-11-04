@@ -2,6 +2,7 @@ package br.lpm.business.datamodel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class BaseDataSet {
   private List<BaseDataPoint> dataPoints = new ArrayList<>();
@@ -41,12 +42,7 @@ public abstract class BaseDataSet {
   }
 
   public BaseDataPoint getDataPoint(Object state) {
-    for (BaseDataPoint dataPoint : dataPoints) {
-      if (dataPoint.getState().equals(state)) {
-        return dataPoint;
-      }
-    }
-    return null;
+    return dataPoints.stream().filter(dataPoint -> dataPoint.getState().equals(state)).findFirst().orElse(null);
   }
 
   public List<BaseDataPoint> getDataPoints() {
@@ -82,12 +78,7 @@ public abstract class BaseDataSet {
   }
 
   public String getAttributeName(String name) {
-    for (String attributeName : attributeNames) {
-      if (attributeName.equals(name)) {
-        return attributeName;
-      }
-    }
-    return null;
+    return attributeNames.stream().filter(attributeName -> attributeName.equals(name)).findFirst().orElse(null);
   }
   
   public List<String> getAttributeNames() {
@@ -102,17 +93,20 @@ public abstract class BaseDataSet {
     this.stateName = stateName;
   }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("Attributes: ");
-    for (String attributeName : attributeNames) {
-      sb.append(attributeName).append(", ");
-    }
-    sb.append("\nState Name: ").append(stateName).append("\nData Points:\n");
-    for (BaseDataPoint dataPoint : dataPoints) {
-      sb.append(dataPoint.toString()).append("\n");
-    }
-    return sb.toString();
-  }
+@Override
+public String toString() {
+    return "BaseDataSet{" +
+        "dataPoints=" + (dataPoints != null ? 
+            dataPoints.stream()
+                      .map(Object::toString)
+                      .collect(Collectors.joining(", ")) 
+            : "[]") +
+        ", attributeNames=" + (attributeNames != null ? 
+            attributeNames.stream()
+                          .collect(Collectors.joining(", ")) 
+            : "[]") +
+        ", stateName='" + stateName + '\'' +
+        '}';
+}
+
 }

@@ -5,8 +5,8 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+import br.lpm.business.datamodel.BaseDataPoint;
 import br.lpm.business.datamodel.BaseDataSet;
-import br.lpm.business.datamodel.DataPoint;
 import br.lpm.business.metrics.Metric;
 
 public class KnnRegressor implements Knn<Double> {
@@ -20,17 +20,17 @@ public class KnnRegressor implements Knn<Double> {
     this.k = k;
   }
 
-  private List<Double> calculateDistances(DataPoint attributes) {
+  private List<Double> calculateDistances(BaseDataPoint attributes) {
     List<Double> distances = new ArrayList<>();
-    for (DataPoint dataPoint : dataset.getDataPoints()) {
+    for (BaseDataPoint dataPoint : dataset.getDataPoints()) {
       distances.add(metric.distance(attributes, dataPoint));
     }
     return distances;
   }
 
   @Override
-  public Double predict(DataPoint testPoint) {
-    List<DataPoint> dataPoints = dataset.getDataPoints();
+  public Double predict(BaseDataPoint testPoint) {
+    List<BaseDataPoint> dataPoints = dataset.getDataPoints();
     List<Double> distances = this.calculateDistances(testPoint);
 
     Integer[] indices = new Integer[dataPoints.size()];

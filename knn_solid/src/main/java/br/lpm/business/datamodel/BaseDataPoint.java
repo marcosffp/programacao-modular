@@ -2,6 +2,7 @@ package br.lpm.business.datamodel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class BaseDataPoint {
   private List<BaseAttribute> attributes = new ArrayList<>();
@@ -20,12 +21,7 @@ public abstract class BaseDataPoint {
   }
 
   public BaseAttribute getAttribute(Object value) {
-    for (BaseAttribute attribute : attributes) {
-      if (attribute.getValue().equals(value)) {
-        return attribute;
-      }
-    }
-    return null;
+    return attributes.stream().filter(attribute -> attribute.getValue().equals(value)).findFirst().orElse(null);
   }
 
   public List<BaseAttribute> getAttributes() {
@@ -37,7 +33,7 @@ public abstract class BaseDataPoint {
   }
 
   public void removeAttribute(Object value) {
-    attributes.remove(getAttribute(value));
+    attributes.removeIf(attribute -> attribute.getValue().equals(value));
   }
 
   public void removeAttribute(int index) {
@@ -61,8 +57,14 @@ public abstract class BaseDataPoint {
     this.state = state;
   }
 
-  @Override
-  public String toString() {
-    return "State: " + state + "\nAttributes: " + attributes;
-  }
+@Override
+public String toString() {
+    return "State: " + state + "\nAttributes: " + 
+        (attributes != null ? 
+            attributes.stream()
+                      .map(Object::toString)
+                      .collect(Collectors.joining(", ")) 
+            : "No attributes available");
+}
+
 }

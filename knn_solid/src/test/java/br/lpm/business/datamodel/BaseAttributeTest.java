@@ -10,7 +10,7 @@ public class BaseAttributeTest {
 
   @BeforeEach
   void setUp() {
-    attribute = new Attribute("testValue");
+    attribute = new SimpleAttribute("testValue");
   }
 
   @Test

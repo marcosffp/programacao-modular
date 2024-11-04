@@ -16,9 +16,9 @@ public class BaseDataSetTest {
   @BeforeEach
   void setUp() {
     dataSet = new SimpleDataSet();
-    dataPoint = new DataPoint();
-    dataPoint2 = new DataPoint();
-    dataPoint3 = new DataPoint();
+    dataPoint = new SimpleDataPoint();
+    dataPoint2 = new SimpleDataPoint();
+    dataPoint3 = new SimpleDataPoint();
   }
 
   @Test

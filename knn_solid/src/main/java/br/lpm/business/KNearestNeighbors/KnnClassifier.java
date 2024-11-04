@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import br.lpm.business.datamodel.BaseDataPoint;
 import br.lpm.business.datamodel.BaseDataSet;
-import br.lpm.business.datamodel.DataPoint;
 import br.lpm.business.metrics.Metric;
 
 public class KnnClassifier implements Knn<String> {
@@ -23,17 +23,17 @@ public class KnnClassifier implements Knn<String> {
     this.k = k;
   }
 
-  private List<Double> calculateDistances(DataPoint attributes) {
+  private List<Double> calculateDistances(BaseDataPoint attributes) {
     List<Double> distances = new ArrayList<>();
-    for (DataPoint dataPoint : dataset.getDataPoints()) {
+    for (BaseDataPoint dataPoint : dataset.getDataPoints()) {
       distances.add(metric.distance(attributes, dataPoint));
     }
     return distances;
   }
 
   @Override
-  public String predict(DataPoint attributes) {
-    List<DataPoint> pontosDeDados = dataset.getDataPoints();
+  public String predict(BaseDataPoint attributes) {
+    List<BaseDataPoint> pontosDeDados = dataset.getDataPoints();
     int numeroDePontos = pontosDeDados.size();
     List<Double> distancias = this.calculateDistances(attributes);
 

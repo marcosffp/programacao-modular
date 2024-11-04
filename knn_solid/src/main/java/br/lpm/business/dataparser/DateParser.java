@@ -7,16 +7,15 @@ import java.time.format.DateTimeParseException;
 public class DateParser implements DataParser {
   @Override
   public Object parse(String input) {
-    try {
-      DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("M/d/yyyy");
-      DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("d/M/yyyy");
+    DateTimeFormatter[] formatters = {
+        DateTimeFormatter.ofPattern("M/d/yyyy"),
+    };
+    for (DateTimeFormatter formatter : formatters) {
       try {
-        return LocalDate.parse(input, formatter1);
+        return LocalDate.parse(input, formatter);
       } catch (DateTimeParseException ignored) {
       }
-      return LocalDate.parse(input, formatter2);
-    } catch (DateTimeParseException e) {
-      return null;
     }
+    return null;
   }
 }

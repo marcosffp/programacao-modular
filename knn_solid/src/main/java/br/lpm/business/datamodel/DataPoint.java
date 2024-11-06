@@ -1,12 +1,13 @@
 package br.lpm.business.datamodel;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
 public class DataPoint {
   private List<Attribute> attributes = new ArrayList<>();
-  private Object state;
+  private Attribute state;
 
   public void addAttribute(Attribute attribute) {
     attributes.add(attribute);
@@ -48,20 +49,27 @@ public class DataPoint {
     return attributes.size();
   }
 
-  @SuppressWarnings("unchecked")
-  public <T> T getState() {
-    return (T) this.state;
+  public Attribute getState() {
+    return state;
   }
 
-  public void setState(Object state) {
+  public void setState(Attribute state) {
     this.state = state;
   }
 
   @Override
   public String toString() {
-    return "State: " + state + ", Attributes: [" + attributes.stream()
-        .map(attribute -> String.format("%.2f", attribute.getValue()))
-        .collect(Collectors.joining(", ")) + "]";
+    return attributes.stream()
+        .map(attribute -> {
+          Object value = attribute.getValue();
+          if (value instanceof Object[]) {
+            return Arrays.toString((Object[]) value);
+          } else {
+            return value.toString();
+          }
+        })
+        .collect(Collectors.joining(", ", "[", "]"));
+
   }
 
 }

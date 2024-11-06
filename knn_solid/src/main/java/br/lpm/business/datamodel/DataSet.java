@@ -33,7 +33,7 @@ public class DataSet {
     dataPoints.clear();
   }
 
-  public int sizeDataPoints() {
+  public int size() {
     return dataPoints.size();
   }
 
@@ -42,7 +42,7 @@ public class DataSet {
   }
 
   public DataPoint getDataPoint(Object state) {
-    return dataPoints.stream().filter(dataPoint -> dataPoint.getState().equals(state)).findFirst().orElse(null);
+    return dataPoints.stream().filter(dataPoint -> dataPoint.getState().getValue().equals(state)).findFirst().orElse(null);
   }
 
   public List<DataPoint> getDataPoints() {

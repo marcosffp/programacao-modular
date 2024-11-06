@@ -60,7 +60,7 @@ public class DataSetTest {
   void testClearDataPoints() {
     dataSet.addDataPoints(List.of(dataPoint, dataPoint2, dataPoint3));
     dataSet.clearDataPoints();
-    assertEquals(0, dataSet.sizeDataPoints(), "Testando limpeza de todos os pontos de dados.");
+    assertEquals(0, dataSet.size(), "Testando limpeza de todos os pontos de dados.");
   }
 
   @Test
@@ -92,7 +92,7 @@ public class DataSetTest {
 
   @Test
   void testGetDataPoint2() {
-    dataPoint.setState("testState");
+    dataPoint.setState(new Attribute("testState"));
     dataSet.addDataPoints(List.of(dataPoint, dataPoint2, dataPoint3));
     assertEquals(dataPoint, dataSet.getDataPoint("testState"), "Testando obtenção do ponto de dados pelo estado.");
   }
@@ -129,22 +129,22 @@ public class DataSetTest {
   void testRemoveDataPoint() {
     dataSet.addDataPoints(List.of(dataPoint, dataPoint2, dataPoint3));
     dataSet.removeDataPoint(dataPoint);
-    assertEquals(2, dataSet.sizeDataPoints(), "Testando remoção do ponto de dados pelo objeto.");
+    assertEquals(2, dataSet.size(), "Testando remoção do ponto de dados pelo objeto.");
   }
 
   @Test
   void testRemoveDataPoint2() {
-    dataPoint.setState(2);
+    dataPoint.setState(new Attribute("state2"));
     dataSet.addDataPoints(List.of(dataPoint, dataPoint2, dataPoint3));
     dataSet.removeDataPoint(2);
-    assertEquals(2, dataSet.sizeDataPoints(), "Testando remoção do ponto de dados pelo estado.");
+    assertEquals(2, dataSet.size(), "Testando remoção do ponto de dados pelo estado.");
   }
 
   @Test
   void testRemoveDataPoint3() {
     dataSet.addDataPoints(List.of(dataPoint, dataPoint2, dataPoint3));
     dataSet.removeDataPoint(0);
-    assertEquals(2, dataSet.sizeDataPoints(), "Testando remoção do ponto de dados pela posição.");
+    assertEquals(2, dataSet.size(), "Testando remoção do ponto de dados pela posição.");
   }
 
   @Test
@@ -162,6 +162,6 @@ public class DataSetTest {
   @Test
   void testSizeDataPoints() {
     dataSet.addDataPoints(List.of(dataPoint, dataPoint2, dataPoint3));
-    assertEquals(3, dataSet.sizeDataPoints(), "Testando contagem de pontos de dados após adição.");
+    assertEquals(3, dataSet.size(), "Testando contagem de pontos de dados após adição.");
   }
 }

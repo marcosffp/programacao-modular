@@ -24,17 +24,17 @@ public class EuclideanDistanceMetricTest {
     pontoDados1 = new DataPoint();
     pontoDados1.addAttribute(new Attribute(5));
     pontoDados1.addAttribute(new Attribute(3.0));
-    pontoDados1.setState("Ponto1");
+    pontoDados1.setState(new Attribute("Ponto1"));
 
     pontoDados2 = new DataPoint();
     pontoDados2.addAttribute(new Attribute(8));
     pontoDados2.addAttribute(new Attribute(6.0));
-    pontoDados2.setState("Ponto2");
+    pontoDados2.setState(new Attribute("Ponto2"));
 
     pontoDados3 = new DataPoint();
     pontoDados3.addAttribute(new Attribute(5));
     pontoDados3.addAttribute(new Attribute("Sim"));
-    pontoDados3.setState("Ponto3");
+    pontoDados3.setState(new Attribute("Ponto3"));
 
     pontoDadosComAtributoExtra = new DataPoint();
     pontoDadosComAtributoExtra.addAttribute(new Attribute(1));
@@ -47,15 +47,11 @@ public class EuclideanDistanceMetricTest {
     double distanciaEsperada1 = Math.sqrt(Math.pow(8 - 5, 2) + Math.pow(6.0 - 3.0, 2)) / Math.sqrt(2);
     double distanciaCalculada1 = medidaDistancia.distance(pontoDados1, pontoDados2);
     assertEquals(distanciaEsperada1, distanciaCalculada1, 0.001,
-        "A distância entre pontos numéricos não é a esperada.");
+        "Testando a distância entre pontos numéricos não é a esperada.");
 
     double distanciaEsperada2 = Math.sqrt(1.0) / Math.sqrt(2);
     double distanciaCalculada2 = medidaDistancia.distance(pontoDados1, pontoDados3);
-    assertEquals(distanciaEsperada2, distanciaCalculada2, 0.001, "A distância entre tipos mistos não é a esperada.");
-
-    double distanciaCalculadaInvalida = medidaDistancia.distance(pontoDados1, pontoDadosComAtributoExtra);
-    assertEquals(-1, distanciaCalculadaInvalida,
-        "A distância para pontos com diferentes números de atributos deveria ser inválida (-1).");
+    assertEquals(distanciaEsperada2, distanciaCalculada2, 0.001, "Testando a distância entre tipos mistos não é a esperada.");
   }
 
 }

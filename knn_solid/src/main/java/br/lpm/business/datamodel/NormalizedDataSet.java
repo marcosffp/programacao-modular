@@ -1,67 +1,73 @@
 package br.lpm.business.datamodel;
 
-import java.util.ArrayList;
-import java.util.List;
+public class NormalizedDataSet extends DataSet {
 
-public class NormalizedDataSet extends DataSet implements Normalize {
+  public NormalizedDataSet() {
+    super();
+  }
 
-  @Override
-  public List<DataPoint> normalizeData(List<DataPoint> data) {
-    List<String> attributeNames = super.getAttributeNames();
-    List<DataPoint> normalizedDataPoints = new ArrayList<>();
-
-    double[] minValues = new double[attributeNames.size()];
-    double[] maxValues = new double[attributeNames.size()];
-
-    for (int i = 0; i < attributeNames.size(); i++) {
-      minValues[i] = Double.MAX_VALUE;
-      maxValues[i] = Double.NEGATIVE_INFINITY;
+  public DataSet normalize() {
+    NormalizedDataSet normalizedDataSet = new NormalizedDataSet();
+    for (DataPoint dataPoint : super.getDataPoints()) {
+      DataPoint normalizedDataPoint = normalizeDataPoint(dataPoint);
+      normalizedDataSet.addDataPoint(normalizedDataPoint);
     }
+    normalizedDataSet.addAttributeNames(super.getAttributeNames());
 
-    for (DataPoint dp : data) {
-      for (int i = 0; i < attributeNames.size(); i++) {
-        Object value = dp.getAttributes().get(i).getValue();
-        if (value instanceof Double) {
-          double doubleValue = (Double) value;
-          if (doubleValue < minValues[i]) {
-            minValues[i] = doubleValue;
-          }
-          if (doubleValue > maxValues[i]) {
-            maxValues[i] = doubleValue;
-          }
+    return normalizedDataSet;
+  }
+
+  private DataPoint normalizeDataPoint(DataPoint dataPoint) {
+    DataPoint normalizedDataPoint = new DataPoint();
+    for (Attribute attribute : dataPoint.getAttributes()) {
+      if (attribute.getValue() instanceof Number) {
+        double normalizedValue = normalizeValue((Number) attribute.getValue());
+        normalizedDataPoint.addAttribute(new Attribute(normalizedValue));
+      } else {
+        normalizedDataPoint.addAttribute(attribute);
+      }
+    }
+    normalizedDataPoint.setState(dataPoint.getState());
+    return normalizedDataPoint;
+  }
+
+  private double normalizeValue(Number value) {
+    double minValue = getMinValue();
+    double maxValue = getMaxValue();
+    return (value.doubleValue() - minValue) / (maxValue - minValue);
+  }
+
+  private double getMinValue() {
+    double min = Double.MAX_VALUE;
+    for (DataPoint dataPoint : super.getDataPoints()) {
+      for (Attribute attribute : dataPoint.getAttributes()) {
+        if (attribute.getValue() instanceof Number) {
+          double value = ((Number) attribute.getValue()).doubleValue();
+          min = Math.min(min, value);
         }
       }
     }
+    return min;
+  }
 
-    for (int i = 0; i < attributeNames.size(); i++) {
-      System.out.println("Atributo: " + attributeNames.get(i) +
-          " | Mínimo: " + minValues[i] +
-          " | Máximo: " + maxValues[i]);
-    }
-
-    for (DataPoint originalDataPoint : data) {
-      DataPoint normalizedDataPoint = new DataPoint();
-      normalizedDataPoint.setState(originalDataPoint.getState());
-
-      for (int i = 0; i < attributeNames.size(); i++) {
-        Object value = originalDataPoint.getAttributes().get(i).getValue();
-        if (value instanceof Double) {
-          double originalValue = (Double) value;
-          double range = maxValues[i] - minValues[i];
-          double normalizedValue = range == 0 ? 0 : (originalValue - minValues[i]) / range;
-          normalizedDataPoint.addAttribute(new Attribute(normalizedValue));
-        } else {
-          normalizedDataPoint.addAttribute(originalDataPoint.getAttributes().get(i));
+  private double getMaxValue() {
+    double max = Double.MIN_VALUE;
+    for (DataPoint dataPoint : this.getDataPoints()) {
+      for (Attribute attribute : dataPoint.getAttributes()) {
+        if (attribute.getValue() instanceof Number) {
+          double value = ((Number) attribute.getValue()).doubleValue();
+          max = Math.max(max, value);
         }
       }
-      normalizedDataPoints.add(normalizedDataPoint);
     }
-
-    return normalizedDataPoints;
+    return max;
   }
 
   @Override
   public String toString() {
-    return "Normalized DataSet: " + super.toString();
+    return "NormalizedDataSet{" +
+        "dataPoints=" + getDataPoints() +
+        ", attributeNames=" + getAttributeNames() +
+        '}';
   }
 }

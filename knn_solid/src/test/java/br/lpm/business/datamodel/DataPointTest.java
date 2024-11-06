@@ -72,8 +72,8 @@ public class DataPointTest {
 
   @Test
   void testGetState() {
-    dataPoint.setState("testState");
-    assertEquals("testState", dataPoint.getState(), "Testando definição e obtenção do estado.");
+    dataPoint.setState(new Attribute("testState"));
+    assertEquals("testState", dataPoint.getState().getValue(), "Testando definição e obtenção do estado.");
   }
 
   @Test
@@ -100,8 +100,8 @@ public class DataPointTest {
 
   @Test
   void testSetState() {
-    dataPoint.setState("testState");
-    assertEquals("testState", dataPoint.getState(), "Testando definição e obtenção do estado.");
+    dataPoint.setState(new Attribute("testState"));
+    assertEquals("testState", dataPoint.getState().getValue(), "Testando definição e obtenção do estado.");
   }
 
   @Test

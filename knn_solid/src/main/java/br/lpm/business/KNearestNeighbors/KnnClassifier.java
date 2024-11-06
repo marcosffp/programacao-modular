@@ -1,67 +1,46 @@
 package br.lpm.business.KNearestNeighbors;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import br.lpm.business.datamodel.Attribute;
 import br.lpm.business.datamodel.DataPoint;
 import br.lpm.business.datamodel.DataSet;
 import br.lpm.business.metrics.Metric;
 
-public class KnnClassifier implements Knn<String> {
-  private DataSet dataset;
-  private Metric metric;
-  private int k;
+public class KnnClassifier extends Knn {
 
-  public KnnClassifier(DataSet dataset, Metric metric, int k) {
-    this.dataset = dataset;
-    this.metric = metric;
-    this.k = k;
+  public KnnClassifier(DataSet dataset, int k, Metric metric) {
+    super(dataset, k, metric);
   }
 
-  private List<Double> calculateDistances(DataPoint attributes) {
-    List<Double> distances = new ArrayList<>();
-    for (DataPoint dataPoint : dataset.getDataPoints()) {
-      distances.add(metric.distance(attributes, dataPoint));
-    }
-    return distances;
+  public Attribute predict(DataPoint testPoint) {
+    List<DataPoint> dataPoints = getDataset().getDataPoints();
+    List<Double> distances = super.calculateDistances(testPoint);
+    List<Integer> nearestIndexes = super.getNearest(distances);
+
+    Map<Object, Integer> stateCount = countStateOccurrences(dataPoints, nearestIndexes);
+    Object predictedState = findMostFrequentState(stateCount);
+
+    return new Attribute(predictedState);
   }
 
-  @Override
-  public String predict(DataPoint attributes) {
-    List<DataPoint> pontosDeDados = dataset.getDataPoints();
-    int numeroDePontos = pontosDeDados.size();
-
-    List<Double> distancias = this.calculateDistances(attributes);
-
-    Integer[] indices = new Integer[numeroDePontos];
-    for (int i = 0; i < numeroDePontos; i++) {
-      indices[i] = i;
+  private Map<Object, Integer> countStateOccurrences(List<DataPoint> dataPoints, List<Integer> nearestIndexes) {
+    Map<Object, Integer> stateCount = new HashMap<>();
+    for (int i = 0; i < getK(); i++) {
+      Object stateValue = dataPoints.get(nearestIndexes.get(i)).getState().getValue();
+      stateCount.put(stateValue, stateCount.getOrDefault(stateValue, 0) + 1);
     }
-
-    Arrays.sort(indices, Comparator.comparingDouble(i -> distancias.get(i)));
-
-    Map<Object, Integer> contagemDeClasses = new HashMap<>();
-
-    for (int i = 0; i < k; i++) {
-      Integer contagemAtual = contagemDeClasses.get(pontosDeDados.get(indices[i]).getState());
-      if (contagemAtual == null) {
-        contagemDeClasses.put(pontosDeDados.get(indices[i]).getState(), 1);
-      } else {
-        contagemDeClasses.put(pontosDeDados.get(indices[i]).getState(), contagemAtual + 1);
-      }
-    }
-
-    Set<Map.Entry<Object, Integer>> conjuntoDeEntradas = contagemDeClasses.entrySet();
-    Map.Entry<Object, Integer> vencedor = conjuntoDeEntradas.stream()
-        .max((entrada1, entrada2) -> entrada1.getValue().compareTo(entrada2.getValue()))
-        .get();
-
-    return (String) vencedor.getKey();
+    return stateCount;
   }
 
+  private Object findMostFrequentState(Map<Object, Integer> stateCount) {
+    Set<Map.Entry<Object, Integer>> states = stateCount.entrySet();
+    return states.stream()
+        .max((e1, e2) -> e1.getValue().compareTo(e2.getValue()))
+        .get()
+        .getKey();
+  }
 }

@@ -3,10 +3,10 @@ package br.lpm.business.loader;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.util.List;
-import br.lpm.business.datamodel.Attribute;
-import br.lpm.business.datamodel.DataPoint;
-import br.lpm.business.datamodel.DataSet;
-import br.lpm.business.dataparser.Parser;
+
+import br.lpm.business.dataset.DataSet;
+import br.lpm.business.model.Attribute;
+import br.lpm.business.model.DataPoint;
 
 public class CsvLoader implements DataLoader {
 

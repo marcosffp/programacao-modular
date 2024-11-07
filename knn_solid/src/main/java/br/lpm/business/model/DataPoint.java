@@ -1,4 +1,4 @@
-package br.lpm.business.datamodel;
+package br.lpm.business.model;
 
 import java.util.ArrayList;
 import java.util.Arrays;

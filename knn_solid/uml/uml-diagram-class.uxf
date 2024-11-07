@@ -1,20 +1,27 @@
-<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>1200</x><y>220</y><w>460</w><h>460</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-Package::br.lpm.business.datamodel
+<diagram program="umletino" version="15.1"><zoom_level>4</zoom_level><element><id>UMLClass</id><coordinates><x>592</x><y>252</y><w>132</w><h>56</h></coordinates><panel_attributes>Package::br.lpm.business.knn
+&lt;&lt;abstract&gt;&gt;
+Knn
+--
+-k: int
+--
+- calcDistances(attributes: DataPoint) : List&lt;Double&gt;
+- getNearest(int k): List&lt;DataPoint&gt;
+/+ &lt;&lt;abstract&gt;&gt; predict(attributes: DataPoint): Attribute/</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>748</x><y>260</y><w>120</w><h>160</h></coordinates><panel_attributes>Package::br.lpm.business.dataset
 DataSet
 --
 - attributeNames: List&lt;String&gt;
 - stateName: String
 --
-+ addDataPoint(dataPoint: BaseDataPoint): void
-+ addDataPoints(dataPoints: List&lt;BaseDataPoint&gt;): void
-+ removeDataPoint(dataPoint: BaseDataPoint): void
++ addDataPoint(dataPoint: DataPoint): void
++ addDataPoints(dataPoints: List&lt;DataPoint&gt;): void
++ removeDataPoint(dataPoint: DataPoint): void
 + removeDataPoint(state: Object): void
 + removeDataPoint(index: int): void
 + clearDataPoints(): void
-+ sizeDataPoints(): int
-+ getDataPoint(index: int): BaseDataPoint
-+ getDataPoint(state: Object): BaseDataPoint
-+ getDataPoints(): List&lt;BaseDataPoint&gt;
++ size(): int
++ getDataPoint(index: int): DataPoint
++ getDataPoint(state: Object): DataPoint
++ getDataPoints(): List&lt;DataPoint&gt;
 + addAttributeName(attributeName: String): void
 + addAttributeNames(attributeNames: List&lt;String&gt;): void
 + removeAttributeName(attributeName: String): void
@@ -27,168 +34,104 @@ DataSet
 + getStateName(): String
 + setStateName(stateName: String): void
 + toString(): String
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1160</x><y>740</y><w>380</w><h>290</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-Package::br.lpm.business.datamodel
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>732</x><y>516</y><w>140</w><h>104</h></coordinates><panel_attributes>Package::br.lpm.business.model
 DataPoint
---
-- state: Object
---
-+ addAttribute(attribute: BaseAttribute): void
-+ addAttributes(attributes: List&lt;BaseAttribute&gt;): void
-+ getAtribute(index: int): BaseAttribute
-+ getAttribute(value: Object): BaseAttribute
-+ getAttributes(): List&lt;BaseAttribute&gt;
-+ removeAttribute(attribute: BaseAttribute): void
+-
+- state: Attribute
+-
++ getAttributes(): List&lt;Attribute&gt;
++ getState(): Attribute
++ setState(state: Attribute): void
++ addAttribute(attribute: Attribute): void
++ addAttributes(attributes: List&lt;Attribute&gt;): void
++ getAttribute(index: int): Attribute
++ getAttribute(value: Object): Attribute
++ removeAttribute(attribute: Attribute): void
 + removeAttribute(value: Object): void
 + removeAttribute(index: int): void
 + clearAttributes(): void
 + sizeAttribute(): int
-+ getState&lt;T&gt;(): T
-+ setState(state: Object): void
 + toString(): String
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1310</x><y>670</y><w>50</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>792</x><y>416</y><w>20</w><h>108</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m1=1
-m2=0..*</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>540</x><y>260</y><w>680</w><h>130</h></coordinates><panel_attributes>lt=&lt;-
+m2=0..*</panel_attributes><additional_attributes>10;10;10;250</additional_attributes></element><element><id>Relation</id><coordinates><x>720</x><y>260</y><w>36</w><h>20</h></coordinates><panel_attributes>lt=&lt;-
 m1=0..1
-</panel_attributes><additional_attributes>660;20;10;20;10;110</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1230</x><y>1120</y><w>240</w><h>140</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-Package::br.lpm.business.datamodel
+</panel_attributes><additional_attributes>70;20;10;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>764</x><y>648</y><w>80</w><h>44</h></coordinates><panel_attributes>Package::br.lpm.business.model
 Attribute
 --
-- value: Object
+-value: Object
 --
-+ BaseAttribute(value: Object)
++ setValue(: T) : Attribute
 + getValue&lt;T&gt;(): T
-+ setValue(value: Object): BaseAttribute
-+ toString(): String
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>810</x><y>800</y><w>290</w><h>90</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
-Package::br.lpm.business.metrics
++ toString() :  String</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>792</x><y>616</y><w>20</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
+m1=1
+m2=1..*</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element><element><id>UMLClass</id><coordinates><x>592</x><y>344</y><w>116</w><h>36</h></coordinates><panel_attributes>Package::br.lpm.business.metric
+&lt;&lt;interface&gt;&gt;
 Metric
 --
 --
 +distance(p1: DataPoint, p2: Datapoint): double
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1090</x><y>810</y><w>90</w><h>40</h></coordinates><panel_attributes>lt=.&gt;
-&lt;&lt;uses&gt;&gt;</panel_attributes><additional_attributes>10;20;70;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>770</x><y>930</y><w>280</w><h>90</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-Package::br.lpm.business.metrics
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>644</x><y>304</y><w>16</w><h>48</h></coordinates><panel_attributes>lt=&lt;-
+m1=1</panel_attributes><additional_attributes>10;100;20;10</additional_attributes></element><element><id>Relation</id><coordinates><x>708</x><y>304</y><w>48</w><h>220</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;uses&gt;&gt;</panel_attributes><additional_attributes>10;10;100;530</additional_attributes></element><element><id>UMLClass</id><coordinates><x>484</x><y>404</y><w>164</w><h>36</h></coordinates><panel_attributes>Package::br.lpm.business.metric
 EuclideanDistanceMetric
 --
---
-+distance(p1: DataPoint, p2: Datapoint): double</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>890</x><y>880</y><w>50</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>30;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>900</x><y>1050</y><w>280</w><h>80</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-Package::br.lpm.business.metrics
-FelizMetric
---
---
-+distance(p1: DataPoint, p2: Datapoint): double</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1070</x><y>880</y><w>50</w><h>190</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;30;170</additional_attributes></element><element><id>Relation</id><coordinates><x>1330</x><y>1020</y><w>50</w><h>120</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-&gt;
-m1=1
-m2=1..*</panel_attributes><additional_attributes>10;10;10;100</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1720</x><y>510</y><w>330</w><h>100</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-Package::br.lpm.business.datamodel
-NormalizedDataSet
++ distance(p1: DataPoint, p2: DataPoint): double
+- calculateAttributeDistance(value1: Object, value2: Object): double
+- calculateNumericDistance(n1: Number, n2: Number): double
+- calculateNonNumericDistance(value1: Object, value2: Object): double
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>540</x><y>376</y><w>80</w><h>36</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>180;10;10;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>616</x><y>452</y><w>112</w><h>20</h></coordinates><panel_attributes>FelizMetric
 --
 --
-+ normalizeData(data:List&lt;DataPoint&gt; ): List&lt;DataPoint&gt;
-+ toString(): String
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1650</x><y>560</y><w>90</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;70;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1250</x><y>0</y><w>460</w><h>160</h></coordinates><panel_attributes>&lt;&lt;abstract&gt;&gt;
-Package::br.lpm.business.datainput
-DataReader
---
-
---
-+ DataReader(compositeDataParser: CompositeDataParser)
-+ loadDataFrom(filename: String, dataSet: DataSet): void
-+ setCompositeDataParser(compositeDataParser: CompositeDataParser): void
-+ getCompositeDataParser(): CompositeDataParser
-+ toString(): String
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>800</x><y>10</y><w>370</w><h>110</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-Package::br.lpm.business.datainput
-CsvReader
---
-+ CsvReader(compositeDataParser: CompositeDataParser)
-+ loadDataFrom(filename: String, dataSet: DataSet): void
-+ toString(): String
-
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1700</x><y>60</y><w>470</w><h>40</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>450;10;10;11</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2080</x><y>530</y><w>220</w><h>100</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-Package::br.lpm.business.dataparser
-BooleanParser
---
---
-+ parse(input:String): Object
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2160</x><y>460</y><w>70</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>50;10;10;70</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2130</x><y>370</y><w>370</w><h>100</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
-Package::br.lpm.business.dataparser
-DataParser
---
---
-+ parse(input:String): Object
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2490</x><y>400</y><w>80</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;60;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1750</x><y>190</y><w>270</w><h>100</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-Package::br.lpm.business.dataparser
-SimpleCompositeDataParser
---
---
-+ toString(): String
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2300</x><y>260</y><w>50</w><h>130</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m1=1
-m2=0..*</panel_attributes><additional_attributes>10;10;10;110</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2150</x><y>10</y><w>290</w><h>260</h></coordinates><panel_attributes>&lt;&lt;abstract&gt;&gt;
-Package::br.lpm.business.dataparser
-CompositeDataParser
--
-
--
-+ addParser(parser: DataParser): void
-+ addParsers(parsers: List&lt;DataParser&gt;): void
-+ getParsers(): List&lt;DataParser&gt;
-+ getParser(index: int): DataParser
-+ getParser(name: String): DataParser
-+ removeParser(parser: DataParser): void
-+ removeParser(index: int): void
-+ removeParser(name: String): void
-+ clearParsers(): void
-+ sizeParsers(): int
-+ parse(input: String): Object
-+ toString(): String
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>400</x><y>370</y><w>330</w><h>130</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-Package::br.lpm.business.KNearestNeighbors
++distance(p1: DataPoint, p2: Datapoint): double</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>656</x><y>376</y><w>28</w><h>84</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;50;190</additional_attributes></element><element><id>UMLClass</id><coordinates><x>304</x><y>240</y><w>252</w><h>40</h></coordinates><panel_attributes>Package::br.lpm.business.knn
 KnnClassifier
 --
-
---
-+ calculateDistances(attributes: DataPoint): List&lt;Double&gt;
-+ predict(attributes: DataPoint): String
-+tryParseDouble(value: Object): Double
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>710</x><y>440</y><w>400</w><h>380</h></coordinates><panel_attributes>lt=&lt;-
-m1=0..1
-</panel_attributes><additional_attributes>360;360;360;10;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>390</y><w>330</w><h>90</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
-Package::br.lpm.business.KNearestNeighbors
-Knn&lt;T&gt;
---
---
-+ predict(DataPoint attributes): T
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>410</x><y>550</y><w>330</w><h>130</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-Package::br.lpm.business.KNearestNeighbors
++ predict(testPoint: DataPoint): Attribute
+- countStateOccurrences(dataPoints: List&lt;DataPoint&gt;, nearestIndexes: List&lt;Integer&gt;): Map&lt;Object, Integer&gt;
+- findMostFrequentState(stateCount: Map&lt;Object, Integer&gt;): Object
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>552</x><y>240</y><w>48</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>100;80;11;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>444</x><y>308</y><w>104</w><h>24</h></coordinates><panel_attributes>Package::br.lpm.business.knn
 KnnRegressor
 --
+--
++predict(attributes: DataPoint): Attribute</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>544</x><y>280</y><w>56</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>120;10;10;80</additional_attributes></element><element><id>UMLClass</id><coordinates><x>916</x><y>256</y><w>92</w><h>36</h></coordinates><panel_attributes>Package::br.lpm.business.loader
+&lt;&lt;interface&gt;&gt;
+DataLoader
+--
+--
+/+ load(filename: String, dataSet: DataSet)/
 
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>924</x><y>308</y><w>116</w><h>56</h></coordinates><panel_attributes>Package::br.lpm.business.loader
+CsvLoader
 --
-+ calculateDistances(attributes: DataPoint): List&lt;Double&gt;
-+ predict(attributes: DataPoint): Double
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>670</y><w>280</w><h>190</h></coordinates><panel_attributes>lt=&lt;-
-m1=0..1
-</panel_attributes><additional_attributes>260;160;10;160;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>730</x><y>620</y><w>490</w><h>50</h></coordinates><panel_attributes>lt=&lt;-
-m1=0..1
-</panel_attributes><additional_attributes>470;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>470</y><w>150</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;130;140</additional_attributes></element><element><id>Relation</id><coordinates><x>320</x><y>420</y><w>100</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;80;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>2360</x><y>530</y><w>220</w><h>100</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-Package::br.lpm.business.dataparser
-DateParser
+- delimiter: char
 --
++ getDelimiter(): char
++ setDelimiter(delimiter: char): void
++ load(filename: String, dataSet: DataSet): void
+- loadHeader(line: String, dataSet: DataSet): void
+- parseDataPoint(line: String): DataPoint
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>956</x><y>288</y><w>12</w><h>28</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>872</x><y>380</y><w>100</w><h>32</h></coordinates><panel_attributes>DbLoader
 --
-+ parse(input:String): Object
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>2550</x><y>360</y><w>220</w><h>100</h></coordinates><panel_attributes>&lt;&lt;class&gt;&gt;
-Package::br.lpm.business.dataparser
-NumericParser
+- db: DataBase
 --
---
-+ parse(input:String): Object
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>2010</x><y>200</y><w>160</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>140;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>2390</x><y>460</y><w>100</w><h>90</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;80;70</additional_attributes></element><element><id>Relation</id><coordinates><x>1160</x><y>60</y><w>110</w><h>40</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>90;11;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1430</x><y>150</y><w>30</w><h>90</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;70;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>120</x><y>470</y><w>1680</w><h>940</h></coordinates><panel_attributes>lt=&lt;.</panel_attributes><additional_attributes>1420;440;1660;440;1660;920;20;920;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1690</x><y>740</y><w>330</w><h>100</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
-Package::br.lpm.business.datamodel
-Normalize
++ DbLoader(url_connection: String)
++ load(filename: String, dataSet: DataSet)
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>908</x><y>288</y><w>48</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>100;10;10;40;10;230</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1024</x><y>380</y><w>84</w><h>28</h></coordinates><panel_attributes>Package::br.lpm.business.loader
+_Parser_
 --
 --
-+ normalizeData(data:List&lt;DataPoint&gt; ): List&lt;DataPoint&gt;
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1530</x><y>770</y><w>180</w><h>40</h></coordinates><panel_attributes>lt=.&gt;
-</panel_attributes><additional_attributes>160;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1840</x><y>600</y><w>30</w><h>160</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;140</additional_attributes></element></diagram>
+- Parser()
+_+ parse(: String): Object_
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1036</x><y>324</y><w>40</w><h>64</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;uses&gt;&gt;</panel_attributes><additional_attributes>10;10;70;140</additional_attributes></element><element><id>Relation</id><coordinates><x>864</x><y>268</y><w>60</w><h>16</h></coordinates><panel_attributes>lt=.&gt;
+&lt;&lt;uses&gt;&gt;</panel_attributes><additional_attributes>10;20;130;20</additional_attributes></element><element><id>UMLClass</id><coordinates><x>848</x><y>448</y><w>128</w><h>56</h></coordinates><panel_attributes>Package::br.lpm.business.dataset
+NormalizedDataSet
+--
++ normalize(): DataSet
+- normalizeDataPoint(dataPoint: DataPoint): DataPoint
+- normalizeValue(value: Number): double
+- getMinValue(): double
+- getMaxValue(): double
++ toString(): String
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>820</x><y>416</y><w>36</w><h>64</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;140;70;140</additional_attributes></element></diagram>

@@ -1,9 +1,10 @@
-package br.lpm.business.datamodel;
+package br.lpm.business.dataset;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import br.lpm.business.model.Attribute;
+import br.lpm.business.model.DataPoint;
 import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.List;
 
 public class NormalizedDataSetTest {

@@ -1,8 +1,9 @@
-package br.lpm.business.metrics;
+package br.lpm.business.metric;
 
 import java.util.List;
-import br.lpm.business.datamodel.Attribute;
-import br.lpm.business.datamodel.DataPoint;
+
+import br.lpm.business.model.Attribute;
+import br.lpm.business.model.DataPoint;
 
 public class EuclideanDistanceMetric implements Metric {
 
@@ -10,6 +11,11 @@ public class EuclideanDistanceMetric implements Metric {
   public double distance(DataPoint p1, DataPoint p2) {
     List<Attribute> attributesP1 = p1.getAttributes();
     List<Attribute> attributesP2 = p2.getAttributes();
+
+    if (attributesP1.size() != attributesP2.size()) {
+      throw new IllegalArgumentException("Os DataPoints comparados devem ter o mesmo número de atributos.");
+    }
+
     double totalDistance = 0;
     for (int i = 0; i < attributesP1.size(); i++) {
       Object value1 = attributesP1.get(i).getValue();

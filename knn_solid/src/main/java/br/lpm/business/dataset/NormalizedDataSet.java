@@ -1,4 +1,7 @@
-package br.lpm.business.datamodel;
+package br.lpm.business.dataset;
+
+import br.lpm.business.model.Attribute;
+import br.lpm.business.model.DataPoint;
 
 public class NormalizedDataSet extends DataSet {
 

@@ -1,14 +1,14 @@
-package br.lpm.business.KNearestNeighbors;
+package br.lpm.business.knn;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import br.lpm.business.datamodel.Attribute;
-import br.lpm.business.datamodel.DataPoint;
-import br.lpm.business.datamodel.DataSet;
-import br.lpm.business.metrics.Metric;
+import br.lpm.business.dataset.DataSet;
+import br.lpm.business.metric.Metric;
+import br.lpm.business.model.Attribute;
+import br.lpm.business.model.DataPoint;
 
 public class KnnClassifier extends Knn {
 

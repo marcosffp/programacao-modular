@@ -1,14 +1,10 @@
-package br.lpm.business.metrics;
+package br.lpm.business.metric;
 
 import org.junit.jupiter.api.Test;
-
-import br.lpm.business.datamodel.DataPoint;
-
+import br.lpm.business.model.Attribute;
+import br.lpm.business.model.DataPoint;
 import org.junit.jupiter.api.BeforeEach;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
-import br.lpm.business.datamodel.Attribute;
 
 public class EuclideanDistanceMetricTest {
 

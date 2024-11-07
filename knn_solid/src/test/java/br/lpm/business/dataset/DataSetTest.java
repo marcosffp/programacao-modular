@@ -1,11 +1,11 @@
-package br.lpm.business.datamodel;
+package br.lpm.business.dataset;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.List;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import br.lpm.business.model.Attribute;
+import br.lpm.business.model.DataPoint;
 
 public class DataSetTest {
   private DataSet dataSet;

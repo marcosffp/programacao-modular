@@ -1,4 +1,4 @@
-package br.lpm.business.dataparser;
+package br.lpm.business.loader;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -14,7 +14,7 @@ public final class Parser {
     } catch (Exception e) {
 
     }
-    try {
+    try { 
       return Double.parseDouble(input);
     } catch (Exception e) {
 

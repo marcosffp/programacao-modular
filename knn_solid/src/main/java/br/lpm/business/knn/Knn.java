@@ -1,14 +1,14 @@
-package br.lpm.business.KNearestNeighbors;
+package br.lpm.business.knn;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import br.lpm.business.datamodel.Attribute;
-import br.lpm.business.datamodel.DataPoint;
-import br.lpm.business.datamodel.DataSet;
-import br.lpm.business.metrics.Metric;
+import br.lpm.business.dataset.DataSet;
+import br.lpm.business.metric.Metric;
+import br.lpm.business.model.Attribute;
+import br.lpm.business.model.DataPoint;
 
 
 public abstract class Knn {
@@ -52,8 +52,6 @@ public abstract class Knn {
     for (int i = 0; i < size; i++) {
       indices.add(i, i);
     }
-
-    // Ordena os DataPoints em função da lista de distâncias.
     Collections.sort(indices, Comparator.comparingDouble(i -> distances.get(i)));
 
     return indices;

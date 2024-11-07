@@ -1,21 +1,19 @@
-package br.lpm.business.datainput;
+package br.lpm.business.loader;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
-import br.lpm.business.datamodel.DataSet;
-import br.lpm.business.loader.CsvLoader;
+import br.lpm.business.dataset.DataSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class DataLoaderTest {
   private CsvLoader dataLoader;
   private DataSet dataSet;
-  private static final String BASE_DIRECTORY = System
-      .getenv("C:\\Users\\marco\\OneDrive\\Documentos\\GitHub\\programacao-modular");
+  private static final String BASE_DIRECTORY = "C:\\Users\\marco\\OneDrive\\Documentos\\GitHub\\programacao-modular";
   private static final String TEST_CSV_FILE = BASE_DIRECTORY + "\\knn_solid\\LPM - Turma 1 - Cadastro de Pessoas.csv";
 
   @BeforeEach
@@ -31,6 +29,8 @@ public class DataLoaderTest {
         Bruna;6/23/1999;Feminino;1,6;62;2000;Belo Horizonte;Com a família;Solteiro;Ensino Médio;Música;Sim
         """;
 
+    File file = new File(TEST_CSV_FILE);
+    file.getParentFile().mkdirs(); 
     try (FileWriter writer = new FileWriter(TEST_CSV_FILE)) {
       writer.write(csvContent);
     }

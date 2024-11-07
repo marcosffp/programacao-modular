@@ -1,15 +1,13 @@
-package br.lpm.business.KNearestNeighbors;
+package br.lpm.business.knn;
 
-import br.lpm.business.datamodel.Attribute;
-import br.lpm.business.datamodel.DataPoint;
-import br.lpm.business.datamodel.DataSet;
-import br.lpm.business.metrics.EuclideanDistanceMetric;
-import br.lpm.business.metrics.Metric;
+import br.lpm.business.dataset.DataSet;
+import br.lpm.business.metric.EuclideanDistanceMetric;
+import br.lpm.business.metric.Metric;
+import br.lpm.business.model.Attribute;
+import br.lpm.business.model.DataPoint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
 import java.util.Arrays;
 
 public class KnnRegressorTest {
@@ -49,7 +47,7 @@ public class KnnRegressorTest {
 
     Attribute predictedValue1 = knnRegressor.predict(newPoint1);
     assertEquals(2.5, (Double) predictedValue1.getValue(),
-        "A previsão não corresponde ao valor esperado no cenário padrão.");
+        "Testando a previsão não corresponde ao valor esperado no cenário padrão.");
 
     knnRegressor = new KnnRegressor(dataset, 1, metric);
     DataPoint newPoint2 = new DataPoint();
@@ -57,9 +55,8 @@ public class KnnRegressorTest {
 
     Attribute predictedValue2 = knnRegressor.predict(newPoint2);
     assertEquals(2.0, (Double) predictedValue2.getValue(),
-        "A previsão não corresponde ao valor esperado no cenário com K=1.");
+        "Testando a previsão não corresponde ao valor esperado no cenário com K=1.");
 
-    // Teste 3: Prevendo o valor com um dataset contendo apenas um ponto
     dataset = new DataSet();
     DataPoint dataPoint = new DataPoint();
     dataPoint.setState(new Attribute(1.0));
@@ -72,6 +69,6 @@ public class KnnRegressorTest {
 
     Attribute predictedValue3 = knnRegressor.predict(newPoint3);
     assertEquals(1.0, (Double) predictedValue3.getValue(),
-        "A previsão não corresponde ao valor esperado no cenário de dataset com único ponto.");
+        "Testando a previsão não corresponde ao valor esperado no cenário de dataset com único ponto.");
   }
 }

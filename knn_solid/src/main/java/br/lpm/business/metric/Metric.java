@@ -1,6 +1,6 @@
-package br.lpm.business.metrics;
+package br.lpm.business.metric;
 
-import br.lpm.business.datamodel.DataPoint;
+import br.lpm.business.model.DataPoint;
 
 @FunctionalInterface
 public interface Metric {

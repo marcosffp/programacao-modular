@@ -1,6 +1,6 @@
-package br.lpm.business.loader;
+package br.lpm.loaders;
 
-import br.lpm.business.dataset.DataSet;
+import br.lpm.data_structures.DataSet;
 
 public interface DataLoader {
   public void load(String filename, DataSet dataSet);

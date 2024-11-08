@@ -1,4 +1,4 @@
-package br.lpm.business.model;
+package br.lpm.data_structures;
 
 public class Attribute {
 

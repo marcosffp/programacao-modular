@@ -1,11 +1,10 @@
-package br.lpm.business.loader;
+package br.lpm.loaders;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import br.lpm.business.dataset.DataSet;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
+import br.lpm.data_structures.DataSet;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;

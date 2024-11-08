@@ -1,8 +1,9 @@
-package br.lpm.business.model;
+package br.lpm.data_structures;
 
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 
 public class AttributeTest {
   private Attribute attribute;

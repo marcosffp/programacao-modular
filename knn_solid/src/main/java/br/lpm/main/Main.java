@@ -1,15 +1,15 @@
 package br.lpm.main;
 
-import br.lpm.business.dataset.DataSet;
-import br.lpm.business.dataset.NormalizedDataSet;
-import br.lpm.business.knn.KnnClassifier;
-import br.lpm.business.knn.KnnRegressor;
-import br.lpm.business.loader.CsvLoader;
-import br.lpm.business.loader.DataLoader;
-import br.lpm.business.metric.EuclideanDistanceMetric;
-import br.lpm.business.metric.Metric;
-import br.lpm.business.model.Attribute;
-import br.lpm.business.model.DataPoint;
+import br.lpm.business.KnnClassifier;
+import br.lpm.business.KnnRegressor;
+import br.lpm.data_structures.Attribute;
+import br.lpm.data_structures.DataPoint;
+import br.lpm.data_structures.DataSet;
+import br.lpm.data_structures.NormalizedDataSet;
+import br.lpm.loaders.CsvLoader;
+import br.lpm.loaders.DataLoader;
+import br.lpm.metrics.EuclideanDistanceMetric;
+import br.lpm.metrics.Metric;
 
 public class Main {
         private static final String BASE_DIRECTORY = "C:\\Users\\marco\\OneDrive\\Documentos\\GitHub\\programacao-modular";

@@ -1,11 +1,11 @@
-package br.lpm.business.knn;
+package br.lpm.business;
 
 import java.util.List;
 
-import br.lpm.business.dataset.DataSet;
-import br.lpm.business.metric.Metric;
-import br.lpm.business.model.Attribute;
-import br.lpm.business.model.DataPoint;
+import br.lpm.data_structures.Attribute;
+import br.lpm.data_structures.DataPoint;
+import br.lpm.data_structures.DataSet;
+import br.lpm.metrics.Metric;
 
 public class KnnRegressor extends Knn {
 

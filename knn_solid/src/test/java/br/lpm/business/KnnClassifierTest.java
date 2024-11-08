@@ -1,10 +1,10 @@
-package br.lpm.business.knn;
+package br.lpm.business;
+import br.lpm.data_structures.Attribute;
+import br.lpm.data_structures.DataPoint;
+import br.lpm.data_structures.DataSet;
+import br.lpm.metrics.EuclideanDistanceMetric;
+import br.lpm.metrics.Metric;
 
-import br.lpm.business.dataset.DataSet;
-import br.lpm.business.metric.EuclideanDistanceMetric;
-import br.lpm.business.metric.Metric;
-import br.lpm.business.model.Attribute;
-import br.lpm.business.model.DataPoint;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;

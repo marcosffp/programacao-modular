@@ -1,10 +1,8 @@
-package br.lpm.business.dataset;
+package br.lpm.data_structures;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import br.lpm.business.model.DataPoint;
 
 public class DataSet {
   private List<DataPoint> dataPoints = new ArrayList<>();

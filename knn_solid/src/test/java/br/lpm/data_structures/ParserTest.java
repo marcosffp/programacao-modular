@@ -1,4 +1,4 @@
-package br.lpm.business.loader;
+package br.lpm.data_structures;
 
 import org.junit.jupiter.api.Test;
 

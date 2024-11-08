@@ -1,8 +1,8 @@
-package br.lpm.business.metric;
+package br.lpm.metrics;
 
 import org.junit.jupiter.api.Test;
-import br.lpm.business.model.Attribute;
-import br.lpm.business.model.DataPoint;
+import br.lpm.data_structures.Attribute;
+import br.lpm.data_structures.DataPoint;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 

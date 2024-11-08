@@ -1,9 +1,7 @@
-package br.lpm.business.dataset;
+package br.lpm.data_structures;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import br.lpm.business.model.Attribute;
-import br.lpm.business.model.DataPoint;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 

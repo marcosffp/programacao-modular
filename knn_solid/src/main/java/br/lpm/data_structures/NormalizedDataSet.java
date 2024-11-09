@@ -21,8 +21,7 @@ public class NormalizedDataSet extends DataSet {
     DataPoint normalizedDataPoint = new DataPoint();
     for (Attribute attribute : dataPoint.getAttributes()) {
       if (attribute.getValue() instanceof Number) {
-        double normalizedValue = normalizeValue((Number) attribute.getValue());
-        normalizedDataPoint.addAttribute(new Attribute(normalizedValue));
+        normalizedDataPoint.addAttribute(new Attribute(normalizeValue((Number) attribute.getValue())));
       } else {
         normalizedDataPoint.addAttribute(attribute);
       }
@@ -32,9 +31,7 @@ public class NormalizedDataSet extends DataSet {
   }
 
   private double normalizeValue(Number value) {
-    double minValue = getMinValue();
-    double maxValue = getMaxValue();
-    return (value.doubleValue() - minValue) / (maxValue - minValue);
+    return (value.doubleValue() - getMinValue()) / (getMaxValue() - getMinValue());
   }
 
   private double getMinValue() {
@@ -52,7 +49,7 @@ public class NormalizedDataSet extends DataSet {
 
   private double getMaxValue() {
     double max = Double.MIN_VALUE;
-    for (DataPoint dataPoint : this.getDataPoints()) {
+    for (DataPoint dataPoint : super.getDataPoints()) {
       for (Attribute attribute : dataPoint.getAttributes()) {
         if (attribute.getValue() instanceof Number) {
           double value = ((Number) attribute.getValue()).doubleValue();
@@ -65,9 +62,6 @@ public class NormalizedDataSet extends DataSet {
 
   @Override
   public String toString() {
-    return "NormalizedDataSet{" +
-        "dataPoints=" + getDataPoints() +
-        ", attributeNames=" + getAttributeNames() +
-        '}';
+    return "NormalizedDataSet{" + super.toString() + "}";
   }
 }

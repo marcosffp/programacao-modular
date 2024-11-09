@@ -14,12 +14,12 @@ public class KnnRegressor extends Knn {
   }
 
   public Attribute predict(DataPoint testPoint) {
-    List<DataPoint> dp = getDataset().getDataPoints();
+    List<DataPoint> dp = super.getDataset().getDataPoints();
     List<Double> distances = super.calculateDistances(testPoint);
     List<Integer> indexes = super.getNearest(distances);
     double sumState = 0;
 
-    for (int n = 0; n < getK(); n++) {
+    for (int n = 0; n < super.getK(); n++) {
       try {
         Double stateValue = Double.valueOf(dp.get(indexes.get(n)).getState().getValue().toString());
         sumState += stateValue;
@@ -27,7 +27,7 @@ public class KnnRegressor extends Knn {
         System.err.println("Valor não numérico encontrado, ignorando: " + dp.get(indexes.get(n)).getState().getValue());
       }
     }
-    return new Attribute(sumState / getK());
+    return new Attribute(sumState / super.getK());
   }
 
 }

@@ -17,7 +17,7 @@ public class KnnClassifier extends Knn {
   }
 
   public Attribute predict(DataPoint testPoint) {
-    List<DataPoint> dataPoints = getDataset().getDataPoints();
+    List<DataPoint> dataPoints = super.getDataset().getDataPoints();
     List<Double> distances = super.calculateDistances(testPoint);
     List<Integer> nearestIndexes = super.getNearest(distances);
 
@@ -29,7 +29,7 @@ public class KnnClassifier extends Knn {
 
   private Map<Object, Integer> countStateOccurrences(List<DataPoint> dataPoints, List<Integer> nearestIndexes) {
     Map<Object, Integer> stateCount = new HashMap<>();
-    for (int i = 0; i < getK(); i++) {
+    for (int i = 0; i < super.getK(); i++) {
       Object stateValue = dataPoints.get(nearestIndexes.get(i)).getState().getValue();
       stateCount.put(stateValue, stateCount.getOrDefault(stateValue, 0) + 1);
     }

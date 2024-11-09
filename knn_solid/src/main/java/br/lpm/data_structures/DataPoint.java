@@ -1,7 +1,6 @@
 package br.lpm.data_structures;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,14 +61,8 @@ public class DataPoint {
     return attributes.stream()
         .map(attribute -> {
           Object value = attribute.getValue();
-          if (value instanceof Object[]) {
-            return Arrays.toString((Object[]) value);
-          } else {
-            return value.toString();
-          }
+          return value != null ? value.toString() : "null";
         })
         .collect(Collectors.joining(", ", "[", "]"));
-
   }
-
 }

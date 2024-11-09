@@ -13,7 +13,7 @@ public class EuclideanDistanceMetric implements Metric {
     List<Attribute> attributesP2 = p2.getAttributes();
 
     if (attributesP1.size() != attributesP2.size()) {
-      throw new IllegalArgumentException("Os DataPoints comparados devem ter o mesmo número de atributos.");
+      return -1;
     }
 
     double totalDistance = 0;
@@ -34,9 +34,7 @@ public class EuclideanDistanceMetric implements Metric {
   }
 
   private double calculateNumericDistance(Number n1, Number n2) {
-    double d1 = n1.doubleValue();
-    double d2 = n2.doubleValue();
-    return Math.pow(d1 - d2, 2);
+    return Math.pow(n1.doubleValue() - n2.doubleValue(), 2);
   }
 
   private double calculateNonNumericDistance(Object value1, Object value2) {

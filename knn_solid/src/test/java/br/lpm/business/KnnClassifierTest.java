@@ -46,14 +46,14 @@ public class KnnClassifierTest {
     newPoint1.addAttribute(new Attribute(2.5));
 
     Attribute predictedClass1 = knnClassifier.predict(newPoint1);
-    assertEquals("ClasseB", predictedClass1.getValue());
+    assertEquals("ClasseB", predictedClass1.getValue(),"Testando a predição para um novo ponto");
 
     knnClassifier = new KnnClassifier(dataset, 1, metric);
     DataPoint newPoint2 = new DataPoint();
     newPoint2.addAttribute(new Attribute(2.5));
 
     Attribute predictedClass2 = knnClassifier.predict(newPoint2);
-    assertEquals("ClasseB", predictedClass2.getValue());
+    assertEquals("ClasseB", predictedClass2.getValue(),"Testando a predição para um novo ponto");
 
     dataset = new DataSet();
     DataPoint dataPoint = new DataPoint();
@@ -66,6 +66,6 @@ public class KnnClassifierTest {
     newPoint3.addAttribute(new Attribute(1.5));
 
     Attribute predictedClass3 = knnClassifier.predict(newPoint3);
-    assertEquals("ClasseA", predictedClass3.getValue());
+    assertEquals("ClasseA", predictedClass3.getValue(),"Testando a predição para um novo ponto");
   }
 }

@@ -35,9 +35,7 @@ public abstract class Knn {
   }
 
   protected List<Double> calculateDistances(DataPoint testPoint) {
-
     List<Double> distances = new ArrayList<Double>(dataset.size());
-
     List<DataPoint> dpList = dataset.getDataPoints();
     for (DataPoint dp : dpList) {
       distances.add(metric.distance(dp, testPoint));
@@ -46,14 +44,12 @@ public abstract class Knn {
   }
 
   protected List<Integer> getNearest(List<Double> distances) {
-
     int size = dataset.size();
     List<Integer> indices = new ArrayList<>(size);
     for (int i = 0; i < size; i++) {
       indices.add(i, i);
     }
     Collections.sort(indices, Comparator.comparingDouble(i -> distances.get(i)));
-
     return indices;
   }
 
